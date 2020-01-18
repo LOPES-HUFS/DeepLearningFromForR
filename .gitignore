@@ -41,3 +41,5 @@ vignettes/*.pdf
 # custom
 *.Rproj
 *.Rmd
+*.html
+*.nb.html
