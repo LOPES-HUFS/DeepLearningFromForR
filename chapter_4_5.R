@@ -127,3 +127,6 @@ numerical_gradient <- function(f,x, t) {
                  b2 = numerical_gradient_b2(f,x,t))
   return(grads)
 }
+
+numerical_gradient <- compiler::cmpfun(numerical_gradient)
+softmax <- compiler::cmpfun(softmax)
