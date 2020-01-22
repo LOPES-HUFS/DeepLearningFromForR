@@ -55,30 +55,6 @@ loss <-function(x,t){
   return(cross_entropy_error(predict(x),t))
 }
 
-loss_W1<-function(W1){
-  z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
-  y<- softmax(sweep((z1 %*% W2),2, b2,'+'))
-  return(cross_entropy_error(y,t))
-}
-
-loss_W2<-function(W2){
-  z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
-  y<- softmax(sweep((z1 %*% W2),2, b2,'+'))
-  return(cross_entropy_error(y,t))
-}
-
-loss_b1<-function(b1){
-  z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
-  y<- softmax(sweep((z1 %*% W2),2, b2,'+'))
-  return(cross_entropy_error(y,t))
-}
-
-loss_b2<-function(b2){
-  z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
-  y<- softmax(sweep((z1 %*% W2),2, b2,'+'))
-  return(cross_entropy_error(y,t))
-}
-
 accuracy <- function(x,t){
   y <- max.col(predict(x))
   t <- max.col(t)
@@ -86,70 +62,68 @@ accuracy <- function(x,t){
   return(accuracy)
 }
 
-numerical_gradient_W1 <- function(f){
-  vec <- vector()
-  temp <- rep(0,length(W1))
+numerical_gradient_W1 <- function(f,x,t){
   h <- 1e-4
+  vec <- matrix(0, nrow = nrow(W1) ,ncol = ncol(W1))
   for(i in 1:length(W1)){
-    temp[i] <- temp[i]+ h
-    fxh1  <-  f(W1+temp)
-    temp[i] <- (temp[i] - (2*h))
-    fxh2  <- f(W1+temp)
-    vec <- c(vec, (fxh1 - fxh2) / (2*h))
-    temp[i] <- 0 
+    origin <- W1
+    W1[i] <<- (W1[i] + h)
+    fxh1 <- f(x, t)
+    W1[i] <<- (W1[i] - (2*h))
+    fxh2 <- f(x, t)
+    vec[i] <- (fxh1 - fxh2) / (2*h)
+    W1 <<- origin
   }
-  return(matrix(vec, nrow = nrow(W1) ,ncol = ncol(W1)))    
+  return(vec)
 }
-
-numerical_gradient_W2 <- function(f){
-  vec <- vector()
-  temp <- rep(0,length(W2))
+numerical_gradient_W2 <- function(f,x,t){
   h <- 1e-4
+  vec <- matrix(0, nrow = nrow(W2) ,ncol = ncol(W2))
   for(i in 1:length(W2)){
-    temp[i] <- temp[i]+ h
-    fxh1  <-  f(W2+temp)
-    temp[i] <- (temp[i] - (2*h))
-    fxh2  <- f(W2+temp)
-    vec <- c(vec, (fxh1 - fxh2) / (2*h))
-    temp[i] <- 0 
+    origin <- W2
+    W2[i] <<- (W2[i] + h)
+    fxh1 <- f(x, t)
+    W2[i] <<- (W2[i] - (2*h))
+    fxh2 <- f(x, t)
+    vec[i] <- (fxh1 - fxh2) / (2*h)
+    W2 <<- origin
   }
-  return(matrix(vec, nrow = nrow(W2) ,ncol = ncol(W2)))    
+  return(vec)
 }
-
-numerical_gradient_b1 <- function(f){
-  vec <- vector()
-  temp <- rep(0,length(b1))
+numerical_gradient_b1 <- function(f,x,t){
   h <- 1e-4
+  vec <- matrix(0, nrow = nrow(b1) ,ncol = ncol(b1))
   for(i in 1:length(b1)){
-    temp[i] <- temp[i]+ h
-    fxh1  <-  f(b1+temp)
-    temp[i] <- (temp[i] - (2*h))
-    fxh2  <- f(b1+temp)
-    vec <- c(vec, (fxh1 - fxh2) / (2*h))
-    temp[i] <- 0 
+    origin <- b1
+    b1[i] <<- (b1[i] + h)
+    fxh1 <- f(x, t)
+    b1[i] <<- (b1[i] - (2*h))
+    fxh2 <- f(x, t)
+    vec[i] <- (fxh1 - fxh2) / (2*h)
+    b1 <<- origin
   }
-  return(matrix(vec, nrow = nrow(b1) ,ncol = ncol(b1)))    
+  return(vec)
 }
 
-numerical_gradient_b2 <- function(f){
-  vec <- vector()
-  temp <- rep(0,length(b2))
+numerical_gradient_b2 <- function(f,x,t){
   h <- 1e-4
+  vec <- matrix(0, nrow = nrow(b2) ,ncol = ncol(b2))
   for(i in 1:length(b2)){
-    temp[i] <- temp[i]+ h
-    fxh1  <-  f(b2+temp)
-    temp[i] <- (temp[i] - (2*h))
-    fxh2  <- f(b2+temp)
-    vec <- c(vec, (fxh1 - fxh2) / (2*h))
-    temp[i] <- 0
+    origin <- b2
+    b2[i] <<- (b2[i] + h)
+    fxh1 <- f(x, t)
+    b2[i] <<- (b2[i] - (2*h))
+    fxh2 <- f(x, t)
+    vec[i] <- (fxh1 - fxh2) / (2*h)
+    b2 <<- origin
   }
-  return(matrix(vec, nrow = nrow(b2) ,ncol = ncol(b2)))    
+  return(vec)
 }
 
-numerical_gradient <- function(x, t) {
-  grads  <- list(W1 = numerical_gradient_W1(loss_W1), 
-                 b1 = numerical_gradient_b1(loss_W2), 
-                 W2 = numerical_gradient_W2(loss_b1), 
-                 b2 = numerical_gradient_b2(loss_b2))
+numerical_gradient <- function(f,x, t) {
+  grads  <- list(W1 = numerical_gradient_W1(f,x,t), 
+                 b1 = numerical_gradient_b1(f,x,t), 
+                 W2 = numerical_gradient_W2(f,x,t), 
+                 b2 = numerical_gradient_b2(f,x,t))
   return(grads)
 }
