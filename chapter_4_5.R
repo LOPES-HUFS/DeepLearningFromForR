@@ -26,7 +26,6 @@ for(i in 1:NROW(t_test_onehotlabel)){
   t_test_onehotlabel[i, t_index[i]] <- TRUE
 }
 
-#normalize
 x_train_normalize <- x_train/255
 x_test_normalize <- x_test/255
 
@@ -34,14 +33,11 @@ sigmoid <- function(x){
   return(1 / (1 + exp(-x)))
 }
 
-#지수 함수 쪽 계산 오래 걸림 
 softmax <- function(a){
   exp_a <- exp(a - apply(a,1,max))
   return(sweep(exp_a,1,rowSums(exp_a),"/"))
 }
 
-# 기존 W1~b2 들은 그래디언트에서 전역으로 바뀌던 변수인데 함수 변경으로 일반 변수화 됨 
-# 따라서 기존 함수의 인자들로 변경해주어야 하고 관련 연산의 구조 설계를 변경 해야함    
 predict <- function(x){
   z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
   return(softmax(sweep((z1 %*% W2),2, b2,'+')))
@@ -56,8 +52,6 @@ cross_entropy_error <- function(y, t){
 loss <-function(x,t){
   return(cross_entropy_error(predict(x),t))
 }
-
-#(sweep((z1 %*% W2),2, b2,'+')) 계산이 문제 있음 
 
 loss_W1<-function(W1){
   z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
