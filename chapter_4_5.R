@@ -6,6 +6,8 @@ TwoLayerNet  <- function(input_size, hidden_size, output_size, weight_init_std =
   return(list(input_size, hidden_size, output_size,weight_init_std))
 }
 
+net <- TwoLayerNet(input_size=784, hidden_size=100, output_size=10)
+
 library(dslabs)
 
 mnist<-read_mnist()
