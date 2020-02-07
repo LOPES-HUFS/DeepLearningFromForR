@@ -14,6 +14,14 @@ numerical_gradient <- function(f,x){
     return(matrix(vec, nrow = nrow(x) ,ncol = ncol(x)))
 }
 
+making_one_hot_label <-function(t_label,nrow,ncol){
+    data <- matrix(FALSE,nrow = nrow,ncol = ncol)
+    t_index <- t_label+1
+    for(i in 1:NROW(data)){
+        data[i, t_index[i]] <- TRUE
+    }
+    return(data)
+}
 
 cross_entropy_error <- function(y, t){
     delta <- 1e-7
@@ -35,7 +43,6 @@ softmax_single <- function(a){
     sum_exp_a <- sum(exp(a - c))
     return(exp(a - c) / sum_exp_a) 
 }
-
 
 softmax <- function(a){
     exp_a <- exp(a - apply(a,1,max))
