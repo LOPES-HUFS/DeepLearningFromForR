@@ -55,7 +55,7 @@ loss <-function(x,t){
   return(cross_entropy_error(predict(x),t))
 }
 
-accuracy <- function(x,t){
+model.evaluate <- function(x,t){
   y <- max.col(predict(x))
   t <- max.col(t)
   accuracy <- (sum(ifelse(y==t,1,0))) / dim(x)[1]
