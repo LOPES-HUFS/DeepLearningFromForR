@@ -5,9 +5,9 @@ numerical_gradient <- function(f,x){
     
     for(i in 1:length(x)){
         temp[i]<-(temp[i] + h)
-        fxh1 <- function_2(x+temp)
+        fxh1 <- f(x+temp)
         temp[i]<-(temp[i] - (2*h))
-        fxh2<- function_2(x+temp)
+        fxh2<- f(x+temp)
         vec <- c(vec, (fxh1 - fxh2) / (2*h))
         temp[i]  <- 0
     }

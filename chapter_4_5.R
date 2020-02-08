@@ -6,7 +6,7 @@ TwoLayerNet  <- function(input_size, hidden_size, output_size, weight_init_std =
   return(list(input_size, hidden_size, output_size,weight_init_std))
 }
 
-net <- TwoLayerNet(input_size=784, hidden_size=100, output_size=10)
+net <- TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
 library(dslabs)
 
@@ -16,17 +16,16 @@ t_train<-mnist$train$labels
 x_test<-mnist$test$images
 t_test<-mnist$test$labels
 
-t_train_onehotlabel <- matrix(FALSE,nrow = 60000,ncol = 10)
-t_index <- t_train+1
-for(i in 1:NROW(t_train_onehotlabel)){
-  t_train_onehotlabel[i, t_index[i]] <- TRUE
+making_one_hot_label <-function(t_label,nrow,ncol){
+  data <- matrix(FALSE,nrow = nrow,ncol = ncol)
+  t_index <- t_label+1
+  for(i in 1:NROW(data)){
+    data[i, t_index[i]] <- TRUE
+  }
+  return(data)
 }
-
-t_test_onehotlabel <- matrix(FALSE,nrow = 10000,ncol = 10)
-t_index <- t_test+1
-for(i in 1:NROW(t_test_onehotlabel)){
-  t_test_onehotlabel[i, t_index[i]] <- TRUE
-}
+t_train_onehotlabel<-making_one_hot_label(t_train,60000,10)
+t_test_onehotlabel<-making_one_hot_label(t_test,10000,10)
 
 x_train_normalize <- x_train/255
 x_test_normalize <- x_test/255
