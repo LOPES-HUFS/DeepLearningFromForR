@@ -1,6 +1,6 @@
 ## 들어가며 ...
 
-DeepLearningFromForR프로젝트는 R언어를 사용하여 딥러닝 기초부터 차근차근 공부할 수 있게 도움을 주고자 출발한 프로젝트입니다.
+이 프로젝트는 R언어를 사용하여 딥러닝 기초부터 차근차근 공부할 수 있게 도움을 주고자 출발한 프로젝트입니다.
 딥러닝이 처음이신 분, 코딩이나 수학이 어려우신 분들을 대상으로 진행됩니다.
 
 준비없이 딥러닝 공부를 시작하기에는 텐서플로우, 파이토치, 케라스 등 광활한 정보의 바다 속에서 무엇을 어떻게 공부할지 갈피를 잡기 어렵습니다.
@@ -19,7 +19,7 @@ DeepLearningFromForR프로젝트는 R언어를 사용하여 딥러닝 기초부�
 
 같이 공부해요!:)
 
-* 프로젝트에서 소개되는 코드는 [밑바닥부터 시작하는 딥러닝] 책의 파이썬 코드를 R언어로 변환하거나 내용에 맞게 일부 각색하였습니다.
+* 프로젝트에서 소개되는 코드는 [밑바닥부터 시작하는 딥러닝](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 [이 책의 github] (https://github.com/WegraLee/deep-learning-from-scratch)를 참고하여 R로 작성하였으며, 일부는 R에 맞게 일부 각색하였습니다.
 * 오타 발견 및 문의 사항은 언제나 환영하며 Issues에 등록 부탁드립니다.
 
     Issues : https://github.com/LOPES-HUFS/DeepLearningFromForR/issues
