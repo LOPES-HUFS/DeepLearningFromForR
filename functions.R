@@ -14,15 +14,6 @@ numerical_gradient <- function(f,x){
     return(matrix(vec, nrow = nrow(x) ,ncol = ncol(x)))
 }
 
-making_one_hot_label <-function(t_label,nrow,ncol){
-    data <- matrix(FALSE,nrow = nrow,ncol = ncol)
-    t_index <- t_label+1
-    for(i in 1:NROW(data)){
-        data[i, t_index[i]] <- TRUE
-    }
-    return(data)
-}
-
 cross_entropy_error <- function(y, t){
     delta <- 1e-7
     batchsize <- dim(y)[1]
@@ -50,11 +41,16 @@ softmax <- function(a){
 }
 
 loss <-function(x,t){
-    return(cross_entropy_error(predict(x),t))
+    return(cross_entropy_error(model.forward(x),t))
+}
+
+model.forward <- function(x){
+    z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
+    return(softmax(sweep((z1 %*% W2),2, b2,'+')))
 }
 
 model.evaluate <- function(x,t){
-    y <- max.col(predict(x))
+    y <- max.col(model.forward(x))
     t <- max.col(t)
     accuracy <- (sum(ifelse(y==t,1,0))) / dim(x)[1]
     return(accuracy)
