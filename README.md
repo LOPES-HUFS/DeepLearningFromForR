@@ -14,7 +14,8 @@
 
 ### 프로젝트 맛보기!
 앞서 설명드린 MNIST의 숫자 이미지를 사용하여 어떻게 숫자를 예측하는지 간략하게 살펴 보겠습니다. 코드는 챕터를 진행하면서 풀어 설명드리겠습니다. 먼저 MNIST 숫자 이미지를 확인합니다. 
-```
+
+```R
 library(dslabs)
 mnist <- read_mnist()
 x_train <- mnist$train$images
@@ -25,18 +26,19 @@ draw_image <- function(x){
 
 draw_image(x_train[2,])
 ```
+
 <img src="./images/chapter5_mnist_image.png" width="200px">
 
 위 숫자 이미지는 7입니다. MNIST에는 이런 이미지가 7만개가 있습니다. 우리는 이 이미지를 보고 7이라는 것을 바로 알지만, 인공지능은 학습이 필요합니다. 인공지능을 학습할 때에는 이미지를 행렬로 변환하여 학습시킵니다. 변환된 행렬은 다음과 같습니다.
 
-```
+```R
 print(x_train[1,])
 ```
 <img src="./images/chapter5_image_to_matrix.png" width="400px">
 
 이미지를 행렬로 변환시킨 후에 인공지능이 숫자를 예측하게 하고 맞았는지,틀렸는지 알려주면서 학습 시킵니다. 학습 후에는 얼마나 잘 맞추는지 확인합니다.
 
-```
+```R
 source('./sample/chapter5_sample.R')
 
 x_test <- mnist$test$images
@@ -52,10 +54,10 @@ t <- t_test_onehotlabel[batch_mask,]
 
 model.evaluate(x, t)
 ```
+
 <img src="./images/chapter5_accuracy_result.png" width="200px">
 
 여기서 결과값은 0.92로 인공지능이 숫자를 맞출 확률이 92%임을 의미합니다. 학습을 더 많이 반복하거나 학습법을 개선한다면 무려 99%까지도 가능합니다! 
-
 
 프로젝트를 함께 따라오다보면 어느새 작은 인공지능을 만들고 그 원리를 이해할 수 있을 것입니다. 
 딥러닝을 시작하기 전에는 수학부터 해야 돼, 코딩부터 해야돼 라면서 딥러닝 공부를 미루지 마세요. 딥러닝 원리를 이해하면서 수학도 코딩도 같이 이해해 나가면 됩니다.
