@@ -72,7 +72,7 @@ numerical_gradient_b2 <- function(f,x,t){
     return(vec)
 }
 
-numerical_gradient_ <- function(f,x, t) {
+numerical_gradient <- function(f,x,t) {
     grads  <- list(W1 = numerical_gradient_W1(f,x,t), 
                    b1 = numerical_gradient_b1(f,x,t), 
                    W2 = numerical_gradient_W2(f,x,t), 
