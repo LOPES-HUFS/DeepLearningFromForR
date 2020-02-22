@@ -1,3 +1,11 @@
+TwoLayerNet  <- function(input_size, hidden_size, output_size, weight_init_std = 0.01) {
+    W1 <<- weight_init_std*matrix(rnorm(n = input_size*hidden_size), nrow = input_size, ncol = hidden_size)
+    b1 <<- matrix(rep(0,hidden_size),nrow=1,ncol=hidden_size)
+    W2 <<- weight_init_std*matrix(rnorm(n = hidden_size*output_size), nrow = hidden_size, ncol = output_size)
+    b2 <<- matrix(rep(0,output_size),nrow=1,ncol=output_size)
+    return(list(input_size, hidden_size, output_size,weight_init_std))
+}
+
 numerical_gradient_layer <- function(f,x){
     h <- 1e-4
     vec <- vector()
@@ -124,3 +132,74 @@ model.evaluate <- function(x,t){
     accuracy <- (sum(ifelse(y==t,1,0))) / dim(x)[1]
     return(accuracy)
 }
+
+MakingParams <- function(input_size, hidden_size, output_size, weight_init_std = 0.01) {
+    W1 <- weight_init_std*matrix(rnorm(n = input_size*hidden_size), nrow = input_size, ncol = hidden_size)
+    b1 <- matrix(rep(0,hidden_size),nrow=1,ncol=hidden_size)
+    W2 <- weight_init_std*matrix(rnorm(n = hidden_size*output_size), nrow = hidden_size, ncol = output_size)
+    b2 <- matrix(rep(0,output_size),nrow=1,ncol=output_size)
+    params <<- list(W1=W1, b1=b1, W2=W2, b2=b2)
+    return(list(input_size, hidden_size, output_size,weight_init_std))
+}
+
+Relu.forward <- function(x){
+    mask <- x<=0
+    out <- x
+    out[mask] <- 0
+    return(list(out = out, mask = mask))
+}
+
+Relu.backward <- function(forward, dout){
+    dout[forward$mask] <- 0
+    return(list(dx = dout))
+}
+
+Affine.forward <- function(W, b, x){
+    out <- sweep((x %*% W),2, b,'+')
+    return(list(out = out, W = W, x = x))
+}
+
+Affine.backward <- function(forward, dout){
+    dx <- dout %*% t(forward$W)
+    dW <- t(forward$x) %*% dout
+    db <- matrix(colSums(dout), nrow=1)
+    return(list(dx = dx, dW = dW, db = db))
+}
+
+SoftmaxWithLoss.forward <- function(x, t){
+    y <- softmax(x)
+    loss <- cross_entropy_error(y, t)
+    return(list(loss = loss , y = y, t = t))
+}
+
+SoftmaxWithLoss.backward <- function(forward, dout=1){
+    dx <- (forward$y - forward$t) / dim(forward$t)[1]
+    return(list(dx = dx))
+}
+
+predict <- function(x){
+    Affine_1_layer <- Affine.forward(params$W1, params$b1, x)
+    Relu_1_layer <- Relu.forward(Affine_1_layer$out)
+    Affine_2_layer <- Affine.forward(params$W2, params$b2, Relu_1_layer$out)
+    return(list(x = Affine_2_layer$out, Affine_1.forward = Affine_1_layer, Affine_2.forward = Affine_2_layer, Relu_1.forward = Relu_1_layer))
+}
+
+backward_loss <- function(x, t){
+    temp  <- predict(x) 
+    y <- temp$x
+    last_layer.forward <- SoftmaxWithLoss.forward(y, t)
+    return(list(loss = last_layer.forward$loss, softmax = last_layer.forward, predict =  temp))
+}
+
+gradient <- function(x, t) {
+    temp_loss <- backward_loss(x, t)
+    dout <- 1
+    last_layer.backward <- SoftmaxWithLoss.backward(temp_loss$softmax, dout)
+    Affine_2_layer.backward <- Affine.backward(temp_loss$predict$Affine_2.forward, dout = last_layer.backward$dx)
+    Relu_1_layer.backward <- Relu.backward(temp_loss$predict$Relu_1.forward, dout = Affine_2_layer.backward$dx)
+    Affine_1_layer.backward <- Affine.backward(temp_loss$predict$Affine_1.forward, dout = Relu_1_layer.backward$dx)
+    
+    grads  <- list(W1 = Affine_1_layer.backward$dW, b1 = Affine_1_layer.backward$db, W2 = Affine_2_layer.backward$dW, b2 = Affine_2_layer.backward$db)
+    return(grads)
+}
+
