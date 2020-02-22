@@ -129,3 +129,25 @@ numerical_gradient <- function(f,x, t) {
 
 numerical_gradient <- compiler::cmpfun(numerical_gradient)
 softmax <- compiler::cmpfun(softmax)
+
+# trainning
+
+learning_rate <- 0.1
+iters_num <- 100
+train_loss_list <- data.frame(lossvalue=rep(0,iters_num))
+train_size <- dim(x_train_normalize)[1]
+batch_size <- 100
+
+for(i in 1:iters_num){
+  batch_mask <- sample(train_size,batch_size)
+  x <- x_train_normalize[batch_mask,]
+  t <- t_train_onehotlabel[batch_mask,]
+  grads <- numerical_gradient(loss,x,t)
+  W1 <- W1 - (grads$W1 * learning_rate)
+  W2 <- W2 - (grads$W2 * learning_rate)
+  b1 <- b1 - (grads$b1 * learning_rate)
+  b2 <- b2 - (grads$b2 * learning_rate)
+  loss_value <- loss(x, t)
+  train_loss_list[i,1] <- loss_value
+  print(i)
+}
