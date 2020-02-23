@@ -65,7 +65,7 @@ predict <- function(x){
 
 predict(x)
 ```
-<img src="./images/chapter5_predict_result.png" width="400px">
+<img src="./images/chapter5_predict_result.png" width="800px">
 
 위 값이 숫자를 예측한 값입니다. 순서대로 0부터 9까지 해당 숫자가 정답일 확률을 의미합니다. 다시 말해,
 0.1097523은 이미지 숫자가 0일 확률이 10.9%임을 의미하며 0.02893408는 숫자 1일 확률을 의미힙니다. 이 중 가장 높은 확률을 인공지능이 예측한 값으로 봅니다. 여기서 가장 큰 값은 0.294425이므로 7이라고 예측했음을 알 수 있습니다.
