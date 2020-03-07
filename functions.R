@@ -82,7 +82,6 @@ numerical_gradient <- function(f,x,t) {
 }
 
 numerical_gradient <- compiler::cmpfun(numerical_gradient)
-softmax <- compiler::cmpfun(softmax)
 
 cross_entropy_error <- function(y, t){
     delta <- 1e-7
@@ -126,6 +125,7 @@ model.evaluate <- function(x,t){
     return(accuracy)
 }
 
+softmax <- compiler::cmpfun(softmax)
 
 Relu.forward <- function(x){
     mask <- x<=0
