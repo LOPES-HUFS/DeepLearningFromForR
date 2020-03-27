@@ -109,13 +109,13 @@ softmax <- function(a){
     return(sweep(exp_a,1,rowSums(exp_a),"/"))
 }
 
-loss <-function(x,t){
-    return(cross_entropy_error(model.forward(x),t))
-}
-
 model.forward <- function(x){
     z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
     return(softmax(sweep((z1 %*% W2),2, b2,'+')))
+}
+
+loss <-function(x,t){
+    return(cross_entropy_error(model.forward(x),t))
 }
 
 model.evaluate <- function(x,t){
