@@ -41,7 +41,8 @@ softmax <- function(a){
 
 predict <- function(x){
   z1 <- sigmoid(sweep((x %*% W1),2, b1,'+'))
-  return(softmax(sweep((z1 %*% W2),2, b2,'+')))
+  a2 <- z1 %*% W2
+  return(softmax(sweep(a2,2, b2,'+')))
 }
 
 cross_entropy_error <- function(y, t){
