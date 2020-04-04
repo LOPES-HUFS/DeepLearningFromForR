@@ -1,13 +1,4 @@
-cross_entropy_error <- function(y, t){
-  delta <- 1e-7
-  batchsize <- dim(y)[1]
-  return(-sum(t * log(y + delta))/batchsize)
-}
-
-softmax <- function(a){
-  exp_a <- exp(a - apply(a,1,max))
-  return(sweep(exp_a,1,rowSums(exp_a),"/"))
-}
+source("./DeepLearningFromForR/functions.R")
 
 simplemodel  <- function(){
   W <<- matrix(c(0.47355232, 0.85557411, 0.9977393, 0.03563661,0.84668094,0.69422093), nrow = 2)

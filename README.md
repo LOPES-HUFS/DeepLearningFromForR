@@ -50,7 +50,7 @@
 
 ## 프로젝트 맛보기!
 어떤 내용을 학습하게 될 지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요!:)
-프로젝트 전체 코드를 다운 받으시려면, https://github.com/LOPES-HUFS/DeepLearningFromForR 페이지에서 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
+프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
 
 ```
 $ git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
@@ -148,7 +148,7 @@ model.evaluate(x, t)
 * 오타 발견 및 문의 사항은 언제나 환영하며 Issues에 등록 부탁드립니다.
 
     Issues : https://github.com/LOPES-HUFS/DeepLearningFromForR/issues
-* DeepLearningFromForR 프로젝트는 한국외국어대학교 LOPES 스터디 그룹에서 진행합니다.
+* DeepLearningFromForR 프로젝트는 [한국외국어대학교 LOPES 스터디 그룹](http://lopes.hufs.ac.kr)에서 진행합니다.
 
 ### R 초심자를 위한 R 설치방법과 기초 사용방법
 R이 처음이신 분들을 위한 가이드를 작성해 보았습니다.
