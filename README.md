@@ -103,7 +103,7 @@ model.evaluate(x, t)
 * 오타 발견 및 문의 사항은 언제나 환영하며 Issues에 등록 부탁드립니다.
 
     Issues : https://github.com/LOPES-HUFS/DeepLearningFromForR/issues
-* DeepLearningFromForR 프로젝트는 한국외국어대학교 LOPES 스터디 그룹에서 진행합니다.
+* DeepLearningFromForR 프로젝트는 [한국외국어대학교 LOPES 스터디 그룹](http://lopes.hufs.ac.kr)에서 진행합니다.
 
 ## R 기초 가이드
 
