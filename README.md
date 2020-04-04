@@ -1,29 +1,80 @@
-## Introduction
+## 손글씨 판별 인공지능 만들기
+이 프로젝트에서는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 인공지능을 만듭니다.
 
-이 프로젝트는 R언어를 사용하여 딥러닝 기초부터 차근차근 공부할 수 있게 도움을 주고자 출발한 프로젝트입니다.
-딥러닝이 처음이신 분, 코딩이나 수학이 어려우신 분들을 대상으로 진행됩니다.
+딥러닝 분야에서 인공지능 학습을 위해 쓰이는 기초 방법론으로는 크게 순전파법과 역전파법이 있습니다.
+이 프로젝트에서는 역전파법을 사용하여 구현할 것입니다. 역전파법을 사용하면 순전파 대비, 손실 함수에 대한 각 가중치의 미분값을 구하는데 필요한 계산량을 줄임으로써 학습하는 시간을 크게 단축시킵니다.
 
-프로젝트는 기계 학습 분야에서 가장 기본적이고 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여  숫자 이미지를 어떤 숫자인지 추론할 수 있는 인공지능을 만듭니다.
-손글씨 판별 인공지능을 직접 구현해보며 컴퓨터가 이미지를 어떻게 인식하는지, 그리고 손글씨 이미지를 어떻게 맞출 수 있는지 그 과정을 살펴봅니다.
+역전파법을 이해하기 위해서는 연쇄법칙과 계산 그래프, 그리고 순전파법에 대한 이해가 먼저 필요합니다. 이 방법들에는 미분과 행렬 계산이 주를 이루는데, 이 계산들을 쉽게 설명 드리기 위해서 R언어로 코드를 작성했습니다. R언어는 벡터와 행렬에 대한 수식을 쉽게 작성할 수 있기 때문에 설명드리기에도 이해하기에도 좀 더 수월할 것 같습니다:)
 
-전체 코드는 R언어로 구현했습니다. 딥러닝을 구현하려면 행렬을 계산할 프로그래밍이 필요한데, 이런 개념을 가장 쉽게 구현할 수 있는 언어가 R입니다. R이라는 언어를 모르시는 분들을 위해서 기초 가이드를 만들었습니다. 아래 [R 기초 가이드](https://github.com/LOPES-HUFS/DeepLearningFromForR#r-기초-가이드)를 참고하세요. 한번씩 읽으시면 이 프로젝트를 이해하는데 많은 도움이 됩니다. 만약 R이 처음이 아니라면 아래 링크를 쭉 보면서 따라오시면 기본적인 지식을 습득하실 수 있어요.
+순전파와 역전파, 그리고 두 방법론을 이해하기 위해 필요한 기초지식들을 살펴 보겠습니다. 그리고 손글씨 판별 인공지능을 직접 구현해보며 컴퓨터가 이미지를 어떻게 인식하는지, 손글씨 이미지를 어떻게 맞출 수 있는지 그 과정을 살펴봅니다. 전체 목차는 다음과 같습니다.
 
-1. R 시작하기
-2. 벡터와 행렬 살펴보기
-3. ...
+1. 벡터와 행렬의 연산
+
+    1-1. [벡터 연산](https://choosunsick.github.io/post/vector_operation/)
+
+    1-2. [행렬 연산](https://choosunsick.github.io/post/matrix_operation/)
+
+    1-3. [브로드 캐스트](https://choosunsick.github.io/post/broadcast_operation/)
+
+2. 신경망
+
+    2-1. [신경망 소개](https://choosunsick.github.io/post/neural_network_intro/)
+
+    2-2. [활성화 함수 소개](https://choosunsick.github.io/post/activation_fuctions/)
+
+    2-3. [3층 신경망 구현](https://choosunsick.github.io/post/softmax_function/)
+
+    2-4. [연습하기 : 손글씨 인식하기](https://choosunsick.github.io/post/neural_network_practice/)
+
+3. 신경망 학습과정
+
+    3-1. [신경망 학습 이론](https://choosunsick.github.io/post/neural_network_1/)
+
+    3-2. [손실함수](https://choosunsick.github.io/post/neural_network_2/)
+
+    3-3. [미니배치 학습](https://choosunsick.github.io/post/neural_network_3/)
+
+    3-4. [미분과 경사하강법](https://choosunsick.github.io/post/neural_network_4/)
+
+    3-4. [학습 알고리즘 구현](https://choosunsick.github.io/post/neural_network_5/)
+
+4. 오차역전파법
+
+    4-1. [계산 그래프와 연쇄법칙](https://choosunsick.github.io/post/neural_network_backward_1/)
+
+    4-2. [역전파 예제](https://choosunsick.github.io/post/neural_network_backward_2/)
+
+    4-3. [다양한 역전파 계층](https://choosunsick.github.io/post/neural_network_backward_3/)
+
+    4-4. [역전파 적용하기](https://choosunsick.github.io/post/neural_network_backward_4/)
 
 ## 프로젝트 맛보기!
 어떤 내용을 학습하게 될 지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요!:)
-프로젝트 전체 코드를 다운 받으시려면, https://github.com/LOPES-HUFS/DeepLearningFromForR 페이지에서 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
+프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
 
 ```
 $ git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
-$ cd DeepLearningFromForR
 ```
+
+코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다.
+R 에디터를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요.
+<PATH> 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 됩니다.
+
+```
+$ setwd('<PATH>/DeepLearningFromForR')
+```
+다음으로 구현에 필요한 라이브러리를 설치합니다.
+
+```
+$ install.packages("dslabs")
+$ library(dslabs)
+```
+
+여기까지 진행하시면 기초 설정은 다 끝났습니다. 아래의 코드를 직접 입력해 보며 결과를 확인할 수 있을 것입니다.
 코드는 챕터를 진행하면서 설명드리겠습니다. 이해는 잠시 뒤로한 채 가볍게 읽어 주세요.
 
 ### 숫자 맞추기
-앞서 설명드린 MNIST의 숫자 이미지를 사용하여 어떻게 숫자를 예측하는지 살펴 보겠습니다. 먼저 MNIST 숫자 이미지를 확인합니다. 
+앞서 설명드린 MNIST의 숫자 이미지를 사용하여 어떻게 숫자를 예측하는지 살펴 보겠습니다. 먼저 MNIST 숫자 이미지를 확인합니다.
 
 ```R
 library(dslabs)
@@ -105,7 +156,9 @@ model.evaluate(x, t)
     Issues : https://github.com/LOPES-HUFS/DeepLearningFromForR/issues
 * DeepLearningFromForR 프로젝트는 [한국외국어대학교 LOPES 스터디 그룹](http://lopes.hufs.ac.kr)에서 진행합니다.
 
-## R 기초 가이드
-
-1. [R 초심자를 위한 R 설치방법과 기초 사용방법](https://choosunsick.github.io/post/r_install/)
-2. ...
+### R 초심자를 위한 R 설치방법과 기초 사용방법
+R이 처음이신 분들을 위한 가이드를 작성해 보았습니다.
+R 설치하기부터 차례대로 따라와 주시면 됩니다:)
+1. [R 설치하기](https://choosunsick.github.io/post/r_install/)
+2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
+3. [대표 문법 살펴보기](https://choosunsick.github.io/post/r_programming_grammar/)
