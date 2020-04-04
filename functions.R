@@ -98,6 +98,10 @@ sigmoid <- function(x){
     return(1 / (1 + exp(-x)))
 }
 
+identify_fun <- function(x){
+    return(x)
+}
+
 softmax_single <- function(a){
     c <- max(a)
     sum_exp_a <- sum(exp(a - c))
