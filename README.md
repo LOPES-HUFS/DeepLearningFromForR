@@ -240,6 +240,14 @@ model.evaluate(x, t)
 
 여기서 결과값은 0.92로 인공지능이 숫자를 맞출 확률이 92%임을 의미합니다. 학습을 더 많이 반복하거나 학습법을 개선한다면 무려 99%까지도 가능합니다! 프로젝트를 통해 정확도를 99%까지 올리는 것도 같이 확인해 보겠습니다.
 
+## R 초심자를 위한 R 설치방법과 기초 사용방법
+R이 처음이신 분들을 위한 가이드를 작성해 보았습니다.
+R 설치하기부터 차례대로 따라와 주시면 됩니다:)
+1. [R 설치하기](https://choosunsick.github.io/post/r_install/)
+2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
+3. [대표 문법 살펴보기](https://choosunsick.github.io/post/r_programming_grammar/)
+
+
 프로젝트를 함께 따라오다보면 어느새 작은 인공지능을 만들고 그 원리를 이해할 수 있을 것입니다. 
 딥러닝을 시작하기 전에는 수학부터 해야 돼, 코딩부터 해야돼 라면서 딥러닝 공부를 미루지 마세요. 딥러닝 원리를 이해하면서 수학도 코딩도 같이 이해해 나가면 됩니다.
 
@@ -249,10 +257,3 @@ model.evaluate(x, t)
 
     Issues : https://github.com/LOPES-HUFS/DeepLearningFromForR/issues
 * DeepLearningFromForR 프로젝트는 [한국외국어대학교 LOPES 스터디 그룹](http://lopes.hufs.ac.kr)에서 진행합니다.
-
-### R 초심자를 위한 R 설치방법과 기초 사용방법
-R이 처음이신 분들을 위한 가이드를 작성해 보았습니다.
-R 설치하기부터 차례대로 따라와 주시면 됩니다:)
-1. [R 설치하기](https://choosunsick.github.io/post/r_install/)
-2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
-3. [대표 문법 살펴보기](https://choosunsick.github.io/post/r_programming_grammar/)
