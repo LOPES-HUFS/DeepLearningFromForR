@@ -9,7 +9,6 @@
 순전파와 역전파, 그리고 두 방법론을 이해하기 위해 필요한 기초지식들을 살펴 보겠습니다. 그리고 손글씨 판별 인공지능을 직접 구현해보며 컴퓨터가 이미지를 어떻게 인식하는지, 손글씨 이미지를 어떻게 맞출 수 있는지 그 과정을 살펴봅니다. 전체 목차는 다음과 같습니다.
 
 1. 벡터와 행렬의 연산
-
     1.[벡터 연산](https://choosunsick.github.io/post/vector_operation/)
     2.[행렬 연산](https://choosunsick.github.io/post/matrix_operation/)
     3.[브로드 캐스트](https://choosunsick.github.io/post/broadcast_operation/)
