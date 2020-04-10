@@ -49,5 +49,5 @@ t
 loss <- function(W){cross_entropy_error(softmax(simplemodel.forward (x)),t)}
 loss()
 
-dw <- numerical_gradient_simplemodel(loss,x,t)
+dw <- numerical_gradient_simplemodel(loss)
 dw
