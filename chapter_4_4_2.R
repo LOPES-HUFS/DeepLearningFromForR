@@ -3,9 +3,9 @@
 # 새롭게 정의하는 함수들만 모아놓은 것 입니다. 
 # 그외 기존에 사용한 적이 있는 함수는 `source()` 함수를 통해 사용할 수 있습니다.
 
-source("./DeepLearningFromForR/utils.R")
-source("./DeepLearningFromForR/numerical_gradient.R")
-source("./DeepLearningFromForR/gradient.R")
+source("./utils.R")
+source("./numerical_gradient.R")
+source("./gradient.R")
 
 # 순전파와 비교를 위해 순전파 가중치 계산기능의 함수를 정의합니다.
 

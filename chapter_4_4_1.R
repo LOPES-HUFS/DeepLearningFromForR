@@ -3,8 +3,8 @@
 # 새롭게 정의하는 함수들만 모아놓은 것 입니다. 
 # 그외 기존에 사용한 적이 있는 함수는 `source()` 함수를 통해 사용할 수 있습니다.
 
-source("./DeepLearningFromForR/functions.R")
-source("./DeepLearningFromForR/utils.R")
+source("./functions.R")
+source("./utils.R")
 
 # 앞서 2층신경망의 초기값 함수와의 차이점은 초기값을 리스트로 만든다는 점입니다.
 # 그외 가중치와 편향이 2개인점과 가중치를 랜덤값으로 설정하는 것은 기존 2층신경망 초기값 함수와 같습니다. 

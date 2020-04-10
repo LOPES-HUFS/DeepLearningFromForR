@@ -3,9 +3,9 @@
 # 이 챕터에서 새롭게 정의한 함수만 스크립트에 저장됩니다. 
 # 그외 사용한 적이 있는 함수는 source() 코드를 통해 불러와 줍니다.
 
-source("./DeepLearningFromForR/functions.R")
-source("./DeepLearningFromForR/numerical_gradient.R")
-source("./DeepLearningFromForR/utils.R")
+source("./functions.R")
+source("./numerical_gradient.R")
+source("./utils.R")
 
 # 2층 신경망에 초기값을 생성하는 함수입니다.
 # 3층 신경망이 아니기에 가중치와 편향을 2개씩만 만들고 가중치에 고정값이 아닌 랜덤값을 부여하여 만듭니다. 

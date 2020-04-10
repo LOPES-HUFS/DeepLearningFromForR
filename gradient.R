@@ -2,7 +2,7 @@
 # 이 함수 코드에 대한 설명은 https://choosunsick.github.io/post/neural_network_backward_4/ 에서 찾아보실 수 있습니다.
 # 작동에 필요한 함수는 source로 불러와 줍니다.
 
-source("./DeepLearningFromForR/functions.R")
+source("./functions.R")
 
 # 역전파 gradient 함수입니다. 
 

@@ -3,7 +3,7 @@
 # 이 스크립트는 함수만 있는 것이 아니라 함수의 작동 결과 코드도 존재합니다. 
 # 새롭게 정의하는 함수가 아닌 경우 `source()` 함수로 불러와 줍니다.
 
-source("./DeepLearningFromForR/functions.R")
+source("./functions.R")
 
 # 간단한 신경망 모델의 초기값을 생성하는 함수입니다. 
 

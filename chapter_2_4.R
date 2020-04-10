@@ -4,8 +4,8 @@
 # 기존의 sigmoid 함수와 softmax 등의 함수를 불러옵니다.
 # 3층 신경망 모델의 계산 방법을 불러옵니다. 
 
-source("./DeepLearningFromForR/functions.R")
-source("./DeepLearningFromForR/chapter_2_3.R")
+source("./functions.R")
+source("./chapter_2_3.R")
 
 # 모델의 성능을 정확도로 평가하는 함수입니다.   
 # single 함수의 경우 이미지를 1장씩 비교해 정확도를 계산합니다. 
