@@ -120,6 +120,7 @@ for(i in 1:iters_num){
 ```
 
 ### 숫자 맞추기 
+
 위 모델이 MNIST의 숫자 이미지를 사용하여 어떻게 숫자를 예측하는지 살펴 보겠습니다. 먼저 MNIST 숫자 이미지를 확인합니다.
 
 ```R
@@ -129,7 +130,8 @@ draw_image(mnist_data$x_train[2,])
 위 숫자 이미지는 0입니다. R은 1부터 표시하기 때문에 정답 레이블은 1이됩니다. 과연 이 모델은 숫자 0을 맞출 수 있을까요? 
 
 ```R
-test<-backward_loss(x_train_normalize[2,], t_train_onehotlabel[2,])
+test <- backward_loss(x_train_normalize[2,], t_train_onehotlabel[2,])
+
 SoftmaxWithLoss.forward(test$predict$x,t_train_onehotlabel[2,])$y
           [,1]         [,2]         [,3]         [,4]         [,5]         [,6]         [,7]         [,8]         [,9]
 [1,] 0.9995271 2.476334e-10 0.0004688242 7.157812e-07 4.546836e-12 1.590027e-07 4.166702e-07 2.015688e-06 3.718068e-08
