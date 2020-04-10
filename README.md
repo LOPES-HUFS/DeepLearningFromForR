@@ -6,45 +6,9 @@
 
 역전파법을 이해하기 위해서는 연쇄법칙과 계산 그래프, 그리고 순전파법에 대한 이해가 먼저 필요합니다. 이 방법들에는 미분과 행렬 계산이 주를 이루는데, 이 계산들을 쉽게 설명 드리기 위해서 R언어로 코드를 작성했습니다. R언어는 벡터와 행렬에 대한 수식을 쉽게 작성할 수 있기 때문에 설명드리기에도 이해하기에도 좀 더 수월할 것 같습니다:)
 
-순전파와 역전파, 그리고 두 방법론을 이해하기 위해 필요한 기초지식들을 살펴 보겠습니다. 그리고 손글씨 판별 인공지능을 직접 구현해보며 컴퓨터가 이미지를 어떻게 인식하는지, 손글씨 이미지를 어떻게 맞출 수 있는지 그 과정을 살펴봅니다. 전체 목차는 다음과 같습니다.
 
-1. 벡터와 행렬의 연산
+순전파와 역전파, 그리고 두 방법론을 R로 구현하기 위해 필요한 내용들을 프로젝트원 추선식이 강의형식으로 썼습니다. 해당 내용의 글들은 다음 [목차](https://choosunsick.github.io/post/contents_list/)를 참고하시면 됩니다. 
 
-    1-1. [벡터 연산](https://choosunsick.github.io/post/vector_operation/)
-    1-2. [행렬 연산](https://choosunsick.github.io/post/matrix_operation/)
-    3-3. [브로드 캐스트](https://choosunsick.github.io/post/broadcast_operation/)
-
-2. 신경망
-
-    2-1. [신경망 소개](https://choosunsick.github.io/post/neural_network_intro/)
-
-    2-2. [활성화 함수 소개](https://choosunsick.github.io/post/activation_fuctions/)
-
-    2-3. [3층 신경망 구현](https://choosunsick.github.io/post/softmax_function/)
-
-    2-4. [연습하기 : 손글씨 인식하기](https://choosunsick.github.io/post/neural_network_practice/)
-
-3. 신경망 학습과정
-
-    3-1. [신경망 학습 이론](https://choosunsick.github.io/post/neural_network_1/)
-
-    3-2. [손실함수](https://choosunsick.github.io/post/neural_network_2/)
-
-    3-3. [미니배치 학습](https://choosunsick.github.io/post/neural_network_3/)
-
-    3-4. [미분과 경사하강법](https://choosunsick.github.io/post/neural_network_4/)
-
-    3-4. [학습 알고리즘 구현](https://choosunsick.github.io/post/neural_network_5/)
-
-4. 오차역전파법
-
-    4-1. [계산 그래프와 연쇄법칙](https://choosunsick.github.io/post/neural_network_backward_1/)
-
-    4-2. [역전파 예제](https://choosunsick.github.io/post/neural_network_backward_2/)
-
-    4-3. [다양한 역전파 계층](https://choosunsick.github.io/post/neural_network_backward_3/)
-
-    4-4. [역전파 적용하기](https://choosunsick.github.io/post/neural_network_backward_4/)
 
 ## 프로젝트 맛보기!
 어떤 내용을 학습하게 될 지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요!:)
