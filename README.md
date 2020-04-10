@@ -43,7 +43,6 @@ $ library(dslabs)
 source("./functions.R")
 source("./utils.R")
 source("./gradient.R")
-library(dslabs)
 
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
   W1 <- weight_init_std*matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
@@ -56,6 +55,11 @@ TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =
 
 TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 
+```
+
+우선 필요한 함수를 불러오고 모델의 초기값을 생성해줍니다. 다음에는 학습할 데이터를 가져옵니다. 
+
+```R
 mnist_data <- get_data()
 
 x_train_normalize <- mnist_data$x_train
@@ -64,6 +68,10 @@ x_test_normalize <- mnist_data$x_test
 t_train_onehotlabel <- making_one_hot_label(mnist_data$t_train,60000,10)
 t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test,10000,10)
 
+```
+학습할 데이터를 처리해주고 나면 학습을 위한 파라미터를 설정해줍니다. 
+
+```R
 iters_num <- 10000
 train_size <- dim(x_train_normalize)[1]
 batch_size <- 100
@@ -74,7 +82,11 @@ train_acc_list <- data.frame(train_acc  =  0)
 test_acc_list <- data.frame(test_acc  =  0)
 
 iter_per_epoch <- max(train_size / batch_size)
+```
 
+다음은 학습을 실제로 진행하는 코드입니다.
+
+```R
 for(i in 1:iters_num){
   batch_mask <- sample(train_size ,batch_size)
   x_batch <- x_train_normalize[batch_mask,]
@@ -99,7 +111,9 @@ for(i in 1:iters_num){
   }
 }
 ```
-코드를 실행시키면 아래와 같이 약 96~97%의 성능의 모델을 얻을 수 있습니다.
+
+위 코드를 실행시키고 3분 정도 지나면 아래와 같은 출력화면이 나올 것입니다. 
+
 ```
 [1] 0.9012333 0.9055000
 [1] 0.9225333 0.9236000
@@ -118,6 +132,8 @@ for(i in 1:iters_num){
 [1] 0.9769 0.9677
 [1] 0.9782833 0.9691000
 ```
+
+약 96~97%의 성능의 모델을 얻을 수 있습니다. 이제 이 모델을 가지고 숫자를 예측해봅시다. 위 학습과정의 자세한 설명은 [링크](https://choosunsick.github.io/post/contents_list/)의 오차역전파법 챕터를 확인해주세요. 
 
 ### 숫자 맞추기 
 
