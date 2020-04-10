@@ -95,3 +95,9 @@ backward_loss <- function(x, t){
     return(list(loss = last_layer.forward$loss, softmax = last_layer.forward, predict =  temp))
 }
 
+model.evaluate.backward <- function(x,t){
+    y <- max.col(model.backward(x)$x)
+    t <- max.col(t)
+    accuracy <- (sum(ifelse(y == t,1,0))) / dim(x)[1]
+    return(accuracy)
+}
