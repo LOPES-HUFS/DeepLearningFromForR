@@ -1,5 +1,6 @@
 ## 손글씨 판별 인공지능 만들기
-이 프로젝트에서는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 인공지능을 만듭니다. * 프로젝트에서 소개되는 코드는 [밑바닥부터 시작하는 딥러닝](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 [이 책의 github](https://github.com/WegraLee/deep-learning-from-scratch)를 참고하여 R로 작성하였으며, 일부는 R에 맞게 일부 각색하였습니다.
+이 프로젝트에서는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 인공지능을 만듭니다. 
+   * 프로젝트에서 소개되는 코드는 [밑바닥부터 시작하는 딥러닝](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 [이 책의 github](https://github.com/WegraLee/deep-learning-from-scratch)를 참고하여 R로 작성하였으며, 일부는 R에 맞게 일부 각색하였습니다.
 
 딥러닝 분야에서 인공지능 학습을 위해 쓰이는 기초 방법론으로는 크게 순전파법과 역전파법이 있습니다.
 이 프로젝트에서는 두 가지 방법을 모두 사용하여 구현합니다. 참고로 역전파법을 사용하면 순전파 대비, 손실 함수에 대한 각 가중치의 미분값을 구하는데 필요한 계산량을 줄임으로써 학습하는 시간을 크게 단축시킵니다.
