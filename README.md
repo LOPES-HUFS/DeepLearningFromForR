@@ -4,13 +4,11 @@
 
 이 프로젝트는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 Deep Learning(이하 딥러닝)을 R로만 구현하는 것을 목표로 진행되고 있습니다. 기본적으로 한빛미디어에서 출판한 [『밑바닥부터 시작하는 딥러닝』](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 이 책의 최근 Python(이하 파이썬) 코드인 [『ゼロから作る Deep Learning』(O'Reilly Japan, 2016)](https://github.com/oreilly-japan/deep-learning-from-scratch)를 참고하여 프로젝트를 진행하고 있습니다. 기본적으로 앞의 파이썬 코드를 따라가면서 ML을 구현하고 있지만, R에 없는 파이썬의 프로그래밍의 일부 기능은 R에 맞춰서 변경하였습니다.
 
-전체 코드는 앞에도 언급했지만 [R](https://www.r-project.org)로 구현했습니다. 딥러닝을 구현하려면 행렬을 계산 할 프로그래밍이 필요한데, 이런 개념을 가장 쉽게 구현할 수 있는 언어가 R입니다. R이라는 언어를 모르시는 분들을 위해서 기초 가이드를 만들었습니다. 아래 R 기초 가이드를 참고하세요. [R 설치하기](https://choosunsick.github.io/post/r_install/)부터 차례대로 따라와 주시면 됩니다:)
+전체 코드는 앞에도 언급했지만 [R](https://www.r-project.org)로 구현했습니다. 딥러닝을 구현하려면 행렬을 계산 할 프로그래밍이 필요한데, 이런 개념을 가장 쉽게 구현할 수 있는 언어가 R입니다. R이라는 언어를 모르시는 분들을 위해서 기초 가이드를 만들었습니다. 아래 R 기초 가이드를 참고하세요. [R 설치하기](https://choosunsick.github.io/post/r_install/)부터 차례대로 따라와 주시면 됩니다 :) 한 번씩 읽으시면 이 프로젝트를 이해하는데 많은 도움이 됩니다. 만약 R이 처음이 아니라면 아래 링크를 쭉 보시면서 따라오시면 기본적인 지식을 습득하실 수 있습니다.
 
 1. [R 설치하기](https://choosunsick.github.io/post/r_install/)
 2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
 3. [대표 문법 살펴보기](https://choosunsick.github.io/post/r_programming_grammar/)
-
-한 번씩 읽으시면 이 프로젝트를 이해하는데 많은 도움이 됩니다. 만약 R이 처음이 아니라면 아래 링크를 쭉 보시면서 따라오시면 기본적인 지식을 습득하실 수 있어요.
 
 ## 프로젝트 맛보기!
 
