@@ -10,6 +10,8 @@
 2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
 3. [대표 문법 살펴보기](https://choosunsick.github.io/post/r_programming_grammar/)
 
+[LOPES](http://www.lopes.co.kr)에서 이 프로젝트를 하게 된 이유는 딥러닝을 기초부터 공부하는 도중, 딥러닝을 R로 만들면 R 프로그래밍도 늘릴 수 있고, 딥러닝도 잘 이해할 수 있을 것 같아서 출발학 되었습니다. 그래서 R로 딥러닝를 구현하는 글도 쓰고 있습니다. 아래 강좌를 참고하세요
+
 ## 프로젝트 맛보기!
 
 어떤 내용을 학습하게 될지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요!:) 프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트의 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
