@@ -2,32 +2,30 @@
 
 ## 프로젝트의 목표
 
-이 프로젝트는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 ML을 R로 구현하는 것을 목표로 진행되고 있습니다. 기본적으로 한빛미디어에서 출판한 [밑바닥부터 시작하는 딥러닝](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 이 책의 최근 Python(이하 파이썬) 코드인 [『ゼロから作る Deep Learning』(O'Reilly Japan, 2016)](https://github.com/WegraLee/deep-learning-from-scratch)를 참고하여 프로젝트를 진행하고 있습니다. 기본적으로 앞의 파이썬 코드를 따라가면서 ML을 구현하고 있지만, R에 없는 파이썬의 프로그래밍의 일부 기능은 R에 맞춰서 변경하였습니다.
+이 프로젝트는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 Deep Learning을 R로만 구현하는 것을 목표로 진행되고 있습니다. 기본적으로 한빛미디어에서 출판한 [밑바닥부터 시작하는 딥러닝](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 이 책의 최근 Python(이하 파이썬) 코드인 [『ゼロから作る Deep Learning』(O'Reilly Japan, 2016)](https://github.com/WegraLee/deep-learning-from-scratch)를 참고하여 프로젝트를 진행하고 있습니다. 기본적으로 앞의 파이썬 코드를 따라가면서 ML을 구현하고 있지만, R에 없는 파이썬의 프로그래밍의 일부 기능은 R에 맞춰서 변경하였습니다.
 
 ## 프로젝트 맛보기!
-어떤 내용을 학습하게 될지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요!:)
-프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트의 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
+
+어떤 내용을 학습하게 될지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요!:) 프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트의 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
 
 ```
 $ git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
 ```
 
-코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다.
-R 에디터를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요.
-<PATH> 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 됩니다.
+코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다. R를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요. <PATH> 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 됩니다.
 
 ```
 $ setwd('<PATH>/DeepLearningFromForR')
 ```
-다음으로 사용할 MNIST 데이터를 위해 라이브러리를 설치합니다. 이 라이브러리에 대한 자세한 내용은 [다음링크](https://choosunsick.github.io/post/mnist/)를 참조하시면 좋습니다. 
+
+다음으로 이 프로젝트에서 사용할 MNIST 데이터를 R 패키지 기능을 사용해서 아래 코드를 입력하여 설치합니다. 설치에 대한 자세한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)를 참조하시면 좋습니다.
 
 ```
 $ install.packages("dslabs")
 $ library(dslabs)
 ```
 
-여기까지 진행하시면 기초 설정은 다 끝났습니다. 아래의 코드를 직접 입력해 보며 결과를 확인할 수 있을 것입니다.
-이해는 잠시 뒤로한 채 가볍게 읽어 주세요.
+여기까지 진행하시면 기초 설정은 다 끝났습니다. 아래의 코드를 직접 입력해 보며 결과를 확인할 수 있을 것입니다. 이해는 잠시 뒤로한 채 가볍게 읽어 주세요.
 
 ### 데이터 학습하기 
 
