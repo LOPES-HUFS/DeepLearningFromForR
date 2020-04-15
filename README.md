@@ -2,7 +2,7 @@
 
 ## 프로젝트의 목표
 
-이 프로젝트는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 Deep Learning을 R로만 구현하는 것을 목표로 진행되고 있습니다. 기본적으로 한빛미디어에서 출판한 [『밑바닥부터 시작하는 딥러닝』](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 이 책의 최근 Python(이하 파이썬) 코드인 [『ゼロから作る Deep Learning』(O'Reilly Japan, 2016)](https://github.com/WegraLee/deep-learning-from-scratch)를 참고하여 프로젝트를 진행하고 있습니다. 기본적으로 앞의 파이썬 코드를 따라가면서 ML을 구현하고 있지만, R에 없는 파이썬의 프로그래밍의 일부 기능은 R에 맞춰서 변경하였습니다.
+이 프로젝트는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 Deep Learning을 R로만 구현하는 것을 목표로 진행되고 있습니다. 기본적으로 한빛미디어에서 출판한 [『밑바닥부터 시작하는 딥러닝』](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 이 책의 최근 Python(이하 파이썬) 코드인 [『ゼロから作る Deep Learning』(O'Reilly Japan, 2016)](https://github.com/oreilly-japan/deep-learning-from-scratch)를 참고하여 프로젝트를 진행하고 있습니다. 기본적으로 앞의 파이썬 코드를 따라가면서 ML을 구현하고 있지만, R에 없는 파이썬의 프로그래밍의 일부 기능은 R에 맞춰서 변경하였습니다.
 
 ## 프로젝트 맛보기!
 
