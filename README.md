@@ -10,28 +10,7 @@
 2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
 3. [대표 문법 살펴보기](https://choosunsick.github.io/post/r_programming_grammar/)
 
-[LOPES](http://www.lopes.co.kr)팀에서 이 프로젝트를 하게 된 이유는 딥러닝을 기초부터 공부하는 도중, 딥러닝을 R로 만들면 R 프로그래밍도 늘릴 수 있고, 딥러닝도 잘 이해할 수 있을 것 같아서 출발하게 되었습니다. 교육 목적으로 시작한 프로젝트이기 때문에 R로 딥러닝를 구현하는 강좌도 프로젝트를 진행하면서 쓰고 있습니다. 팀원인 @choosunsick 이 지금까지 진행된 프로젝트 내용을 정리하고 글로 쓰고 있습니다. 아래 강좌를 참고하세요.
-
-1. 벡터와 행렬의 연산
-   1. [벡터 연산](https://choosunsick.github.io/post/vector_operation/)
-   2. [행렬 연산](https://choosunsick.github.io/post/matrix_operation/)
-   3. [브로드 캐스트](https://choosunsick.github.io/post/broadcast_operation/)
-2. 신경망
-   1. [신경망 소개](https://choosunsick.github.io/post/neural_network_intro/)
-   2. [활성화 함수 소개](https://choosunsick.github.io/post/activation_fuctions/)
-   3. [3층 신경망 구현](https://choosunsick.github.io/post/softmax_function/)
-   4. [신경망 연습 - 손글씨 인식하기](https://choosunsick.github.io/post/neural_network_practice/)  
-3. 신경망 학습과정
-   1. [신경망 학습이론](https://choosunsick.github.io/post/neural_network_1/)
-   2. [손실함수](https://choosunsick.github.io/post/neural_network_2/)
-   3. [미니배치 학습](https://choosunsick.github.io/post/neural_network_3/)
-   4. [미분과 경사하강법](https://choosunsick.github.io/post/neural_network_4/)
-   5. [학습알고리즘 구현](https://choosunsick.github.io/post/neural_network_5/)
-4. 오차역전파법
-   1. [계산그래프와 연쇄법칙](https://choosunsick.github.io/post/neural_network_backward_1/)
-   2. [역전파 예제](https://choosunsick.github.io/post/neural_network_backward_2/)
-   3. [다양한 역전파 계층](https://choosunsick.github.io/post/neural_network_backward_3/)
-   4. [역전파 적용하기](https://choosunsick.github.io/post/neural_network_backward_4/)
+[LOPES](http://www.lopes.co.kr)팀에서 이 프로젝트를 하게 된 이유는 딥러닝을 기초부터 공부하는 도중, 딥러닝을 R로 만들면 R 프로그래밍도 늘릴 수 있고, 딥러닝도 잘 이해할 수 있을 것 같아서 출발하게 되었습니다. 교육 목적으로 시작한 프로젝트이기 때문에 R로 딥러닝를 구현하는 강좌도 프로젝트를 진행하면서 쓰고 있습니다.
 
 ## 프로젝트 맛보기
 
@@ -41,7 +20,7 @@
 git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
 ```
 
-코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다. R를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요. <PATH> 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 됩니다.
+코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다. R를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요. `<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 됩니다.
 
 ```R
 setwd('<PATH>/DeepLearningFromForR')
@@ -263,6 +242,32 @@ model.evaluate(x, t)
 <img src="./images/chapter5_accuracy_result.png" width="200px">
 
 여기서 결과값은 0.92로 인공지능이 숫자를 맞출 확률이 92%임을 의미합니다. 학습을 더 많이 반복하거나 학습법을 개선한다면 무려 99%까지도 가능합니다! 프로젝트를 통해 정확도를 99%까지 올리는 것도 같이 확인해 보겠습니다.
+
+## 손으로 쓴 숫자 이미지를 판별하는 딥러닝을 R로만 구현하는 방법 소개
+
+앞에서도 언급했지만, 이 프로젝트는 이 프로젝트를 같이 진행 중인 [choosunsick](https://github.com/choosunsick)이 지금까지 진행된 프로젝트 내용을 정리하고 글로 쓰고 있습니다. 아래 링크를 쭉 살펴보시면, 어떻게 구현하고 있는지 아실 수 있습니다.
+
+1. 벡터와 행렬의 연산
+   1. [벡터 연산](https://choosunsick.github.io/post/vector_operation/)
+   2. [행렬 연산](https://choosunsick.github.io/post/matrix_operation/)
+   3. [브로드 캐스트](https://choosunsick.github.io/post/broadcast_operation/)
+2. 신경망
+   1. [신경망 소개](https://choosunsick.github.io/post/neural_network_intro/)
+   2. [활성화 함수 소개](https://choosunsick.github.io/post/activation_fuctions/)
+   3. [3층 신경망 구현](https://choosunsick.github.io/post/softmax_function/)
+   4. [신경망 연습 - 손글씨 인식하기](https://choosunsick.github.io/post/neural_network_practice/)  
+3. 신경망 학습과정
+   1. [신경망 학습이론](https://choosunsick.github.io/post/neural_network_1/)
+   2. [손실함수](https://choosunsick.github.io/post/neural_network_2/)
+   3. [미니배치 학습](https://choosunsick.github.io/post/neural_network_3/)
+   4. [미분과 경사하강법](https://choosunsick.github.io/post/neural_network_4/)
+   5. [학습알고리즘 구현](https://choosunsick.github.io/post/neural_network_5/)
+4. 오차역전파법
+   1. [계산그래프와 연쇄법칙](https://choosunsick.github.io/post/neural_network_backward_1/)
+   2. [역전파 예제](https://choosunsick.github.io/post/neural_network_backward_2/)
+   3. [다양한 역전파 계층](https://choosunsick.github.io/post/neural_network_backward_3/)
+   4. [역전파 적용하기](https://choosunsick.github.io/post/neural_network_backward_4/)
+
 
 ## R 초심자를 위한 R 설치방법과 기초 사용방법
 
