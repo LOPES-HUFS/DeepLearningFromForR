@@ -12,6 +12,27 @@
 
 [LOPES](http://www.lopes.co.kr)팀에서 이 프로젝트를 하게 된 이유는 딥러닝을 기초부터 공부하는 도중, 딥러닝을 R로 만들면 R 프로그래밍도 늘릴 수 있고, 딥러닝도 잘 이해할 수 있을 것 같아서 출발하게 되었습니다. 교육 목적으로 시작한 프로젝트이기 때문에 R로 딥러닝를 구현하는 강좌도 프로젝트를 진행하면서 쓰고 있습니다. 팀원인 @choosunsick 이 지금까지 진행된 프로젝트 내용을 정리하고 글로 쓰고 있습니다. 아래 강좌를 참고하세요.
 
+1. 벡터와 행렬의 연산
+   1. [벡터 연산](https://choosunsick.github.io/post/vector_operation/)
+   2. [행렬 연산](https://choosunsick.github.io/post/matrix_operation/)
+   3. [브로드 캐스트](https://choosunsick.github.io/post/broadcast_operation/)
+2. 신경망
+   1. [신경망 소개](https://choosunsick.github.io/post/neural_network_intro/)
+   2. [활성화 함수 소개](https://choosunsick.github.io/post/activation_fuctions/)
+   3. [3층 신경망 구현](https://choosunsick.github.io/post/softmax_function/)
+   4. [신경망 연습 - 손글씨 인식하기](https://choosunsick.github.io/post/neural_network_practice/)  
+3. 신경망 학습과정
+   1. [신경망 학습이론](https://choosunsick.github.io/post/neural_network_1/)
+   2. [손실함수](https://choosunsick.github.io/post/neural_network_2/)
+   3. [미니배치 학습](https://choosunsick.github.io/post/neural_network_3/)
+   4. [미분과 경사하강법](https://choosunsick.github.io/post/neural_network_4/)
+   5. [학습알고리즘 구현](https://choosunsick.github.io/post/neural_network_5/)
+4. 오차역전파법
+   1. [계산그래프와 연쇄법칙](https://choosunsick.github.io/post/neural_network_backward_1/)
+   2. [역전파 예제](https://choosunsick.github.io/post/neural_network_backward_2/)
+   3. [다양한 역전파 계층](https://choosunsick.github.io/post/neural_network_backward_3/)
+   4. [역전파 적용하기](https://choosunsick.github.io/post/neural_network_backward_4/)
+
 ## 프로젝트 맛보기
 
 어떤 내용을 학습하게 될지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요!:) 프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트의 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
