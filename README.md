@@ -187,6 +187,8 @@ draw_image(x_train[2,])
 print(x_train[1,])
 ```
 
+![chapter5 image_to_matrix](./images/chapter5_image_to_matrix.png)
+
 <img src="./images/chapter5_image_to_matrix.png" width="400px">
 
 인공지능은 이 행렬을 보고 어떤 숫자인지 예측합니다. 그리고 나서 예측한 값이 맞았는지, 틀렸는지 확인합니다. 인공지능은 이 과정을 반복하면서 자신의 인지 능력을 개선해 나가는데, 우리는 이를 학습한다고 표현합니다.
@@ -266,7 +268,7 @@ model.evaluate(x, t)
 
 ## R 초심자를 위한 R 설치방법과 기초 사용방법
 
-R이 처음이신 분들을 위한 가이드를 작성해 보았습니다. R 설치하기부터 차례대로 따라와 주시면 됩니다 :)
+R이 처음이신 분들을 위한 가이드를 작성해 보았습니다. R 설치하기부터 차례대로 따라와 주시면 됩니다:)
 
 1. [R 설치하기](https://choosunsick.github.io/post/r_install/)
 2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
