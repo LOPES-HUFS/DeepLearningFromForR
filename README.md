@@ -266,7 +266,7 @@ model.evaluate(x, t)
 
 ## R 초심자를 위한 R 설치방법과 기초 사용방법
 
-R이 처음이신 분들을 위한 가이드를 작성해 보았습니다. R 설치하기부터 차례대로 따라와 주시면 됩니다:)
+R이 처음이신 분들을 위한 가이드를 작성해 보았습니다. R 설치하기부터 차례대로 따라와 주시면 됩니다 :)
 
 1. [R 설치하기](https://choosunsick.github.io/post/r_install/)
 2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
