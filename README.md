@@ -33,7 +33,7 @@ library(dslabs)
 
 ### 데이터 학습하기
 
-이제 모델에 손글씨 데이터를 학습시켜 봅시다. 여기서는 역전파를 이용하여 학습을 해보겠습니다. 자세한 내용에 대해서는 [오차역전파법을 적용하기](https://choosunsick.github.io/post/neural_network_backward_4/)를 참조해주시기 바랍니다. 다른 학습 방법은 [다양한 학습 방법](https://github.com/LOPES-HUFS/DeepLearningFromForR#다양한-학습-방법)을 참고하세요.
+이제 모델에 손글씨 데이터를 학습시켜 봅시다. 여기서는 역전파를 이용하여 학습 해보겠습니다. 자세한 내용에 대해서는 [오차역전파법을 적용하기](https://choosunsick.github.io/post/neural_network_backward_4/)를 참조해주시기 바랍니다. 다른 학습 방법은 [다양한 학습 방법](https://github.com/LOPES-HUFS/DeepLearningFromForR#다양한-학습-방법)을 참고하세요.
 
 ```R
 source("./functions.R")
