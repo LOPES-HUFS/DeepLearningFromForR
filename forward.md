@@ -2,18 +2,24 @@
 
 ## 학습하기
 
+학습에 필요한 데이터를 불러오는데 필요한 패키지를 설치해 줍니다.
+
 ```
 install.packages("dslabs")
 library(dslabs)
 ```
 
-데이터를 불러오는데 필요한 패키지를 설치해 줍니다.
+순전파를 학습하는데 필요한 함수들을 불러와 줍니다.  
 
 ```
 source("./functions.R")
 source("./utils.R")
 source("./numerical_gradient.R")
+```
 
+초기값을 만들어 줍니다.
+
+```
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std = 0.01) {
   W1 <<- weight_init_std*matrix(rnorm(n = input_size*hidden_size), nrow = input_size, ncol = hidden_size)
   b1 <<- matrix(rep(0, hidden_size), nrow=1,ncol=hidden_size)
@@ -23,10 +29,11 @@ TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std = 
 }
 
 TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
+
+str(W1)
+dim(W1)
 ```
-
-먼저 필요한 소스코드를 불러오고 초기값을 만들어 줍니다. 그 다음에는 학습할 데이터를 읽어옵니다.
-
+그 다음에는 학습할 데이터를 읽어옵니다.
 ```
 mnist_data <- get_data()
 
@@ -36,7 +43,7 @@ x_test_normalize <- mnist_data$x_test
 t_train_onehotlabel <- making_one_hot_label(mnist_data$t_train, 60000,10)
 t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test, 10000,10)
 ```
-
+함수를 통해 데이터를 불러옵니다. 
 학습할 데이터를 처리한 이후 학습에 필요한 파라미터를 설정해줍니다.
 
 ```
@@ -69,6 +76,9 @@ for(i in 1:iters_num){
 
 ##모델평가
 
+모델의 손실 함수 값과 정확도를 확인해 봅시다.
+
 ```
+train_loss_list
 model.evaluate(x_test_normalize,t_test_onehotlabel)
 ```
