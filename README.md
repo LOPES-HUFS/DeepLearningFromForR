@@ -41,16 +41,15 @@ source("./utils.R")
 source("./gradient.R")
 
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
-  W1 <- weight_init_std*matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
-  b1 <- matrix(rep(0,hidden_size),nrow = 1,ncol = hidden_size)
-  W2 <- weight_init_std*matrix(rnorm(n  =  hidden_size*output_size), nrow  =  hidden_size, ncol  =  output_size)
-  b2 <- matrix(rep(0,output_size),nrow = 1,ncol = output_size)
+  W1 <- weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
+  b1 <- matrix(rep(0,hidden_size), nrow = 1, ncol = hidden_size)
+  W2 <- weight_init_std * matrix(rnorm(n  =  hidden_size*output_size), nrow  =  hidden_size, ncol  =  output_size)
+  b2 <- matrix(rep(0,output_size),nrow = 1, ncol = output_size)
   params <<- list(W1 = W1, b1 = b1, W2 = W2, b2 = b2)
-  return(list(input_size, hidden_size, output_size,weight_init_std))
+  return(list(input_size, hidden_size, output_size, weight_init_std))
 }
 
 TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
-
 ```
 
 우선 필요한 함수를 불러오고 모델의 초기값을 생성해줍니다. 다음에는 학습할 데이터를 가져옵니다.
@@ -61,8 +60,8 @@ mnist_data <- get_data()
 x_train_normalize <- mnist_data$x_train
 x_test_normalize <- mnist_data$x_test
 
-t_train_onehotlabel <- making_one_hot_label(mnist_data$t_train,60000,10)
-t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test,10000,10)
+t_train_onehotlabel <- making_one_hot_label(mnist_data$t_train,60000, 10)
+t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test,10000, 10)
 ```
 
 학습할 데이터를 처리해주고 나면 학습을 위한 파라미터를 설정해줍니다.
@@ -96,13 +95,13 @@ for(i in 1:iters_num){
   params$b2 <- params$b2 - (grad$b2 * learning_rate)
   
   loss_value <- backward_loss(x_batch, t_batch)$loss
-  train_loss_list <- rbind(train_loss_list,loss_value)
+  train_loss_list <- rbind(train_loss_list, loss_value)
   
   if(i %% iter_per_epoch == 0){
     train_acc <- model.evaluate.backward(x_train_normalize, t_train_onehotlabel)
     test_acc <- model.evaluate.backward(x_test_normalize, t_test_onehotlabel)
-    train_acc_list <- rbind(train_acc_list,train_acc)
-    test_acc_list <- rbind(test_acc_list,test_acc)
+    train_acc_list <- rbind(train_acc_list, train_acc)
+    test_acc_list <- rbind(test_acc_list, test_acc)
     print(c(train_acc, test_acc))
   }
 }
