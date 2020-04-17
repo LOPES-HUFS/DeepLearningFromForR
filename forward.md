@@ -54,7 +54,7 @@ for(i in 1:iters_num){
   batch_mask <- sample(train_size,batch_size)
   x <- x_train_normalize[batch_mask,]
   t <- t_train_onehotlabel[batch_mask,]
-  grads <- numerical_gradient(loss,x,t)
+  grads <- numerical_gradient(loss, x, t)
   W1 <- W1 - (grads$W1 * learning_rate)
   W2 <- W2 - (grads$W2 * learning_rate)
   b1 <- b1 - (grads$b1 * learning_rate)
