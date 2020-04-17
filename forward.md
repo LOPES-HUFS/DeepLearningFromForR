@@ -67,7 +67,7 @@ for(i in 1:iters_num){
 }
 ```
 
-모델을 100번 학습하는데 걸리는 시간은 3시간정도 소요가 됩니다. 참고로 [『ゼロから作る Deep Learning』(O'Reilly Japan, 2016)](https://github.com/oreilly-japan/deep-learning-from-scratch) 142 쪽의 코드를 반복횟수 100번으로 설정하여 실행시키면 약 5300초가 걸립니다. 결과는 다음과 같습니다.
+모델을 100번 학습하는데 걸리는 시간은 3시간정도 소요가 됩니다. 참고로 [『ゼロから作る Deep Learning』(O'Reilly Japan, 2016)](https://github.com/oreilly-japan/deep-learning-from-scratch) 142 쪽의 코드를 반복횟수 100번으로 설정하여 실행시키면 약 5300초가 걸립니다. 
 
 ## 모델평가
 
