@@ -181,6 +181,7 @@ draw_image(x_train[2,])
 
 <img src="./images/chapter5_mnist_image.png" width="200px">
 
+
 위 숫자 이미지는 7입니다. MNIST에는 이런 이미지가 7만개 있습니다. 우리는 이 이미지를 보고 7이라는 것을 바로 알지만, 인공지능은 학습이 필요합니다. 인공지능을 학습할 때에는 이미지를 행렬로 변환하여 학습시킵니다. 변환된 행렬은 다음과 같습니다.
 
 ```R
@@ -188,8 +189,6 @@ print(x_train[1,])
 ```
 
 ![chapter5 image_to_matrix](./images/chapter5_image_to_matrix.png)
-
-<img src="./images/chapter5_image_to_matrix.png" width="400px">
 
 인공지능은 이 행렬을 보고 어떤 숫자인지 예측합니다. 그리고 나서 예측한 값이 맞았는지, 틀렸는지 확인합니다. 인공지능은 이 과정을 반복하면서 자신의 인지 능력을 개선해 나가는데, 우리는 이를 학습한다고 표현합니다.
 이미지에 대한 예측값은 아래와 같습니다.
