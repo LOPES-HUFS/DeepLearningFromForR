@@ -2,7 +2,7 @@
 
 ## 데이터 학습
 
-```
+```R
 install.packages("dslabs")
 library(dslabs)
 ```
