@@ -33,7 +33,7 @@ library(dslabs)
 
 ### 데이터 학습하기
 
-이제 모델에 손글씨 데이터를 학습시켜 봅시다. 역전파 딥러닝 모델을 학습 시키는 자세한 내용에 대해서는 [링크](https://choosunsick.github.io/post/neural_network_backward_4/)를 참조해주시기 바랍니다.
+이제 모델에 손글씨 데이터를 학습시켜 봅시다. 여기서는 역전파를 이용하여 학습을 해보겠습니다. 자세한 내용에 대해서는 [오차역전파법을 적용하기](https://choosunsick.github.io/post/neural_network_backward_4/)를 참조해주시기 바랍니다. 다른 학습 방법은 [다양한 학습 방법](https://github.com/LOPES-HUFS/DeepLearningFromForR#데이터-학습하기)을 참고하세요.
 
 ```R
 source("./functions.R")
@@ -152,6 +152,12 @@ model.evaluate.backward(x_test_normalize,t_test_onehotlabel)
 ```
 
 여기서 결과값은 0.9698로 인공지능이 숫자를 맞출 확률이 약 97%임을 의미합니다. 학습을 더 많이 반복하거나 합성곱과 같은 방법을 사용한다면 정확독 무려 99%까지도 가능합니다! 차후 프로젝트를 진행해 나가면서 정확도를 99%까지 올리는 것도 같이 확인해 보겠습니다.
+
+## 다양한 학습 방법
+
+네트웍을 학습하는 방법은 다음과 같습니다.
+
+1. [순전파를 이용한 학습 방법](https://github.com/LOPES-HUFS/DeepLearningFromForR/blob/master/forward.md)
 
 ## 손으로 쓴 숫자 이미지를 판별하는 딥러닝을 R로만 구현하는 방법 소개
 
