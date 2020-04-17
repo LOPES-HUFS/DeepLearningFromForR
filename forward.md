@@ -64,7 +64,7 @@ for(i in 1:iters_num){
 
 ```
 
-모델을 100번 학습하는데 걸리는 시간은 15분정도 소요가 됩니다. 결과는 다음과 같습니다.
+모델을 100번 학습하는데 걸리는 시간은 3시간정도 소요가 됩니다. 결과는 다음과 같습니다.
 
 ```
 model.evaluate(x_test_normalize,t_test_onehotlabel)
