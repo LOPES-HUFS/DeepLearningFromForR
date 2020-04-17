@@ -41,16 +41,15 @@ source("./utils.R")
 source("./gradient.R")
 
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
-  W1 <- weight_init_std*matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
-  b1 <- matrix(rep(0,hidden_size),nrow = 1,ncol = hidden_size)
-  W2 <- weight_init_std*matrix(rnorm(n  =  hidden_size*output_size), nrow  =  hidden_size, ncol  =  output_size)
-  b2 <- matrix(rep(0,output_size),nrow = 1,ncol = output_size)
+  W1 <- weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
+  b1 <- matrix(rep(0,hidden_size), nrow = 1, ncol = hidden_size)
+  W2 <- weight_init_std * matrix(rnorm(n  =  hidden_size*output_size), nrow  =  hidden_size, ncol  =  output_size)
+  b2 <- matrix(rep(0,output_size),nrow = 1, ncol = output_size)
   params <<- list(W1 = W1, b1 = b1, W2 = W2, b2 = b2)
-  return(list(input_size, hidden_size, output_size,weight_init_std))
+  return(list(input_size, hidden_size, output_size, weight_init_std))
 }
 
 TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
-
 ```
 
 우선 필요한 함수를 불러오고 모델의 초기값을 생성해줍니다. 다음에는 학습할 데이터를 가져옵니다.
@@ -61,8 +60,8 @@ mnist_data <- get_data()
 x_train_normalize <- mnist_data$x_train
 x_test_normalize <- mnist_data$x_test
 
-t_train_onehotlabel <- making_one_hot_label(mnist_data$t_train,60000,10)
-t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test,10000,10)
+t_train_onehotlabel <- making_one_hot_label(mnist_data$t_train,60000, 10)
+t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test,10000, 10)
 ```
 
 학습할 데이터를 처리해주고 나면 학습을 위한 파라미터를 설정해줍니다.
@@ -96,19 +95,19 @@ for(i in 1:iters_num){
   params$b2 <- params$b2 - (grad$b2 * learning_rate)
   
   loss_value <- backward_loss(x_batch, t_batch)$loss
-  train_loss_list <- rbind(train_loss_list,loss_value)
+  train_loss_list <- rbind(train_loss_list, loss_value)
   
   if(i %% iter_per_epoch == 0){
     train_acc <- model.evaluate.backward(x_train_normalize, t_train_onehotlabel)
     test_acc <- model.evaluate.backward(x_test_normalize, t_test_onehotlabel)
-    train_acc_list <- rbind(train_acc_list,train_acc)
-    test_acc_list <- rbind(test_acc_list,test_acc)
+    train_acc_list <- rbind(train_acc_list, train_acc)
+    test_acc_list <- rbind(test_acc_list, test_acc)
     print(c(train_acc, test_acc))
   }
 }
 ```
 
-위 코드를 실행시키고 3분 정도 지나면 아래와 같은 출력화면이 나올 것입니다.
+위 코드를 실행시키고 3분 정도 지나면 아래와 같은 출력화면이 나올 것입니다. 참고로 행의 첫 번째 숫자는 훈련데이터 셋의 예측값이고 행의 두 번째에 나오는 숫자는 테스트 셋에 대한 예측 값입니다. 하나의 행은 1에폭을 의미합니다. 아래의 출력 값들은 초기 값의 랜덤값으로 인해 다른 숫자가 나올 수 있습니다.
 
 ```R
 [1] 0.9012333 0.9055000
@@ -129,7 +128,7 @@ for(i in 1:iters_num){
 [1] 0.9782833 0.9691000
 ```
 
-약 96~97%의 성능의 모델을 얻을 수 있습니다. 이제 이 모델을 가지고 숫자를 예측해봅시다. 위 학습과정의 자세한 설명은 [링크](https://choosunsick.github.io/post/contents_list/)의 오차역전파법 글을 확인해주세요.
+약 97%의 성능의 모델을 얻을 수 있습니다. 이제 이 모델을 가지고 숫자를 예측해봅시다. 위 학습과정의 자세한 설명은 [링크](https://choosunsick.github.io/post/contents_list/)의 오차역전파법 글을 확인해주세요.
 
 ### 숫자 맞추기
 
@@ -138,19 +137,9 @@ for(i in 1:iters_num){
 ```R
 draw_image(mnist_data$x_train[2,])
 ```
+![숫자0](https://user-images.githubusercontent.com/19144813/79545694-13144280-80cc-11ea-8a9a-69c71ad298ed.png)
 
 위 숫자 이미지는 0입니다. R은 1부터 표시하기 때문에 정답 레이블은 1이됩니다. 과연 이 모델은 숫자 0을 맞출 수 있을까요?
-
-```R
-predict.backward(x_train_normalize[2,])
-
-          [,1]         [,2]         [,3]         [,4]         [,5]         [,6]         [,7]         [,8]         [,9]
-[1,] 0.9995271 2.476334e-10 0.0004688242 7.157812e-07 4.546836e-12 1.590027e-07 4.166702e-07 2.015688e-06 3.718068e-08
-            [,10]
-[1,] 7.639079e-07
-```
-
-위 값이 숫자를 예측한 값입니다. 순서대로 0부터 9까지 해당 숫자가 정답일 확률을 의미합니다. 보시다싶이 모델의 예측은 정답 레이블 1에 대해서 약99% 확률을 보여줍니다.  다시 말해,0.9995271은 이미지 숫자가 0일 확률이 99.9%임을 의미합니다. 그외 숫자들에 대해서는 너무도 작은 확률이기에 모델은 정답을 맞춘것입니다.
 
 ### 전체 테스트 셋 추론하기
 
@@ -162,84 +151,6 @@ model.evaluate.backward(x_test_normalize,t_test_onehotlabel)
 ```
 
 여기서 결과값은 0.9698로 인공지능이 숫자를 맞출 확률이 약 97%임을 의미합니다. 학습을 더 많이 반복하거나 합성곱과 같은 방법을 사용한다면 정확독 무려 99%까지도 가능합니다! 차후 프로젝트를 진행해 나가면서 정확도를 99%까지 올리는 것도 같이 확인해 보겠습니다.
-
-### 숫자 맞추기
-
-앞서 설명드린 MNIST의 숫자 이미지를 사용하여 어떻게 숫자를 예측하는지 살펴 보겠습니다. 먼저 MNIST 숫자 이미지를 확인합니다.
-
-```R
-library(dslabs)
-mnist <- read_mnist()
-x_train <- mnist$train$images
-
-draw_image <- function(x){
-    return(image(1:28, 1:28, matrix(x, nrow=28)[ , 28:1], col = gray(seq(0, 1, 0.05)), xlab="", ylab=""))
-    }
-
-draw_image(x_train[2,])
-```
-
-<img src="./images/chapter5_mnist_image.png" width="200px">
-
-위 숫자 이미지는 7입니다. MNIST에는 이런 이미지가 7만개 있습니다. 우리는 이 이미지를 보고 7이라는 것을 바로 알지만, 인공지능은 학습이 필요합니다. 인공지능을 학습할 때에는 이미지를 행렬로 변환하여 학습시킵니다. 변환된 행렬은 다음과 같습니다.
-
-```R
-print(x_train[1,])
-```
-
-![chapter5 image_to_matrix](./images/chapter5_image_to_matrix.png)
-
-<img src="./images/chapter5_image_to_matrix.png" width="400px">
-
-인공지능은 이 행렬을 보고 어떤 숫자인지 예측합니다. 그리고 나서 예측한 값이 맞았는지, 틀렸는지 확인합니다. 인공지능은 이 과정을 반복하면서 자신의 인지 능력을 개선해 나가는데, 우리는 이를 학습한다고 표현합니다.
-이미지에 대한 예측값은 아래와 같습니다.
-
-```R
-library(dslabs)
-
-mnist <- read_mnist()
-x_train <- mnist$train$images
-x_train_normalize <- x_train/255
-x <- x_train_normalize[1,]
-
-W <- 0.01*matrix(rnorm(n = 784*10), nrow = 784, ncol = 10)
-
-predict <- function(x){
-        return(x %*% W)
-    }
-
-predict(x)
-```
-
-<img src="./images/chapter5_predict_result.png" width="800px">
-
-위 값이 숫자를 예측한 값입니다. 순서대로 0부터 9까지 해당 숫자가 정답일 확률을 의미합니다. 다시 말해,
-0.1097523은 이미지 숫자가 0일 확률이 10.9%임을 의미하며 0.02893408는 숫자 1일 확률을 의미힙니다. 이 중 가장 높은 확률을 인공지능이 예측한 값으로 봅니다. 여기서 가장 큰 값은 0.294425이므로 7이라고 예측했음을 알 수 있습니다.
-
-### 전체 테스트 셋 추론하기
-
-실제 프로젝트에서는 이미지 7만개를 사용합니다. 학습을 얼마나 잘했냐에 따라 인공지능의 예측률이 달라지는데, 아래는 저희가 학습시킨 인공지능의 예측률입니다.
-
-```R
-source('./sample/chapter5_sample.R')
-
-x_test <- mnist$test$images
-t_test <- mnist$test$labels
-
-x_test_normalize <- x_test/255
-t_test_onehotlabel <- making_one_hot_label(t_test,10000,10)
-
-batch_mask <- sample(10000,100)
-
-x <- x_test_normalize[batch_mask,]
-t <- t_test_onehotlabel[batch_mask,]
-
-model.evaluate(x, t)
-```
-
-<img src="./images/chapter5_accuracy_result.png" width="200px">
-
-여기서 결과값은 0.92로 인공지능이 숫자를 맞출 확률이 92%임을 의미합니다. 학습을 더 많이 반복하거나 학습법을 개선한다면 무려 99%까지도 가능합니다! 프로젝트를 통해 정확도를 99%까지 올리는 것도 같이 확인해 보겠습니다.
 
 ## 손으로 쓴 숫자 이미지를 판별하는 딥러닝을 R로만 구현하는 방법 소개
 
