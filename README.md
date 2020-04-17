@@ -137,7 +137,7 @@ for(i in 1:iters_num){
 ```R
 draw_image(mnist_data$x_train[2,])
 ```
-https://user-images.githubusercontent.com/19144813/79545694-13144280-80cc-11ea-8a9a-69c71ad298ed.png
+![숫자0](https://user-images.githubusercontent.com/19144813/79545694-13144280-80cc-11ea-8a9a-69c71ad298ed.png)
 
 위 숫자 이미지는 0입니다. R은 1부터 표시하기 때문에 정답 레이블은 1이됩니다. 과연 이 모델은 숫자 0을 맞출 수 있을까요?
 
