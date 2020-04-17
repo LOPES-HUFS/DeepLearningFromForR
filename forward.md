@@ -2,18 +2,24 @@
 
 ## 학습하기
 
+우선 학습에 필요한 MNIST 데이터를 불러오는데 필요한 패키지를 설치합니다.
+
 ```R
 install.packages("dslabs")
 library(dslabs)
 ```
 
-데이터를 불러오는데 필요한 패키지를 설치해 줍니다.
+학습에 필요한 함수나 코드를 불어옵니다.
 
 ```R
 source("./functions.R")
 source("./utils.R")
 source("./numerical_gradient.R")
+```
 
+학습할 네트웍을 만듭니다.
+
+```R
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std = 0.01) {
   W1 <<- weight_init_std*matrix(rnorm(n = input_size*hidden_size), nrow = input_size, ncol = hidden_size)
   b1 <<- matrix(rep(0, hidden_size), nrow=1,ncol=hidden_size)
@@ -47,7 +53,7 @@ train_size <- dim(x_train_normalize)[1]
 batch_size <- 100
 ```
 
-다음은 순전파 학습과정을 실제로 진행하는 코드입니다.
+사전 준비는 다 끝났습니다. 실제로 순전파를 이용해서 학습해 보겠습니다.
 
 ```R
 for(i in 1:iters_num){
