@@ -33,7 +33,7 @@ library(dslabs)
 
 ### 데이터 학습하기
 
-이제 모델에 손글씨 데이터를 학습시켜 봅시다. 역전파 딥러닝 모델을 학습 시키는 자세한 내용에 대해서는 [링크](https://choosunsick.github.io/post/neural_network_backward_4/)를 참조해주시기 바랍니다.  
+이제 모델에 손글씨 데이터를 학습시켜 봅시다. 역전파 딥러닝 모델을 학습 시키는 자세한 내용에 대해서는 [링크](https://choosunsick.github.io/post/neural_network_backward_4/)를 참조해주시기 바랍니다.
 
 ```R
 source("./functions.R")
@@ -128,7 +128,7 @@ for(i in 1:iters_num){
 [1] 0.9782833 0.9691000
 ```
 
-약 97%의 성능의 모델을 얻을 수 있습니다. 이제 이 모델을 가지고 숫자를 예측해봅시다. 위 학습과정의 자세한 설명은 [링크](https://choosunsick.github.io/post/contents_list/)의 오차역전파법 글을 확인해주세요.
+약 97%의 성능의 모델을 얻을 수 있습니다. 이제 이 모델을 가지고 숫자를 예측해봅시다. 위 학습과정의 자세한 설명은 [R로 딥러닝하기 강좌](https://choosunsick.github.io/post/contents_list/)에서 **4.오차역전파법** 항목을 확인해주세요.
 
 ### 숫자 맞추기
 
@@ -137,6 +137,7 @@ for(i in 1:iters_num){
 ```R
 draw_image(mnist_data$x_train[2,])
 ```
+
 ![숫자0](https://user-images.githubusercontent.com/19144813/79545694-13144280-80cc-11ea-8a9a-69c71ad298ed.png)
 
 위 숫자 이미지는 0입니다. R은 1부터 표시하기 때문에 정답 레이블은 1이됩니다. 과연 이 모델은 숫자 0을 맞출 수 있을까요?
