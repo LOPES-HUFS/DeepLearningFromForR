@@ -2,6 +2,8 @@
 # 역전파 예측과 손실함수 모델의 정확도를 계산하는 함수 입니다. 
 # 관련 내용에 대한 설명은 https://choosunsick.github.io/post/neural_network_backward_4/ 에서 찾아보실 수 있습니다.
 
+source("./functions.R")
+
 model.backward <- function(x){
   Affine_1_layer <- Affine.forward(params$W1, params$b1, x)
   Relu_1_layer <- Relu.forward(Affine_1_layer$out)
