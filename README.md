@@ -13,11 +13,7 @@
 어떤 내용을 학습하게 될지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요! :smile: 프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트의 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시면 됩니다. 만약, [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력해도 다운 받을 수 있습니다.
 
 ```bash
-git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
-```
-그리고 파일이 설치된 경로는 아래의 명령어로 확인할 수 있습니다.
-```bash
-git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
+$ git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
 ```
 
 코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다. R를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요. 
@@ -27,10 +23,17 @@ setwd('<PATH>/DeepLearningFromForR')
 `<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 되는데 경로를 모르신다면 다음과 같이 해보세요.
 먼저, 커맨드 창에 아래의 명령어를 쳐서 현재 경로를 확인합니다.
 ```bash
-pwd //현재 경로 확인
-ls -al // 현재 경로에 있는 폴더 및 파일 확인
+$ pwd //현재 경로 확인
+$ ls -al // 현재 경로에 있는 폴더 및 파일 확인
 ```
-현재 경로에서 폴더가 있는 경로까지 이동해 주시면 되는데, 이동하는 명령어는 `cd` 입니다.
+확인 후 현재 경로에 DeepLearningFromForR 폴더가 있다면 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다. DeepLearningFromForR 폴더가 없다면 현재 경로에서 폴더가 있는 경로까지 이동해 주시면 되는데, 이동하는 명령어는 `cd` 입니다.
+일단 폴더가 어디있는지 알아야 이동할 수 있겠죠? 
+이동 후에 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다. 
+```bash
+$ cd ./<DeepLearningFromForR폴더가 있는 경로> //경로 이동
+$ pwd // 현재 경로 확인
+```
+혹시 확인을 못하셨다면 Issues에 올려주세요. 확인해 드리겠습니다.
 
 다음으로 이 프로젝트에서 사용할 MNIST 데이터를 R 패키지 기능을 사용해서 아래 코드를 입력하여 설치합니다. 설치에 대한 자세한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)를 참조하시면 좋습니다.
 
