@@ -24,7 +24,13 @@ git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
 ```R
 setwd('<PATH>/DeepLearningFromForR')
 ```
-`<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 되는데 
+`<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 되는데 경로를 모르신다면 다음과 같이 해보세요.
+먼저, 커맨드 창에 아래의 명령어를 쳐서 현재 경로를 확인합니다.
+```bash
+pwd //현재 경로 확인
+ls -al // 현재 경로에 있는 폴더 및 파일 확인
+```
+현재 경로에서 폴더가 있는 경로까지 이동해 주시면 되는데, 이동하는 명령어는 `cd` 입니다.
 
 다음으로 이 프로젝트에서 사용할 MNIST 데이터를 R 패키지 기능을 사용해서 아래 코드를 입력하여 설치합니다. 설치에 대한 자세한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)를 참조하시면 좋습니다.
 
