@@ -55,6 +55,7 @@ library(dslabs)
 source("./functions.R")
 source("./utils.R")
 source("./gradient.R")
+source("./TwoLayerNet_model.backward.R")
 
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
   W1 <- weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
