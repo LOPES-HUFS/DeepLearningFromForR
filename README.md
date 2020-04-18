@@ -16,26 +16,32 @@
 $ git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
 ```
 
-코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다. R를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요. 
+코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다. R를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요.
+
 ```R
 setwd('<PATH>/DeepLearningFromForR')
 ```
-`<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 되는데, 경로를 모르신다면 다음과 같이 해보세요. 
+
+`<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 되는데, 경로를 모르신다면 다음과 같이 해보세요.
 
 먼저, 커맨드 창이나 터미널에서 아래의 명령어를 쳐서 현재 경로를 확인합니다.
+
 ```bash
 $ pwd #현재 경로 확인
 $ ls -al #현재 경로에 있는 폴더 및 파일 확인
 ```
-현재 경로에 DeepLearningFromForR 폴더가 있다면 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다. 
+
+현재 경로에 DeepLearningFromForR 폴더가 있다면 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다.
 
 만약, DeepLearningFromForR 폴더가 없다면 현재 경로에서 폴더가 있는 경로까지 이동해 주시면 되는데, 이동하는 명령어는 `cd` 입니다.
 일단 폴더가 어디있는지 알아야 이동할 수 있겠죠? 
 이동 후에 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다. 
+
 ```bash
 $ cd ./<DeepLearningFromForR폴더가 있는 경로> 
 $ pwd #현재 경로 확인
 ```
+
 혹시 확인을 못 하셨다면 Issues에 올려주세요! 확인해 드리겠습니다.
 
 다음으로 이 프로젝트에서 사용할 MNIST 데이터를 R 패키지 기능을 사용해서 아래 코드를 R 콘솔에서 입력하여 설치합니다. `dslabs` 패키지에 대한 자세한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)를 참고하세요.
@@ -125,8 +131,9 @@ for(i in 1:iters_num){
 ```
 
 위 코드를 실행시키고 3분 정도 지나면 아래와 같은 출력화면이 나올 것입니다. 한 행의 첫 번째 숫자는 훈련데이터 셋에 대한 정확도, 두 번째 숫자는 테스트 셋에 대한 정확도를 나타냅니다. 그리고 하나의 행은 1에폭(epoch)을 의미합니다. 에폭을 진행할수록 정확도가 높아지는 것을 확인할 수 있습니다.
-  * 에폭에 대한 설명은 [링크](https://choosunsick.github.io/post/neural_network_5/)를 참고하세요. 
-  * 아래의 출력 값들은 초기 값의 랜덤값으로 인해 다른 숫자가 나올 수 있습니다.
+
+* 에폭에 대한 설명은 [링크](https://choosunsick.github.io/post/neural_network_5/)를 참고하세요.
+* 아래의 출력 값들은 초기 값의 랜덤값으로 인해 다른 숫자가 나올 수 있습니다.
 
 ```R
 [1] 0.9012333 0.9055000
@@ -168,7 +175,8 @@ draw_image(mnist_data$x_train[2,])
             [,10]
 [1,] 3.788493e-07
 ```
-보시다 싶이 첫번째 인덱스를 약 0.9983% 확률로 표기합니다. 이 말은 모델이 숫자 0을 정답으로 판단한 확률이 99%란 의미로 다시말해 모델이 이미지 데이터를 보고 숫자를 맞춘 것입니다. 
+
+보시다 싶이 첫번째 인덱스를 약 0.9983% 확률로 표기합니다. 이 말은 모델이 숫자 0을 정답으로 판단한 확률이 99%란 의미로 다시말해 모델이 이미지 데이터를 보고 숫자를 맞춘 것입니다.
 
 ### 전체 테스트 셋 추론하기
 
@@ -214,7 +222,7 @@ model.evaluate.backward(x_test_normalize,t_test_onehotlabel)
 
 ## R 초심자를 위한 R 설치방법과 기초 사용방법
 
-R이 처음이신 분들을 위한 가이드를 작성해 보았습니다. R 설치하기부터 차례대로 따라와 주시면 됩니다. 
+R이 처음이신 분들을 위한 가이드를 작성해 보았습니다. R 설치하기부터 차례대로 따라와 주시면 됩니다.
 
 1. [R 설치하기](https://choosunsick.github.io/post/r_install/)
 2. [자료형 살펴보기](https://choosunsick.github.io/post/r_structure/)
