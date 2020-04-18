@@ -6,6 +6,7 @@
 
 마찬가지로 손글씨로 쓴 이미지를 판별하는 딥러닝 구현 과정을 살펴보면서, 순전파의 원리와 함께 순전파가 느린 이유를 풀어 설명해 보도록 하겠습니다.
 
+
 ## 학습하기
 
 우선 학습에 필요한 MNIST 데이터를 불러오는데 필요한 패키지를 설치합니다.
@@ -15,7 +16,7 @@ install.packages("dslabs")
 library(dslabs)
 ```
 
-다음으로 학습에 필요한 함수를 불러옵니다.
+학습에 필요한 함수나 코드를 불어옵니다. 아래 소스코드들을 불러오기 위해 경로 설정을 해주어야 합니다. 경로 설정에 대한 부분은 [링크](https://github.com/LOPES-HUFS/DeepLearningFromForR/blob/master/README.md)의 프로젝트 맛보기를 참고해주세요.
 
 ```R
 source("./functions.R")
@@ -37,11 +38,13 @@ TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std = 
 
 TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 ```
+
 각 파라미터의 의미는 아래와 같습니다.
  * input_size : 입력 노드의 개수로, 여기서는 한 이미지의 크기(28*28)를 의미합니다. 
  * hidden_size : 은닉층의 노드 개수로, 여기서는 50개로 설정하였습니다.
  * output_size : 출력 노드의 개수로, 숫자 0~9의 값을 분류하기 때문에 10이 됩니다.
  * weight_init_std : 가중치 초기값이 큰 값이 되는 것을 방지하는 파라미터입니다.
+
 
 이제, 손글씨 이미지를 불러오고 학습을 위해 훈련 셋과 테스트 셋으로 나눕니다.
 ```R
@@ -93,6 +96,7 @@ for(i in 1:iters_num){
 ## 모델평가
 
 이제 손실 함수 값과 모델의 정확도를 확인해 봅시다.
+
 ```R
 train_loss_list
 

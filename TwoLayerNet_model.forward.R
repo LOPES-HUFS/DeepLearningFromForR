@@ -19,7 +19,3 @@ model.evaluate.forward <- function(x,t){
   accuracy <- (sum(ifelse(y==t,1,0))) / dim(x)[1]
   return(accuracy)
 }
-
-predict.forward <- function(x){
-  return(softmax(model.backward(x)))
-}
