@@ -4,23 +4,27 @@
 
 이 프로젝트는 딥러닝 분야에서 유명한 [MNIST 데이터베이스](http://yann.lecun.com/exdb/mnist/)를 이용하여 손글씨로 쓴 숫자 이미지를 어떤 숫자인지 추론할 수 있는 Deep Learning(이하 딥러닝)을 R로만 구현하는 것을 목표로 진행합니다. 전반적인 프로젝트 내용은 한빛미디어에서 출판한 [『밑바닥부터 시작하는 딥러닝』](http://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198)과 이 책의 최근 Python(이하 파이썬) 코드인 [『ゼロから作る Deep Learning』(O'Reilly Japan, 2016)](https://github.com/oreilly-japan/deep-learning-from-scratch)를 참고하였습니다. 참고 서적의 파이썬 코드를 R로 변환하여 ML을 구현하고 있으며, R에 없는 파이썬의 일부 기능은 R에 맞춰서 변경하였습니다.
 
-앞에도 언급했지만 전체 코드는 [R](https://www.r-project.org)로 구현했습니다. 딥러닝을 구현하려면 행렬을 계산 할 프로그래밍이 필요한데, 이런 개념을 가장 쉽게 구현할 수 있는 언어가 R입니다. R이라는 언어를 모르시는 분들을 위해서 기초 가이드를 만들었습니다. 아래 [R 기초 가이드](https://github.com/LOPES-HUFS/DeepLearningFromForR#r-초심자를-위한-r-설치방법과-기초-사용방법)를 참고하세요. [R 설치하기](https://choosunsick.github.io/post/r_install/)부터 차례대로 따라와 주시면 됩니다. :smile: 한 번씩 읽으시면 이 프로젝트를 이해하는데 많은 도움이 됩니다. 만약 R이 처음이 아니라면 아래 링크를 쭉 보면서 따라오시면 기본적인 지식을 습득하실 수 있습니다.
+앞서 언급했듯이 전체 코드는 [R](https://www.r-project.org)로 구현했습니다. 딥러닝을 구현하려면 행렬을 계산하는 프로그래밍이 필요한데, 이런 개념을 가장 쉽게 구현할 수 있는 언어가 R입니다. R이라는 언어를 모르시는 분들을 위해서 기초 가이드를 만들었습니다. 아래 [R 기초 가이드](https://github.com/LOPES-HUFS/DeepLearningFromForR#r-초심자를-위한-r-설치방법과-기초-사용방법)를 참고하세요. [R 설치하기](https://choosunsick.github.io/post/r_install/)부터 차례대로 따라와 주시면 됩니다. :smile: 한 번씩 읽으시면 이 프로젝트를 이해하는데 많은 도움이 됩니다. 만약 R이 처음이 아니라면 아래링크를 쭉 보면서 따라오시면 기본적인 지식을 습득하실 수 있습니다.
 
-[LOPES](http://www.lopes.co.kr)팀에서 이 프로젝트를 하게 된 이유는 딥러닝을 기초부터 공부하는 도중, 딥러닝을 R로 만들면 R 프로그래밍도 늘릴 수 있고, 딥러닝도 잘 이해할 수 있을 것 같아서 출발하게 되었습니다. 교육 목적으로 시작한 프로젝트이기 때문에 R로 딥러닝를 구현하는 강좌도 프로젝트를 진행하면서 쓰고 있습니다. 아래 [손으로 쓴 숫자 이미지를 판별하는 딥러닝을 R로만 구현하는 방법 소개](https://github.com/LOPES-HUFS/DeepLearningFromForR#손으로-쓴-숫자-이미지를-판별하는-딥러닝을-r로만-구현하는-방법-소개)에 있는 글을 읽어보시면 우리 팀이 R로 어떻게 딥러닝을 구현하고 있는지 살펴보실 수 있습니다. 또한 R을 어느 정도 알고 있지만, 딥러닝에 대해서 잘 알지 못하신다면, 딥러닝 기초 원리를 파악하시는데 도움이 될 것 같습니다.
+[LOPES](http://www.lopes.co.kr)팀에서 이 프로젝트를 하게 된 이유는 딥러닝 기초 서적을 공부하던 도중, 딥러닝을 R로 직접 구현해보면 R 프로그래밍 실력도 늘릴 수 있고, 딥러닝 기초 원리도 좀 더 명확하게 이해할 수 있을 것 같아서 출발하게 되었습니다. 교육 목적으로 시작한 프로젝트이기 때문에 R로 딥러닝를 구현하는 강좌도 따로 쓰고 있습니다. 아래 [손으로 쓴 숫자 이미지를 판별하는 딥러닝을 R로만 구현하는 방법 소개](https://github.com/LOPES-HUFS/DeepLearningFromForR#손으로-쓴-숫자-이미지를-판별하는-딥러닝을-r로만-구현하는-방법-소개)에 있는 글을 읽어보시면 우리 팀이 R로 어떻게 딥러닝을 구현하고 있는지 살펴보실 수 있습니다. 또한 R을 어느 정도 알고 있지만, 딥러닝에 대해서 잘 알지 못하신다면, 딥러닝 기초 원리를 파악하시는데 도움이 될 것 같습니다.
 
 ## 프로젝트 맛보기
 
-어떤 내용을 학습하게 될지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요! :smile: 프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트의 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시거나 [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력하시면 됩니다.
+어떤 내용을 학습하게 될지 궁금하신 분들을 위해 프로젝트 맛보기를 준비했습니다. 프로젝트 전체 코드를 다운 받은 후, 아래 코드를 따라 입력해 보시는 걸 추천드립니다. 신기하거든요! :smile: 프로젝트 전체 코드를 다운 받으시려면, 이 프로젝트의 [메인 페이지](https://github.com/LOPES-HUFS/DeepLearningFromForR) 오른쪽 상단에 'Clone or download' 버튼을 클릭 후 'Download ZIP' 버튼을 눌러 다운 받으시면 됩니다. 만약, [git](https://git-scm.com/downloads)을 설치하셨으면 아래의 명령어를 커맨드 창에 입력해도 다운 받을 수 있습니다.
 
 ```bash
 git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
 ```
+그리고 파일이 설치된 경로는 아래의 명령어로 확인할 수 있습니다.
+```bash
+git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
+```
 
-코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다. R를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요. `<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 됩니다.
-
+코드를 다운 받으셨다면, R 에디터에서 디렉토리 설정을 진행해야 합니다. R를 연 후에 다음과 같이 디렉토리 경로를 입력해주세요. 
 ```R
 setwd('<PATH>/DeepLearningFromForR')
 ```
+`<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 되는데 
 
 다음으로 이 프로젝트에서 사용할 MNIST 데이터를 R 패키지 기능을 사용해서 아래 코드를 입력하여 설치합니다. 설치에 대한 자세한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)를 참조하시면 좋습니다.
 
