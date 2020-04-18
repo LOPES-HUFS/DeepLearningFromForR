@@ -20,13 +20,16 @@ $ git clone https://github.com/LOPES-HUFS/DeepLearningFromForR.git
 ```R
 setwd('<PATH>/DeepLearningFromForR')
 ```
-`<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 되는데 경로를 모르신다면 다음과 같이 해보세요.
+`<PATH>` 대신에 DeepLearningFromForR 폴더가 위치한 경로를 넣으면 되는데, 경로를 모르신다면 다음과 같이 해보세요. 
+
 먼저, 커맨드 창에 아래의 명령어를 쳐서 현재 경로를 확인합니다.
 ```bash
 $ pwd #현재 경로 확인
 $ ls -al #현재 경로에 있는 폴더 및 파일 확인
 ```
-확인 후 현재 경로에 DeepLearningFromForR 폴더가 있다면 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다. DeepLearningFromForR 폴더가 없다면 현재 경로에서 폴더가 있는 경로까지 이동해 주시면 되는데, 이동하는 명령어는 `cd` 입니다.
+현재 경로에 DeepLearningFromForR 폴더가 있다면 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다. 
+
+만약, DeepLearningFromForR 폴더가 없다면 현재 경로에서 폴더가 있는 경로까지 이동해 주시면 되는데, 이동하는 명령어는 `cd` 입니다.
 일단 폴더가 어디있는지 알아야 이동할 수 있겠죠? 
 이동 후에 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다. 
 ```bash
