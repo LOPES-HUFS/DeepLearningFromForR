@@ -1,4 +1,10 @@
-# 순전파
+# 순전파를 이용한 모델 학습 방법
+
+순전파는 원리만 이해하면 됩니다. 굳이 순전파를 사용하여 데이터를 학습하는 것은 어쩌면 무모한 짓입니다. 역전파법을 사용하면 3분이면 될 것을 8시간에 걸쳐서 학습하기 때문입니다.😂
+
+그럼에도 불구하고 구현해 보았습니다. 순전파로 학습하기...!
+
+마찬가지로 손글씨로 쓴 이미지를 판별하는 딥러닝 구현 과정을 살펴보면서, 순전파의 원리와 함께 순전파가 느린 이유를 풀어 설명해 보도록 하겠습니다.
 
 ## 학습하기
 
@@ -9,7 +15,7 @@ install.packages("dslabs")
 library(dslabs)
 ```
 
-학습에 필요한 함수나 코드를 불어옵니다.
+다음으로 학습에 필요한 함수를 불러옵니다.
 
 ```R
 source("./functions.R")
@@ -18,7 +24,7 @@ source("./numerical_gradient.R")
 source("./TwoLayerNet_model.forward.R")
 ```
 
-학습할 네트워크를 만듭니다.
+학습할 네트워크를 만듭니다. 
 
 ```R
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std = 0.01) {
@@ -30,7 +36,14 @@ TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std = 
 }
 
 TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
+```
+각 파라미터의 의미는 아래와 같습니다.
+ * input_size : 입력 노드의 개수로, 여기서는 한 이미지의 크기(28*28)를 의미합니다. 
+ * hidden_size : 은닉층의 노드 개수로, 여기서는 50개로 설정하였습니다.
+ * output_size : 출력 노드의 개수로, 숫자 0~9의 값을 분류하기 때문에 10이 됩니다.
+ * weight_init_std : 가중치 초기값이 큰 값이 되는 것을 방지하는 파라미터입니다.
 
+이제, 손글씨 이미지를 불러오고 학습을 위해 훈련 셋과 테스트 셋으로 나눕니다.
 ```R
 mnist_data <- get_data()
 
@@ -40,8 +53,8 @@ x_test_normalize <- mnist_data$x_test
 t_train_onehotlabel <- making_one_hot_label(mnist_data$t_train, 60000,10)
 t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test, 10000,10)
 ```
-함수를 통해 데이터를 불러옵니다.
-학습할 데이터를 처리한 이후 학습에 필요한 파라미터를 설정해줍니다.
+
+학습에 필요한 파라미터를 설정합니다.
 
 ```R
 learning_rate <- 0.1
@@ -50,6 +63,13 @@ train_loss_list <- data.frame(lossvalue=rep(0, iters_num))
 train_size <- dim(x_train_normalize)[1]
 batch_size <- 100
 ```
+ 각 변수의 의미는 다음과 같습니다.
+
+ * learning_rate : 학습률로, 학습률이 높을수록 학습이 빨리 진행되는 대신에 덜 진행될 수 있습니다.
+ * iters_num : 학습 반복 횟수
+ * train_loss_list : 손실 함수 값 기록 리스트
+ * train_size : 전체 훈련 셋 개수
+ * batch_size : 훈련 셋에서 뽑을 이미지 개수
 
 사전 준비는 다 끝났습니다. 실제로 순전파를 이용해서 학습해 보겠습니다.
 
