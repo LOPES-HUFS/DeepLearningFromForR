@@ -15,6 +15,7 @@ library(dslabs)
 source("./functions.R")
 source("./utils.R")
 source("./numerical_gradient.R")
+source("./TwoLayerNet_model.forward.R")
 ```
 
 학습할 네트워크를 만듭니다.
@@ -67,7 +68,7 @@ for(i in 1:iters_num){
 }
 ```
 
-모델을 100번 학습하는데 걸리는 시간은 3시간정도 소요가 됩니다. 참고로 [파이썬 코드](https://github.com/oreilly-japan/deep-learning-from-scratch/blob/master/ch04/two_layer_net.py)를 반복횟수 100번으로 설정하여 실행시키면 약 5300초가 걸립니다. 
+모델을 100번 학습하는데 걸리는 시간은 최소 3시간 이상이 소요가 됩니다. 참고로 [파이썬 코드](https://github.com/oreilly-japan/deep-learning-from-scratch/blob/master/ch04/two_layer_net.py)를 반복횟수 100번으로 설정하여 실행시키면 약 5300초가 걸립니다.
 
 ## 모델평가
 
@@ -75,5 +76,5 @@ for(i in 1:iters_num){
 ```R
 train_loss_list
 
-model.evaluate(x_test_normalize,t_test_onehotlabel)
+model.evaluate.forward(x_test_normalize,t_test_onehotlabel)
 ```
