@@ -9,7 +9,7 @@ install.packages("dslabs")
 library(dslabs)
 ```
 
-학습에 필요한 함수나 코드를 불어옵니다.
+학습에 필요한 함수나 코드를 불어옵니다. 아래 소스코드들을 불러오기 위해 경로 설정을 해주어야 합니다. 경로 설정에 대한 부분은 [링크](https://github.com/LOPES-HUFS/DeepLearningFromForR/blob/master/README.md)의 프로젝트 맛보기를 참고해주세요.
 
 ```R
 source("./functions.R")
