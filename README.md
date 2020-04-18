@@ -33,9 +33,9 @@ $ ls -al #현재 경로에 있는 폴더 및 파일 확인
 $ cd ./<DeepLearningFromForR폴더가 있는 경로> 
 $ pwd #현재 경로 확인
 ```
-혹시 확인을 못하셨다면 Issues에 올려주세요. 확인해 드리겠습니다.
+혹시 확인을 못하셨다면 Issues에 올려주세요! 확인해 드리겠습니다.
 
-다음으로 이 프로젝트에서 사용할 MNIST 데이터를 R 패키지 기능을 사용해서 아래 코드를 입력하여 설치합니다. 설치에 대한 자세한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)를 참조하시면 좋습니다.
+다음으로 이 프로젝트에서 사용할 MNIST 데이터를 R 패키지 기능을 사용해서 아래 코드를 R콘솔에서 입력하여 설치합니다. 설치에 대한 자세한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)를 참조하시면 좋습니다.
 
 ```R
 install.packages("dslabs")
