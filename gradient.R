@@ -3,12 +3,13 @@
 # 작동에 필요한 함수는 source로 불러와 줍니다.
 
 source("./functions.R")
+source("./TwoLayerNet_model.backward.R")
 
 # 역전파 gradient 함수입니다. 
 
 gradient <- function(x, t) {
   # 순전파
-  temp_loss <- backward_loss(x, t)
+  temp_loss <- loss(x, t)
   # 역전파
   dout <- 1
   last_layer.backward <- SoftmaxWithLoss.backward(temp_loss$softmax, dout)
