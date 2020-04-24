@@ -1,5 +1,5 @@
-sgd.update <- function(params,grads,lr=0.01){
-  sgd <- function(params,grads,weight,lr=0.01){
+sgd.update <- function(params,grads,lr=0.1){
+  sgd <- function(params,grads,weight,lr=0.1){
     params[[weight]] <- params[[weight]] - (grads[[weight]]*lr)
     return(params[[weight]])
   }
