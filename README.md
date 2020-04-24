@@ -116,7 +116,7 @@ for(i in 1:iters_num){
 
   params <- sgd.update(params,grad,lr=learning_rate)
 
-  loss_value <- backward_loss(x_batch, t_batch)$loss
+  loss_value <- loss(x_batch, t_batch)$loss
   train_loss_list <- rbind(train_loss_list, loss_value)
 
   if(i %% iter_per_epoch == 0){

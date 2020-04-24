@@ -11,7 +11,7 @@ model.backward <- function(x){
   return(list(x = Affine_2_layer$out, Affine_1.forward = Affine_1_layer, Affine_2.forward = Affine_2_layer, Relu_1.forward = Relu_1_layer))
 }
 
-backward_loss <- function(x, t){
+loss <- function(x, t){
   temp  <- model.backward(x) 
   y <- temp$x
   last_layer.forward <- SoftmaxWithLoss.forward(y, t)
