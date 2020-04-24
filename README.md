@@ -34,11 +34,11 @@ $ ls -al #현재 경로에 있는 폴더 및 파일 확인
 현재 경로에 DeepLearningFromForR 폴더가 있다면 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다.
 
 만약, DeepLearningFromForR 폴더가 없다면 현재 경로에서 폴더가 있는 경로까지 이동해 주시면 되는데, 이동하는 명령어는 `cd` 입니다.
-일단 폴더가 어디있는지 알아야 이동할 수 있겠죠? 
-이동 후에 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다. 
+일단 폴더가 어디있는지 알아야 이동할 수 있겠죠?
+이동 후에 `pwd` 결과 값을 `<PATH>` 대신에 넣으면 됩니다.
 
 ```bash
-$ cd ./<DeepLearningFromForR폴더가 있는 경로> 
+$ cd ./<DeepLearningFromForR폴더가 있는 경로>
 $ pwd #현재 경로 확인
 ```
 
@@ -62,6 +62,8 @@ source("./functions.R")
 source("./utils.R")
 source("./gradient.R")
 source("./TwoLayerNet_model.backward.R")
+source("./optimizer.R")
+
 
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
   W1 <- weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
@@ -109,17 +111,14 @@ for(i in 1:iters_num){
   batch_mask <- sample(train_size ,batch_size)
   x_batch <- x_train_normalize[batch_mask,]
   t_batch <- t_train_onehotlabel[batch_mask,]
-  
+
   grad <- gradient(x_batch, t_batch)
-  
-  params$W1 <- params$W1 - (grad$W1 * learning_rate)
-  params$W2 <- params$W2 - (grad$W2 * learning_rate)
-  params$b1 <- params$b1 - (grad$b1 * learning_rate)
-  params$b2 <- params$b2 - (grad$b2 * learning_rate)
-  
+
+  params <- sgd.update(params,grad,lr=learning_rate)
+
   loss_value <- backward_loss(x_batch, t_batch)$loss
   train_loss_list <- rbind(train_loss_list, loss_value)
-  
+
   if(i %% iter_per_epoch == 0){
     train_acc <- model.evaluate.backward(x_train_normalize, t_train_onehotlabel)
     test_acc <- model.evaluate.backward(x_test_normalize, t_test_onehotlabel)
@@ -136,22 +135,22 @@ for(i in 1:iters_num){
 * 아래의 출력 값들은 초기 값의 랜덤값으로 인해 다른 숫자가 나올 수 있습니다.
 
 ```R
-[1] 0.9012333 0.9055000
-[1] 0.9225333 0.9236000
-[1] 0.9380167 0.9360000
-[1] 0.9459667 0.9428000
-[1] 0.9528667 0.9496000
-[1] 0.9568 0.9525
-[1] 0.9602833 0.9560000
-[1] 0.9642333 0.9592000
-[1] 0.9674333 0.9600000
-[1] 0.9692167 0.9633000
-[1] 0.97025 0.96430
-[1] 0.9729833 0.9653000
-[1] 0.9740167 0.9653000
-[1] 0.9757333 0.9660000
-[1] 0.9769 0.9677
-[1] 0.9782833 0.9691000
+[[1] 0.9043 0.9061
+[1] 0.92165 0.92330
+[1] 0.9338667 0.9351000
+[1] 0.9428167 0.9413000
+[1] 0.9500667 0.9474000
+[1] 0.9569 0.9544
+[1] 0.9599667 0.9572000
+[1] 0.9644167 0.9620000
+[1] 0.9669833 0.9613000
+[1] 0.9703667 0.9659000
+[1] 0.9714833 0.9663000
+[1] 0.9725667 0.9690000
+[1] 0.9748833 0.9682000
+[1] 0.9765333 0.9699000
+[1] 0.9780333 0.9698000
+[1] 0.9791167 0.9705000
 ```
 
 최종적으로 약 97%의 정확도를 가진 모델을 얻었습니다. 이제 이 모델을 가지고 숫자를 예측해봅시다. 위 학습과정의 자세한 설명은 아래 [손으로 쓴 숫자 이미지를 판별하는 딥러닝을 R로만 구현하는 방법 소개](https://github.com/LOPES-HUFS/DeepLearningFromForR#손으로-쓴-숫자-이미지를-판별하는-딥러닝을-r로만-구현하는-방법-소개)에서 **4.오차역전파법** 항목을 확인해주세요.
@@ -170,10 +169,10 @@ draw_image(mnist_data$x_train[2,])
 
 ```R
 > predict.backward(x_train_normalize[2,])
-          [,1]        [,2]        [,3]         [,4]         [,5]         [,6]         [,7]         [,8]         [,9]
-[1,] 0.9982558 1.44705e-10 0.001739177 2.583026e-06 1.293144e-11 9.714383e-07 1.949852e-07 3.216493e-07 5.454262e-07
+          [,1]         [,2]         [,3]         [,4]         [,5]         [,6]         [,7]         [,8]         [,9]
+[1,] 0.9999275 4.047121e-11 6.940698e-05 3.017206e-08 5.713369e-11 2.207228e-07 2.471982e-07 1.099375e-06 2.342958e-08
             [,10]
-[1,] 3.788493e-07
+[1,] 1.425998e-06
 ```
 
 보시다 싶이 첫번째 인덱스를 약 0.9983% 확률로 표기합니다. 이 말은 모델이 숫자 0을 정답으로 판단한 확률이 99%란 의미로 다시말해 모델이 이미지 데이터를 보고 숫자를 맞춘 것입니다.
@@ -183,8 +182,8 @@ draw_image(mnist_data$x_train[2,])
 이제 위 모델이 전체 테스트셋 이미지 1만장을 얼마나 잘 맞추는지 확인해 보겠습니다.
 
 ```R
-model.evaluate.backward(x_test_normalize,t_test_onehotlabel)
-[1] 0.9698
+> model.evaluate.backward(x_test_normalize,t_test_onehotlabel)
+[1] 0.9711
 ```
 
 여기서 결과값은 0.9698로 인공지능이 숫자를 맞출 확률이 약 97%임을 의미합니다. 학습을 더 많이 반복하거나 합성곱과 같은 방법을 사용한다면 정확도는 무려 99%까지도 가능합니다! 차후 프로젝트를 진행해 나가면서 정확도를 99%까지 올리는 것도 같이 확인해 보겠습니다.
