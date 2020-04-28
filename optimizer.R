@@ -1,10 +1,10 @@
-sgd <- function(params, grads, weight, lr = 0.01){
+sgd_cal <- function(params, grads, weight, lr = 0.01){
   params[[weight]] <- params[[weight]] - (grads[[weight]]*lr)
   return(params[[weight]])
 }
 
 sgd.update <- function(params, grads, lr = 0.01){
-  params_temp <- lapply(names(params), FUN = function(x){sgd(params = params,grads = grad,weight = x,lr=lr)})
+  params_temp <- lapply(names(params), FUN = function(x){sgd_cal(params = params,grads = grad,weight = x,lr=lr)})
   names(params_temp) <- names(params)
   params <- params_temp
   return(params) 
