@@ -36,3 +36,28 @@ AdaGrad.update <- function(params,grad,h,lr=0.01){
   names(optimizer$AdaGrad) <- names(params)
   return(params)
 }
+
+Adam.update <- function(params,grads,iter,m,v,lr=0.001,beta1=0.9,beta2=0.999){
+  if(is.null(m) == TRUE){
+    m <- rep(list(NA),NROW(params))
+    v <- rep(list(NA),NROW(params))
+    names(m) <- names(params)
+    names(v) <- names(params)
+    for(i in 1:NROW(params)){
+      m[[i]] <- matrix(0,dim(params[[i]])[1],dim(params[[i]])[2])
+      v[[i]] <- matrix(0,dim(params[[i]])[1],dim(params[[i]])[2])
+    }
+  }
+  optimizer$Adam$iter <<- iter+1
+  lr_t <- (lr*sqrt(1.0 - beta2^optimizer$Adam$iter))/ (1.0 - beta1^optimizer$Adam$iter) 
+  temp_m_list <- rep(list(NA),NROW(params))
+  temp_v_list <- rep(list(NA),NROW(params))
+  for(i in 1:NROW(params)){
+    temp_m_list[[i]] <-  m[[i]] + (1 - beta1) * (grads[[i]] - m[[i]])
+    temp_v_list[[i]] <-  v[[i]] + (1 - beta2) * (grads[[i]]^2 - v[[i]])
+    params[[i]] <- params[[i]] - (lr_t * temp_m_list[[i]]/ (sqrt(temp_v_list[[i]]) + 1e-7))
+  }
+  optimizer$Adam$m <- temp_m_list
+  optimizer$Adam$v <- temp_v_list
+  return(params)
+}
