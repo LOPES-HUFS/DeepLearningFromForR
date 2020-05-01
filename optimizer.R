@@ -3,8 +3,7 @@ sgd.update <- function(params, grads, lr = 0.01){
   return(params) 
 }
 
-optimizer <- list(c(NULL), c(NULL), c(NULL))
-names(optimizer) <- c("Momentum", "AdaGrad", "Adam")
+optimizer <- list(Momentum=NULL, AdaGrad=NULL, Adam=list("iter"=0,"m"=NULL,"v"=NULL))
 
 momentum.update <- function(params, grad,v, lr = 0.01,momentum=0.9){
   if (is.null(v) == TRUE) {
