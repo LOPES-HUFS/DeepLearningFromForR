@@ -11,9 +11,9 @@
 
 # model.evaluate(model.forward, x_train_normalize, t_train_onehotlabel)
 
-model.evaluate <- function(model.forward, x,t){
+model.evaluate <- function(model.forward, x, t){
     y <- max.col(model.forward(x))
     t <- max.col(t)
-    accuracy <- (sum(ifelse(y == t,1,0))) / dim(x)[1]
+    accuracy <- (sum(ifelse(y == t, 1, 0))) / dim(x)[1]
     return(accuracy)
 }
