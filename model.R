@@ -7,13 +7,22 @@
 #    return(Affine_2_layer$out)
 #}
 #
-# 아래와 같이 사용하면 된다.
-
+# 모델을 평가할 때, 아래와 같이 사용하면 된다.
+#
 # model.evaluate(model.forward, x_train_normalize, t_train_onehotlabel)
+# model.evaluate(model.forward, x_test_normalize, t_test_onehotlabel)
 
 model.evaluate <- function(model.forward, x, t){
     y <- max.col(model.forward(x))
     t <- max.col(t)
     accuracy <- (sum(ifelse(y == t, 1, 0))) / dim(x)[1]
     return(accuracy)
+}
+
+# 특정 숫자를 맞출 수 있는지 아래와 같이 사용하면 됩니다.
+
+# model.predict(model.forward, x_train_normalize[2,])
+
+model.predict <- function(model.forward, x){
+    return(softmax(model.forward(x)))
 }
