@@ -26,3 +26,39 @@ model.evaluate <- function(model.forward, x, t){
 model.predict <- function(model.forward, x){
     return(softmax(model.forward(x)))
 }
+
+model.train_set_validator <- function(x_train, y_train){
+    return(dim(x_train)[2] != dim(x_test)[2])
+}
+
+model.train <- function(batch_size, iters_num, learning_rate,
+                        network, x_train, y_train, x_test, y_test,
+                        debug = FALSE){
+    
+    train_size <- dim(x_train)[1]
+    
+    iter_per_epoch <- max(train_size / batch_size)
+    
+    for(i in 1:iters_num){
+        batch_mask <- sample(train_size ,batch_size)
+        x_batch <- x_train[batch_mask,]
+        t_batch <- y_train[batch_mask,]
+        
+        grad <- gradient(x_batch, t_batch)
+        
+        #update weights and biases using SGD
+        network <<- sgd.update(network, grad, lr = learning_rate)
+        
+        if(debug == TRUE){
+            if(i %% iter_per_epoch == 0){
+                train_acc <- model.evaluate.backward(x_train_normalize, t_train_onehotlabel)
+                test_acc <- model.evaluate.backward(x_test_normalize, t_test_onehotlabel)
+                print(c(train_acc, test_acc))
+            }
+        }
+    }
+
+    train_accuracy = model.evaluate.backward(x_train_normalize, t_train_onehotlabel)
+    test_accuracy = model.evaluate.backward(x_test_normalize, t_test_onehotlabel)
+    return(c(train_accuracy, test_accuracy))
+}
