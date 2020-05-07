@@ -19,11 +19,6 @@ momentum.update <- function(network, grad,v, lr = 0.01,momentum=0.9){
     network[[i]] <- network[[i]]+optimizer$Momentum[[i]]}
   names(optimizer$Momentum) <- names(network)
   return(network)
-
-    network[[i]] <- network[[i]]+v[[i]]}
-  names(optimizer$Momentum) <- names(network)
-  return(network)
->>>>>>> 9f998dc26689a5f03d3007f525b1c01bf538e135
 }
 
 AdaGrad.update <- function(network,grad,h,lr=0.01){
