@@ -14,9 +14,7 @@ MNIST 자료를 가져오는 방법에 대한 내용은 [Mnist 손글씨 데이�
 ```R
 # install.packages("dslabs") 이미 설치한 것이 있으면 생략
 library(dslabs)
-```
 
-```R
 mnist_data <- get_data()
 
 x_train_normalize <- mnist_data$x_train
@@ -24,7 +22,11 @@ x_test_normalize <- mnist_data$x_test
 
 t_train_onehotlabel <- making_one_hot_label(mnist_data$t_train,60000, 10)
 t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test,10000, 10)
+```
+
 이제 본격적으로 우리가 학습시킬 네트웍을 만든다.
+
+```R
 TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
   W1 <- weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
