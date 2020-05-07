@@ -27,7 +27,6 @@ t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test,10000, 10)
 이제 본격적으로 우리가 학습시킬 네트웍을 만든다.
 
 ```R
-TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
   W1 <- weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
   b1 <- matrix(rep(0,hidden_size), nrow = 1, ncol = hidden_size)
