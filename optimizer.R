@@ -14,7 +14,7 @@ momentum.update <- function(network, grad,v, lr = 0.01, momentum=0.9){
     }
   }
   for(i in 1:NROW(network)){
-    optimizer$Momentum[[i]] <<- v[[i]]*momentum - lr*grad[[i]]
+    optimizer$Momentum[[i]] <<- v[[i]]*momentum - (lr*grad[[i]])
 
     network[[i]] <- network[[i]]+optimizer$Momentum[[i]]}
   names(optimizer$Momentum) <- names(network)
