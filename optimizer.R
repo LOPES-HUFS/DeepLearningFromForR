@@ -5,7 +5,7 @@ sgd.update <- function(network, grads, lr = 0.01){
 
 optimizer <- list(Momentum=NULL, AdaGrad=NULL, Adam=list("iter"=0,"m"=NULL,"v"=NULL))
 
-momentum.update <- function(network, grad,v, lr = 0.01,momentum=0.9){
+momentum.update <- function(network, grad,v, lr = 0.01, momentum=0.9){
   if (is.null(v) == TRUE) {
     v <- rep(list(NA),NROW(network))
     names(v) <- names(network)
@@ -14,7 +14,7 @@ momentum.update <- function(network, grad,v, lr = 0.01,momentum=0.9){
     }
   }
   for(i in 1:NROW(network)){
-    optimizer$Momentum[[i]] <<- momentum*v[[i]] - lr*grad[[i]]
+    optimizer$Momentum[[i]] <<- v[[i]]*momentum - lr*grad[[i]]
 
     network[[i]] <- network[[i]]+optimizer$Momentum[[i]]}
   names(optimizer$Momentum) <- names(network)
