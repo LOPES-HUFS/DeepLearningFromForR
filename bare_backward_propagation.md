@@ -44,10 +44,10 @@ TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 
 ```R
 forward <- function(x){
-  Affine_1_layer <- Affine.forward(params$W1, params$b1, x)
-  Relu_1_layer <- Relu.forward(Affine_1_layer$out)
-  Affine_2_layer <- Affine.forward(params$W2, params$b2, Relu_1_layer$out)
-  return(list(x = Affine_2_layer$out, Affine_1.forward = Affine_1_layer, Affine_2.forward = Affine_2_layer, Relu_1.forward = Relu_1_layer))
+  Affine_1 <- Affine.forward(params$W1, params$b1, x)
+  Relu_1 <- Relu.forward(Affine_1$out)
+  Affine_2 <- Affine.forward(params$W2, params$b2, Relu_1$out)
+  return(list(x = Affine_2$out, Affine_1.forward = Affine_1, Affine_2.forward = Affine_2, Relu_1.forward = Relu_1))
 }
 
 loss <- function(model.forward, x, t){
@@ -60,10 +60,12 @@ loss <- function(model.forward, x, t){
 
 gradient <- function(model.forward, x, t) {
   # 순전파
-  temp_loss <- loss(model.forward, x, t)
+  temp <- model.forward(x)
+  y <- temp$x
+  last_layer.forward <- SoftmaxWithLoss.forward(y, t)
   # 역전파
   dout <- 1
-  last_layer.backward <- SoftmaxWithLoss.backward(temp_loss$softmax, dout)
+  last_layer.backward <- SoftmaxWithLoss.backward(last_layer.forward$softmax, dout)
   Affine_2_layer.backward <- Affine.backward(temp_loss$predict$Affine_2.forward, dout  =  last_layer.backward$dx)
   Relu_1_layer.backward <- Relu.backward(temp_loss$predict$Relu_1.forward, dout  =  Affine_2_layer.backward$dx)
   Affine_1_layer.backward <- Affine.backward(temp_loss$predict$Affine_1.forward, dout  =  Relu_1_layer.backward$dx)
