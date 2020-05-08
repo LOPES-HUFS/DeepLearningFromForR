@@ -7,6 +7,7 @@
 ```R
 source("./functions.R")
 source("./utils.R")
+source("./optimizer.R")
 ```
 
 MNIST 자료를 가져오는 방법에 대한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)을 참고한다. 자료를 가져오는 코드는 아래와 같다. 아래 코드에 대한 소개는 다음을 참고한다.
@@ -60,16 +61,14 @@ loss <- function(model.forward, x, t){
 
 gradient <- function(model.forward, x, t) {
   # 순전파
-  temp <- model.forward(x)
-  y <- temp$x
-  last_layer.forward <- SoftmaxWithLoss.forward(y, t)
+  temp <- loss(model.forward, x, t)
   # 역전파
   dout <- 1
-  last_layer.backward <- SoftmaxWithLoss.backward(last_layer.forward$softmax, dout)
-  Affine_2_layer.backward <- Affine.backward(temp_loss$predict$Affine_2.forward, dout  =  last_layer.backward$dx)
-  Relu_1_layer.backward <- Relu.backward(temp_loss$predict$Relu_1.forward, dout  =  Affine_2_layer.backward$dx)
-  Affine_1_layer.backward <- Affine.backward(temp_loss$predict$Affine_1.forward, dout  =  Relu_1_layer.backward$dx)
-  grads  <- list(W1  =  Affine_1_layer.backward$dW, b1  =  Affine_1_layer.backward$db, W2  =  Affine_2_layer.backward$dW, b2  =  Affine_2_layer.backward$db)
+  last.backward <- SoftmaxWithLoss.backward(temp$softmax, dout)
+  Affine_2.backward <- Affine.backward(temp$predict$Affine_2.forward, dout  =  last.backward$dx)
+  Relu_1.backward <- Relu.backward(temp$predict$Relu_1.forward, dout  =  Affine_2.backward$dx)
+  Affine_1.backward <- Affine.backward(temp$predict$Affine_1.forward, dout  =  Relu_1.backward$dx)
+  grads  <- list(W1  =  Affine_1.backward$dW, b1  =  Affine_1.backward$db, W2  =  Affine_2.backward$dW, b2  =  Affine_2.backward$db)
   return(grads)
 }
 ```
@@ -77,27 +76,50 @@ gradient <- function(model.forward, x, t) {
 지금까지 만든 것을 테스트해보자.
 
 ```R
-> train_size <- dim(x_train_normalize)[1]
-> batch_size <- 100
-> grads <- gradient(model.forward=forward, x=x_train_normalize[batch_mask,], t= t_train_onehotlabel[batch_mask,])
-> loss_value <- loss(forward=forward, x=x_train_normalize[batch_mask,], t_train_onehotlabel[batch_mask,])$loss
-> loss_value
+train_size <- dim(x_train_normalize)[1]
+batch_mask <- 100
+train_loss_list <- data.frame(lossvalue  =  0)
+train_acc_list <- data.frame(train_acc  =  0)
+test_acc_list <- data.frame(test_acc  =  0)
+iter_per_epoch <- max(train_size / batch_size)
+grads <- gradient(model.forward=forward, x=x_train_normalize[1:batch_mask,], t= t_train_onehotlabel[1:batch_mask,])
+loss_value <- loss(model.forward=forward, x=x_train_normalize[1:batch_mask,], t_train_onehotlabel[1:batch_mask,])$loss
+loss_value
 [1] 2.302899
 ```
+
+```R
+model.evaluate <- function(model,x,t){
+    temp <- model(x)
+    y <- max.col(temp$x)
+    t <- max.col(t)
+    accuracy <- (sum(ifelse(y == t,1,0))) / dim(x)[1]
+    return(accuracy)
+}
+```
+
 
 실제로 무식하게 돌려봅니다.
 
 ```R
-for(i in 1:iters_num){
+for(i in 1:2000){
   batch_mask <- sample(train_size ,batch_size)
   x_batch <- x_train_normalize[batch_mask,]
   t_batch <- t_train_onehotlabel[batch_mask,]
 
   grad <- gradient(model.forward=forward, x_batch, t_batch)
   
-  params$W1 <- params$W1 - (grads$W1 * learning_rate)
-  params$W2 <- params$W2 - (grads$W2 * learning_rate)
-  params$b1 <- params$b1 - (grads$b1 * learning_rate)
-  params$b2 <- params$b2 - (grads$b2 * learning_rate)
+  params <- sgd.update(params,grad)
+  
+  loss_value <- loss(forward ,x_batch, t_batch)$loss
+  train_loss_list <- rbind(train_loss_list,loss_value)
+  
+  if(i %% iter_per_epoch == 0){
+    train_acc <- model.evaluate(forward, x_train_normalize, t_train_onehotlabel)
+    test_acc <- model.evaluate(forward, x_test_normalize, t_test_onehotlabel)
+    train_acc_list <- rbind(train_acc_list,train_acc)
+    test_acc_list <- rbind(test_acc_list,test_acc)
+    print(c(train_acc, test_acc))
   }
+}
 ```
