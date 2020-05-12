@@ -74,7 +74,7 @@ Adam.update <- function(network,grads,iter,m,v,lr=0.001,beta1=0.9,beta2=0.999){
     temp_v_list[[i]] <-  v[[i]] + (1 - beta2) * (grads[[i]]^2 - v[[i]])
     network[[i]] <- network[[i]] - (lr_t * temp_m_list[[i]]/ (sqrt(temp_v_list[[i]]) + 1e-7))
   }
-  optimizer$Adam$m <- temp_m_list
-  optimizer$Adam$v <- temp_v_list
+  optimizer$Adam$m <<- temp_m_list
+  optimizer$Adam$v <<- temp_v_list
   return(network)
 }
