@@ -3,7 +3,7 @@ sgd.update <- function(network, grads, lr = 0.01){
   return(network)
 }
 
-optimizer <- list(Momentum=NULL, AdaGrad=NULL, Adam=list("iter"=0,"m"=NULL,"v"=NULL))
+optimizer <- list(Momentum=NULL, AdaGrad=NULL, Rmsprop=NULL,Adam=list("iter"=0,"m"=NULL,"v"=NULL))
 
 momentum.update <- function(network, grad,v, lr = 0.01, momentum=0.9){
   if (is.null(v) == TRUE) {
@@ -35,6 +35,22 @@ AdaGrad.update <- function(network,grad,h,lr=0.01){
     network[[i]] <- network[[i]] - (lr*grad[[i]] / (sqrt(optimizer$AdaGrad[[i]])+1e-7))
   }
   names(optimizer$AdaGrad) <- names(network)
+  return(network)
+}
+
+Rmsprop.update <- function(network, grad, h, lr=0.01, beta=0.9){
+  if (is.null(h) == TRUE) {
+    h <- rep(list(NA),NROW(network))
+    names(h) <- names(network)
+    for(i in 1:NROW(network)){
+      h[[i]] <- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+    }
+  }
+  for(i in 1:NROW(network)){
+    optimizer$Rmsprop[[i]]  <<- (beta * h[[i]]) + (1.0 - beta)*(grads[[i]] * grads[[i]])
+    network[[i]] <- network[[i]] - (lr * grads[[i]]) / (sqrt(optimizer$Rmsprop[[i]])+ 1e-7)
+  }
+  names(optimizer$Rmsprop) <- names(network)
   return(network)
 }
 
