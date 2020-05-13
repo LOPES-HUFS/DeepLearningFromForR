@@ -3,7 +3,7 @@ sgd.update <- function(network, grads, lr = 0.01){
   return(network)
 }
 
-optimizer <- list(Momentum=NULL, AdaGrad=NULL, Rmsprop=NULL,Adam=list("iter"=0,"m"=NULL,"v"=NULL))
+optimizer <- list(Momentum=NULL, AdaGrad=NULL, Rmsprop=NULL, Adam=list("iter"=0,"m"=NULL,"v"=NULL))
 
 momentum.update <- function(network, grad,v, lr = 0.01, momentum=0.9){
   if (is.null(v) == TRUE) {
@@ -70,8 +70,8 @@ Adam.update <- function(network,grads,iter,m,v,lr=0.001,beta1=0.9,beta2=0.999){
   temp_m_list <- rep(list(NA),NROW(network))
   temp_v_list <- rep(list(NA),NROW(network))
   for(i in 1:NROW(network)){
-    temp_m_list[[i]] <-  m[[i]] + (1 - beta1) * (grads[[i]] - m[[i]])
-    temp_v_list[[i]] <-  v[[i]] + (1 - beta2) * (grads[[i]]^2 - v[[i]])
+    temp_m_list[[i]] <- m[[i]] + (1 - beta1) * (grads[[i]] - m[[i]])
+    temp_v_list[[i]] <- v[[i]] + (1 - beta2) * (grads[[i]]^2 - v[[i]])
     network[[i]] <- network[[i]] - (lr_t * temp_m_list[[i]]/ (sqrt(temp_v_list[[i]]) + 1e-7))
   }
   optimizer$Adam$m <<- temp_m_list
