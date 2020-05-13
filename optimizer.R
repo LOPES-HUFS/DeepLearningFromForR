@@ -38,7 +38,7 @@ AdaGrad.update <- function(network,grad,h,lr=0.01){
   return(network)
 }
 
-Rmsprop.update <- function(network, grad, h, lr=0.01, beta=0.9){
+Rmsprop.update <- function(network, grads, h, lr=0.01, beta=0.9){
   if (is.null(h) == TRUE) {
     h <- rep(list(NA),NROW(network))
     names(h) <- names(network)
