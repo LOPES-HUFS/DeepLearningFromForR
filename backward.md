@@ -44,7 +44,7 @@ init <- function(){
 앞서 역전파에서는 국소적 미분을 사용한다고 했습니다. 순전파와 반대방향으로 국소적 미분을 곱하여 이전 노드들에 값을 전달하는 것인데, 국소적 미분은 순전파 때의 미분을 구한다는 뜻입니다. 다시 말해, 순전파 때의 미분 값을 구해 다음 노드에 전달하는 함수가 필요합니다.
 다음 코드는 순전파 때와 마찬가지로 입력신호와 가중치를 계산하고 Relu함수를 거쳐 다음 노드로 전달합니다.
 ```R
-forward <- function(x){
+model.forward <- function(x){
   Affine_1 <- Affine.forward(network$W1, network$b1, x)
   Relu_1 <- Relu.forward(Affine_1$out)
   Affine_2 <- Affine.forward(network$W2, network$b2, Relu_1$out)
@@ -92,21 +92,21 @@ train_model <- function(batch_size, iters_num, learning_rate, debug=FALSE){
       x_batch <- x_train_normalize[batch_mask,]
       t_batch <- t_train_onehotlabel[batch_mask,]
 
-      grad <- gradient(model.forward=forward, x_batch, t_batch)
+      grad <- gradient(model.forward=model.forward, x_batch, t_batch)
       #update weights and biases using SGD
       network <<- sgd.update(network,grad,lr=learning_rate)
 
       if(debug == TRUE){
           if(i %% iter_per_epoch == 0){
-              train_acc <- model.evaluate(forward, x_train_normalize, t_train_onehotlabel)
-              test_acc <- model.evaluate(forward, x_test_normalize, t_test_onehotlabel)
+              train_acc <- model.evaluate(model.forward, x_train_normalize, t_train_onehotlabel)
+              test_acc <- model.evaluate(model.forward, x_test_normalize, t_test_onehotlabel)
               print(c(train_acc, test_acc))
           }
       }
   }
 
-  train_accuracy = model.evaluate(forward, x_train_normalize, t_train_onehotlabel)
-  test_accuracy = model.evaluate(forward, x_test_normalize, t_test_onehotlabel)
+  train_accuracy = model.evaluate(model.forward, x_train_normalize, t_train_onehotlabel)
+  test_accuracy = model.evaluate(model.forward, x_test_normalize, t_test_onehotlabel)
   return(c(train_accuracy, test_accuracy))
 }
 ```
