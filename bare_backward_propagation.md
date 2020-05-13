@@ -33,7 +33,7 @@ TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =
   b1 <- matrix(rep(0,hidden_size), nrow = 1, ncol = hidden_size)
   W2 <- weight_init_std * matrix(rnorm(n  =  hidden_size*output_size), nrow  =  hidden_size, ncol  =  output_size)
   b2 <- matrix(rep(0,output_size),nrow = 1, ncol = output_size)
-  params <<- list(W1 = W1, b1 = b1, W2 = W2, b2 = b2)
+  network <<- list(W1 = W1, b1 = b1, W2 = W2, b2 = b2)
   
   return (list(W1 = W1, b1 = b1, W2 = W2, b2 = b2))
 }
@@ -41,13 +41,13 @@ TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =
 TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 ```
 
-앞에서 만든 네트웍을 학습시킬 모델을 만든다. 이 함수를 다 따로 만든 이유는 우선 `forward()`은 예측을 하기 위해 필요하다. `loss()`은 당연히 손실값을 알아보기 위해서 필요하다.
+앞에서 만든 네트웍을 학습시킬 모델을 만든다. 이 함수를 다 따로 만든 이유는 우선 `model.forward()`은 예측을 하기 위해 필요하다. `loss()`은 당연히 손실값을 알아보기 위해서 필요하다.
 
 ```R
-forward <- function(x){
-  Affine_1 <- Affine.forward(params$W1, params$b1, x)
+model.forward <- function(x){
+  Affine_1 <- Affine.forward(network$W1, network$b1, x)
   Relu_1 <- Relu.forward(Affine_1$out)
-  Affine_2 <- Affine.forward(params$W2, params$b2, Relu_1$out)
+  Affine_2 <- Affine.forward(network$W2, network$b2, Relu_1$out)
   return(list(x = Affine_2$out, Affine_1.forward = Affine_1, Affine_2.forward = Affine_2, Relu_1.forward = Relu_1))
 }
 
@@ -78,12 +78,13 @@ gradient <- function(model.forward, x, t) {
 ```R
 train_size <- dim(x_train_normalize)[1]
 batch_mask <- 100
+batch_size <- 100
 train_loss_list <- data.frame(lossvalue  =  0)
 train_acc_list <- data.frame(train_acc  =  0)
 test_acc_list <- data.frame(test_acc  =  0)
 iter_per_epoch <- max(train_size / batch_size)
-grads <- gradient(model.forward=forward, x=x_train_normalize[1:batch_mask,], t= t_train_onehotlabel[1:batch_mask,])
-loss_value <- loss(model.forward=forward, x=x_train_normalize[1:batch_mask,], t_train_onehotlabel[1:batch_mask,])$loss
+grads <- gradient(model.forward=model.forward, x=x_train_normalize[1:batch_mask,], t= t_train_onehotlabel[1:batch_mask,])
+loss_value <- loss(model.forward=model.forward, x=x_train_normalize[1:batch_mask,], t_train_onehotlabel[1:batch_mask,])$loss
 loss_value
 [1] 2.302899
 ```
@@ -107,16 +108,16 @@ for(i in 1:2000){
   x_batch <- x_train_normalize[batch_mask,]
   t_batch <- t_train_onehotlabel[batch_mask,]
 
-  grad <- gradient(model.forward=forward, x_batch, t_batch)
+  grad <- gradient(model.forward=model.forward, x_batch, t_batch)
   
-  params <- sgd.update(params,grad)
+  network <- sgd.update(network,grad)
   
-  loss_value <- loss(forward ,x_batch, t_batch)$loss
+  loss_value <- loss(model.forward ,x_batch, t_batch)$loss
   train_loss_list <- rbind(train_loss_list,loss_value)
   
   if(i %% iter_per_epoch == 0){
-    train_acc <- model.evaluate(forward, x_train_normalize, t_train_onehotlabel)
-    test_acc <- model.evaluate(forward, x_test_normalize, t_test_onehotlabel)
+    train_acc <- model.evaluate(model.forward, x_train_normalize, t_train_onehotlabel)
+    test_acc <- model.evaluate(model.forward, x_test_normalize, t_test_onehotlabel)
     train_acc_list <- rbind(train_acc_list,train_acc)
     test_acc_list <- rbind(test_acc_list,test_acc)
     print(c(train_acc, test_acc))
