@@ -127,11 +127,16 @@ test_acc_list <- data.frame(test_acc  =  0)
 진짜로 돌립니다. 앞에 iters_num = 10000으로 설정했습니다. 대략 16 애폭정도 돌아갑니다.
 
 ```R
+
+epoch_counter <- 0
+
+temp_TwoLayerNet <- TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
+
 for(i in 1: iters_num){
   batch_mask <- sample(train_size ,batch_size)
   x_batch <- x_train_normalize[batch_mask,]
   t_batch <- t_train_onehotlabel[batch_mask,]
-
+  
   grad <- gradient(model.forward = model.forward, network = temp_TwoLayerNet, x_batch, t_batch)
   
   temp_TwoLayerNet <- sgd.update(temp_TwoLayerNet, grad)
@@ -140,10 +145,12 @@ for(i in 1: iters_num){
   train_loss_list <- rbind(train_loss_list,loss_value)
   
   if(i %% iter_per_epoch == 0){
+    epoch_counter <- epoch_counter + 1
     train_acc <- model.evaluate(model.forward, temp_TwoLayerNet, x_train_normalize, t_train_onehotlabel)
     test_acc <- model.evaluate(model.forward, temp_TwoLayerNet, x_test_normalize, t_test_onehotlabel)
     train_acc_list <- rbind(train_acc_list,train_acc)
     test_acc_list <- rbind(test_acc_list,test_acc)
+    print(epoch_counter)
     print(c(train_acc, test_acc))
   }
 }
