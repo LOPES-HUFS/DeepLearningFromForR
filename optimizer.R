@@ -1,3 +1,21 @@
+get_optimizer <- function(network,grad,name){
+    if(name=="SGD"){
+        return(sgd.update(network,grad))
+    }
+    else if(name=="momentum"){
+        return(momentum.update(network,grad,optimizer$Momentum))
+    } 
+    else if(name=="adagrad"){
+        return(adagrad.update(network,grad,optimizer$AdaGrad))
+    }
+    else if(name=="Rmsprop"){
+        return(rmsprop.update(network,grad,optimizer$Rmsprop))
+    }
+    else{
+        return(adam.update(network, grad, optimizer$Adam$iter,m = optimizer$Adam$m, v = optimizer$Adam$v))
+    }
+}
+
 sgd.update <- function(network, grads, lr = 0.01){
   for(i in names(network)){network[[i]] <- network[[i]] - (grads[[i]]*lr)}
   return(network)
@@ -78,3 +96,5 @@ adam.update <- function(network,grads,iter,m,v,lr=0.001,beta1=0.9,beta2=0.999){
   optimizer$Adam$v <<- temp_v_list
   return(network)
 }
+
+

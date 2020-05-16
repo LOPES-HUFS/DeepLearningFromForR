@@ -24,8 +24,8 @@ init <- function(){
   t_test_onehotlabel <<- making_one_hot_label(mnist_data$t_test,10000, 10)
 }
 
-#forwad 미분값
-forward_process <- function(network, x){
+#forward 미분값
+model.forward <- function(network, x){
   affine_1 <- Affine.forward(network$W1, network$b1, x)
   relu_1 <- Relu.forward(affine_1$out)
   affine_2 <- Affine.forward(network$W2, network$b2, relu_1$out)
@@ -40,9 +40,9 @@ forward_process <- function(network, x){
 }
 
 #경사하강법
-gradient <- function(network, x, t) {
+model.backward <- function(network, x, t) {
   # 순전파
-  d_forward <- forward_process(network, x)
+  d_forward <- model.forward(network, x)
   # 역전파
   dout <- 1
   last_backward <- SoftmaxWithLoss.backward(d_forward$softmax, t, dout)
@@ -63,15 +63,7 @@ SoftmaxWithLoss.backward <- function(predict, t, dout=1){
     return(list(dx = dx))
 }
 
-model.evaluate <- function(func,network,x,t){
-  model <- func(network, x)
-  predict <- max.col(model$softmax)
-  answer <- max.col(t)
-  accuracy <- (sum(ifelse(predict == answer,1,0))) / dim(x)[1]
-  return(accuracy)
-}
-
-train_model <- function(batch_size, iters_num, learning_rate, debug=FALSE){
+model.train <- function(batch_size, iters_num, learning_rate, optimizer_name, debug=FALSE){
   train_size <- dim(x_train_normalize)[1]
   iter_per_epoch <- max(train_size / batch_size)
 
@@ -80,15 +72,14 @@ train_model <- function(batch_size, iters_num, learning_rate, debug=FALSE){
       batch_mask <- sample(train_size ,batch_size)
       x_batch <- x_train_normalize[batch_mask,]
       t_batch <- t_train_onehotlabel[batch_mask,]
-
-      grad <- gradient(network, x_batch, t_batch)
-      #update weights and biases using SGD
-      network <- sgd.update(network,grad,lr=learning_rate)
+      
+      gradient <- model.backward(network, x_batch, t_batch)
+      network <- get_optimizer(network, gradient, optimizer_name)
 
       if(debug){
           if(i %% iter_per_epoch == 0){
-              train_acc <- model.evaluate(forward_process, network, x_train_normalize, t_train_onehotlabel)
-              test_acc <- model.evaluate(forward_process, network, x_test_normalize, t_test_onehotlabel)
+              train_acc <- model.evaluate(model.forward, network, x_train_normalize, t_train_onehotlabel)
+              test_acc <- model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel)
               print(c(train_acc, test_acc))
           }
       }
@@ -107,4 +98,4 @@ sgd.update <- function(network, grads, lr = 0.01){
 }
 
 init()
-train_model(100, 10000, 0.1, TRUE)
+model.train(100, 10000, 0.1, "SGD", TRUE)
