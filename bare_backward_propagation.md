@@ -98,21 +98,36 @@ model.evaluate <- function(model, network, x, t){
 }
 ```
 
-실제로 무식하게 돌려봅니다.
+이 역전파는 SGD를 이용하여 네트웍을 갱신하면서 학습시킬 예정입니다. 이 작업을 할 함수를 만듭니다.
+
+```R
+sgd.update <- function(network, grads, lr = 0.01){
+  for(i in names(network)){network[[i]] <- network[[i]] - (grads[[i]]*lr)}
+  return(network)
+}
+```
+
+실제로 무식하게 돌려봅니다. 우선 필요한 변수를 설정합니다.
 
 ```R
 train_size <- dim(x_train_normalize)[1]
 batch_mask <- 100
 batch_size <- 100
+iter_per_epoch <- max(train_size / batch_size)
+iters_num <- 10000
+```
+학습한 자료를 결과를 저장할 장소를 만듭니다.
+
+```R
 train_loss_list <- data.frame(lossvalue  =  0)
 train_acc_list <- data.frame(train_acc  =  0)
 test_acc_list <- data.frame(test_acc  =  0)
-iter_per_epoch <- max(train_size / batch_size)
 ```
 
+진짜로 돌립니다. 앞에 iters_num = 10000으로 설정했습니다. 대략 16 애폭정도 돌아갑니다.
 
 ```R
-for(i in 1:2000){
+for(i in 1: iters_num){
   batch_mask <- sample(train_size ,batch_size)
   x_batch <- x_train_normalize[batch_mask,]
   t_batch <- t_train_onehotlabel[batch_mask,]
