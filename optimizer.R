@@ -21,7 +21,7 @@ momentum.update <- function(network, grad,v, lr = 0.01, momentum=0.9){
   return(network)
 }
 
-AdaGrad.update <- function(network,grad,h,lr=0.01){
+adagrad.update <- function(network,grad,h,lr=0.01){
   if (is.null(h) == TRUE) {
     h <- rep(list(NA),NROW(network))
     names(h) <- names(network)
@@ -54,7 +54,7 @@ Rmsprop.update <- function(network, grads, h, lr=0.01, beta=0.9){
   return(network)
 }
 
-Adam.update <- function(network,grads,iter,m,v,lr=0.001,beta1=0.9,beta2=0.999){
+adam.update <- function(network,grads,iter,m,v,lr=0.001,beta1=0.9,beta2=0.999){
   if(is.null(m) == TRUE){
     m <- rep(list(NA),NROW(network))
     v <- rep(list(NA),NROW(network))
