@@ -12,6 +12,8 @@
 # model.evaluate(model.forward, x_train_normalize, t_train_onehotlabel)
 # model.evaluate(model.forward, x_test_normalize, t_test_onehotlabel)
 
+source("./optimizer.R")
+
 model.evaluate <- function(model,x,t){
     temp <- model(x)
     y <- max.col(temp$x)
@@ -62,4 +64,22 @@ model.train <- function(batch_size, iters_num, learning_rate,
     train_accuracy = model.evaluate.backward(x_train_normalize, t_train_onehotlabel)
     test_accuracy = model.evaluate.backward(x_test_normalize, t_test_onehotlabel)
     return(c(train_accuracy, test_accuracy))
+}
+
+get_optimizer <- function(network,grad,name){
+    if(name=="SGD"){
+        return(sgd.update(network,grad))
+    }
+    else if(name=="momentum"){
+        return(momentum.update(network,grad,optimizer$Momentum))
+    } 
+    else if(name=="adagrad"){
+        return(adagrad.update(network,grad,optimizer$AdaGrad))
+    }
+    else if(name=="Rmsprop"){
+        return(rmsprop.update(network,grad,optimizer$Rmsprop))
+    }
+    else{
+        return(adam.update(network, grad, optimizer$Adam$iter,m = optimizer$Adam$m, v = optimizer$Adam$v))
+    }
 }
