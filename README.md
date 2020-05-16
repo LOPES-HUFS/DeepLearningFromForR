@@ -193,6 +193,7 @@ draw_image(mnist_data$x_train[2,])
 네트웍을 학습하는 방법은 다음과 같습니다.
 
 1. [순전파를 이용한 학습 방법](https://github.com/LOPES-HUFS/DeepLearningFromForR/blob/master/forward.md)
+2. [역전파를 이용한 학습 방법](https://github.com/LOPES-HUFS/DeepLearningFromForR/blob/master/backward.md)
 
 ## 손으로 쓴 숫자 이미지를 판별하는 딥러닝을 R로만 구현하는 방법 소개
 
