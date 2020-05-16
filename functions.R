@@ -64,3 +64,17 @@ SoftmaxWithLoss.backward <- function(forward, dout=1){
     dx <- (forward$y - forward$t) / dim(forward$t)[1]
     return(list(dx = dx))
 }
+
+drop_out_single <- function(input_size, rate) {
+    temp <- rep(TRUE, input_size)
+    temp[sample(input_size, input_size * rate)] <- FALSE
+    return(temp)
+}
+drop_out.forward <- function(input_size, hidden_size, rate = 0.5) {
+    temp <- matrix(TRUE, nrow = hidden_size, ncol = input_size, byrow = TRUE)
+    for(i in 1:hidden_size){
+        temp[i,] <- drop_out_single(input_size, rate)
+    }
+    return(temp)
+}
+
