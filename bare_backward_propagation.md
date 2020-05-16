@@ -77,14 +77,13 @@ gradient <- function(model.forward, x, t) {
 
 ```R
 train_size <- dim(x_train_normalize)[1]
-batch_mask <- 100
 batch_size <- 100
 train_loss_list <- data.frame(lossvalue  =  0)
 train_acc_list <- data.frame(train_acc  =  0)
 test_acc_list <- data.frame(test_acc  =  0)
 iter_per_epoch <- max(train_size / batch_size)
-grads <- gradient(model.forward=model.forward, x=x_train_normalize[1:batch_mask,], t= t_train_onehotlabel[1:batch_mask,])
-loss_value <- loss(model.forward=model.forward, x=x_train_normalize[1:batch_mask,], t_train_onehotlabel[1:batch_mask,])$loss
+grads <- gradient(model.forward=model.forward, x=x_train_normalize[1:batch_size,], t= t_train_onehotlabel[1:batch_size,])
+loss_value <- loss(model.forward=model.forward, x=x_train_normalize[1:batch_size,], t_train_onehotlabel[1:batch_size,])$loss
 loss_value
 [1] 2.302899
 ```
