@@ -70,11 +70,20 @@ drop_out_single <- function(input_size, rate) {
     temp[sample(input_size, input_size * rate)] <- FALSE
     return(temp)
 }
-drop_out.forward <- function(input_size, hidden_size, rate = 0.5) {
-    temp <- matrix(TRUE, nrow = hidden_size, ncol = input_size, byrow = TRUE)
-    for(i in 1:hidden_size){
-        temp[i,] <- drop_out_single(input_size, rate)
+drop_out <- function(x,rate = 0.5){
+    temp <- matrix(TRUE, nrow = NROW(x), ncol = NCOL(x), byrow = TRUE)
+    for(i in 1:NROW(x)){
+        temp[i,] <- drop_out_single(NCOL(x), rate)
     }
     return(temp)
 }
 
+drop_out.forward <- function(x, rate) {
+    temp <- drop_out(x,rate)
+    return(list(out = x*temp, mask = temp))
+}
+
+drop_out.backward<- function(forward,dout) {
+    dout <- dout*forward$mask
+    return(list(dx = dout))
+}
