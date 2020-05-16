@@ -28,40 +28,36 @@ t_test_onehotlabel <- making_one_hot_label(mnist_data$t_test,10000, 10)
 이제 본격적으로 우리가 학습시킬 네트웍을 만든다.
 
 ```R
-TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
-  W1 <- weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
-  b1 <- matrix(rep(0,hidden_size), nrow = 1, ncol = hidden_size)
-  W2 <- weight_init_std * matrix(rnorm(n  =  hidden_size*output_size), nrow  =  hidden_size, ncol  =  output_size)
-  b2 <- matrix(rep(0,output_size),nrow = 1, ncol = output_size)
-  network <<- list(W1 = W1, b1 = b1, W2 = W2, b2 = b2)
-  
+TwoLayerNet <- function(input_size, hidden_size, output_size, weight_init_std = 0.01) {
+  W1 <- weight_init_std*matrix(rnorm(n = input_size*hidden_size), nrow = input_size, ncol = hidden_size)
+  b1 <- matrix(rep(0,hidden_size),nrow=1,ncol=hidden_size)
+  W2 <- weight_init_std*matrix(rnorm(n = hidden_size*output_size), nrow = hidden_size, ncol = output_size)
+  b2 <- matrix(rep(0,output_size),nrow=1,ncol=output_size)
   return (list(W1 = W1, b1 = b1, W2 = W2, b2 = b2))
 }
-
-TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 ```
 
 앞에서 만든 네트웍을 학습시킬 모델을 만든다. 이 함수를 다 따로 만든 이유는 우선 `model.forward()`은 예측을 하기 위해 필요하다. `loss()`은 당연히 손실값을 알아보기 위해서 필요하다.
 
 ```R
-model.forward <- function(x){
+model.forward <- function(network, x){
   Affine_1 <- Affine.forward(network$W1, network$b1, x)
   Relu_1 <- Relu.forward(Affine_1$out)
   Affine_2 <- Affine.forward(network$W2, network$b2, Relu_1$out)
   return(list(x = Affine_2$out, Affine_1.forward = Affine_1, Affine_2.forward = Affine_2, Relu_1.forward = Relu_1))
 }
 
-loss <- function(model.forward, x, t){
-  temp <- model.forward(x)
+loss <- function(model.forward, network, x, t){
+  temp <- model.forward(network, x)
   y <- temp$x
   last_layer.forward <- SoftmaxWithLoss.forward(y, t)
   return(list(loss = last_layer.forward$loss, softmax = last_layer.forward, predict =  temp))
 }
 
 
-gradient <- function(model.forward, x, t) {
+gradient <- function(model.forward, network, x, t) {
   # 순전파
-  temp <- loss(model.forward, x, t)
+  temp <- loss(model.forward, network, x, t)
   # 역전파
   dout <- 1
   last.backward <- SoftmaxWithLoss.backward(temp$softmax, dout)
@@ -83,22 +79,30 @@ train_loss_list <- data.frame(lossvalue  =  0)
 train_acc_list <- data.frame(train_acc  =  0)
 test_acc_list <- data.frame(test_acc  =  0)
 iter_per_epoch <- max(train_size / batch_size)
-grads <- gradient(model.forward=model.forward, x=x_train_normalize[1:batch_mask,], t= t_train_onehotlabel[1:batch_mask,])
-loss_value <- loss(model.forward=model.forward, x=x_train_normalize[1:batch_mask,], t_train_onehotlabel[1:batch_mask,])$loss
-loss_value
-[1] 2.302899
+
+temp_TwoLayerNet <- TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
+
+grads <- gradient(model.forward=model.forward, network = temp_TwoLayerNet, x=x_train_normalize[1:batch_mask,], t= t_train_onehotlabel[1:batch_mask,])
+loss_value <- loss(model.forward=model.forward, network = temp_TwoLayerNet, x=x_train_normalize[1:batch_mask,], t_train_onehotlabel[1:batch_mask,])$loss
 ```
 
+윗 코드를 실행하면 다음과 같은 결과가 나옵니다.
+
 ```R
-model.evaluate <- function(model,x,t){
-    temp <- model(x)
+>loss_value
+[1] 2.302899
+```
+이렇게 돌아가는 모델을 평가하는 평가 함수를 만들겠습니다.
+
+```R
+model.evaluate <- function(model, network, x, t){
+    temp <- model(network, x)
     y <- max.col(temp$x)
     t <- max.col(t)
     accuracy <- (sum(ifelse(y == t,1,0))) / dim(x)[1]
     return(accuracy)
 }
 ```
-
 
 실제로 무식하게 돌려봅니다.
 
@@ -108,16 +112,16 @@ for(i in 1:2000){
   x_batch <- x_train_normalize[batch_mask,]
   t_batch <- t_train_onehotlabel[batch_mask,]
 
-  grad <- gradient(model.forward=model.forward, x_batch, t_batch)
+  grad <- gradient(model.forward = model.forward, network = temp_TwoLayerNet, x_batch, t_batch)
   
-  network <- sgd.update(network,grad)
+  temp_TwoLayerNet <- sgd.update(temp_TwoLayerNet, grad)
   
-  loss_value <- loss(model.forward ,x_batch, t_batch)$loss
+  loss_value <- loss(model.forward=model.forward, network = temp_TwoLayerNet, x_batch, t_batch)$loss
   train_loss_list <- rbind(train_loss_list,loss_value)
   
   if(i %% iter_per_epoch == 0){
-    train_acc <- model.evaluate(model.forward, x_train_normalize, t_train_onehotlabel)
-    test_acc <- model.evaluate(model.forward, x_test_normalize, t_test_onehotlabel)
+    train_acc <- model.evaluate(model.forward, temp_TwoLayerNet, x_train_normalize, t_train_onehotlabel)
+    test_acc <- model.evaluate(model.forward, temp_TwoLayerNet, x_test_normalize, t_test_onehotlabel)
     train_acc_list <- rbind(train_acc_list,train_acc)
     test_acc_list <- rbind(test_acc_list,test_acc)
     print(c(train_acc, test_acc))
