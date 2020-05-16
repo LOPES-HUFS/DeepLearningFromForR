@@ -7,7 +7,7 @@
 ```R
 source("./functions.R")
 source("./utils.R")
-source("./optimizer.R")
+#source("./optimizer.R")
 ```
 
 MNIST 자료를 가져오는 방법에 대한 내용은 [Mnist 손글씨 데이터 읽어오는 패키지 소개](https://choosunsick.github.io/post/mnist/)을 참고한다. 자료를 가져오는 코드는 아래와 같다. 아래 코드에 대한 소개는 다음을 참고한다.
@@ -69,21 +69,15 @@ gradient <- function(model.forward, network, x, t) {
 }
 ```
 
-지금까지 만든 것을 테스트해보자.
+지금까지 만든 것을 테스트해보자. 학습 자료 처음부터 100개만 뽑하서 배치를 이용해서 한꺼번에 돌려 손실 함수 값을 계산하겠습니다.
 
 ```R
-train_size <- dim(x_train_normalize)[1]
-batch_mask <- 100
 batch_size <- 100
-train_loss_list <- data.frame(lossvalue  =  0)
-train_acc_list <- data.frame(train_acc  =  0)
-test_acc_list <- data.frame(test_acc  =  0)
-iter_per_epoch <- max(train_size / batch_size)
 
 temp_TwoLayerNet <- TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 
-grads <- gradient(model.forward=model.forward, network = temp_TwoLayerNet, x=x_train_normalize[1:batch_mask,], t= t_train_onehotlabel[1:batch_mask,])
-loss_value <- loss(model.forward=model.forward, network = temp_TwoLayerNet, x=x_train_normalize[1:batch_mask,], t_train_onehotlabel[1:batch_mask,])$loss
+grads <- gradient(model.forward=model.forward, network = temp_TwoLayerNet, x=x_train_normalize[1:batch_size,], t= t_train_onehotlabel[1:batch_size,])
+loss_value <- loss(model.forward=model.forward, network = temp_TwoLayerNet, x=x_train_normalize[1:batch_size,], t_train_onehotlabel[1:batch_size,])$loss
 ```
 
 윗 코드를 실행하면 다음과 같은 결과가 나옵니다.
@@ -105,6 +99,17 @@ model.evaluate <- function(model, network, x, t){
 ```
 
 실제로 무식하게 돌려봅니다.
+
+```R
+train_size <- dim(x_train_normalize)[1]
+batch_mask <- 100
+batch_size <- 100
+train_loss_list <- data.frame(lossvalue  =  0)
+train_acc_list <- data.frame(train_acc  =  0)
+test_acc_list <- data.frame(test_acc  =  0)
+iter_per_epoch <- max(train_size / batch_size)
+```
+
 
 ```R
 for(i in 1:2000){
