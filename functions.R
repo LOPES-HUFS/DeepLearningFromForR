@@ -78,8 +78,8 @@ drop_out <- function(x, rate = 0.5) {
     return(temp)
 }
 
-drop_out.forward <- function(x, rate = 0.5) {
-    temp <- drop_out(x)
+drop_out.forward <- function(x, rate) {
+    temp <- drop_out(x,rate)
     return(list(out = x*temp, mask = temp))
 }
 
