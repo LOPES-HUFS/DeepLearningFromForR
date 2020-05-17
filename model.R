@@ -15,11 +15,11 @@
 source("./optimizer.R")
 
 model.backward <- function(){
-    return FALSE
+    return(FALSE)
 }
 
 model.forward <- function(){
-    return FALSE
+    return(FALSE)
 }
 
 model.evaluate <- function(func,network,x,t){
