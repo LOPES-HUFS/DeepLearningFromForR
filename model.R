@@ -22,12 +22,12 @@ model.forward <- function(){
     return(FALSE)
 }
 
-model.evaluate <- function(network,model,x,t){
-    temp <- model(network,x)
-    y <- max.col(temp$x)
-    t <- max.col(t)
-    accuracy <- (sum(ifelse(y == t,1,0))) / dim(x)[1]
-    return(accuracy)
+model.evaluate <- function(func,network,x,t){
+  model <- func(network, x)
+  predict <- max.col(model$softmax)
+  answer <- max.col(t)
+  accuracy <- (sum(ifelse(predict == answer,1,0))) / dim(x)[1]
+  return(accuracy)
 }
 
 # 특정 숫자를 맞출 수 있는지 아래와 같이 사용하면 됩니다.
