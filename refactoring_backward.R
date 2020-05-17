@@ -90,12 +90,5 @@ model.train <- function(batch_size, iters_num, learning_rate, optimizer_name, de
   return(c(train_accuracy, test_accuracy))
 }
 
-sgd.update <- function(network, grads, lr = 0.01){
-  for(i in names(network)){
-    network[[i]] <- network[[i]] - (grads[[i]]*lr)
-    }
-  return(network)
-}
-
 init()
 model.train(100, 10000, 0.1, "SGD", TRUE)

@@ -16,7 +16,7 @@ get_optimizer <- function(network,grad,name){
     }
 }
 
-sgd.update <- function(network, grads, lr = 0.01){
+sgd.update <- function(network, grads, lr = 0.1){
   for(i in names(network)){network[[i]] <- network[[i]] - (grads[[i]]*lr)}
   return(network)
 }
