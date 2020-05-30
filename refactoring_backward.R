@@ -1,5 +1,5 @@
-# rm(list=ls())
-# setwd('/Users/yejin/Sites/DeepLearningFromForR')
+#  rm(list=ls())
+#  setwd('/Users/yejin/Sites/DeepLearningFromForR')
 library(dslabs)
 
 source("./functions.R")
@@ -39,12 +39,12 @@ model.forward <- function(network, x){
     ))
 }
 
-
 model.backward <- function(network, x, t) {
   # 순전파
   d_forward <- model.forward(network, x)
 
   # 역전파
+  dout <- 1
   last_backward <- SoftmaxWithLoss.backward(d_forward$softmax, t, dout)
   affine_2_backward <- Affine.backward(d_forward$affine_2, last_backward$dx)
   relu_1_backward <- Relu.backward(d_forward$relu_1, affine_2_backward$dx)
@@ -85,8 +85,9 @@ model.train <- function(batch_size, iters_num, learning_rate, optimizer_name, de
       }
   }
 
-  train_accuracy = model.evaluate(model.forward, x_train_normalize, t_train_onehotlabel)
-  test_accuracy = model.evaluate(model.forward, x_test_normalize, t_test_onehotlabel)
+  train_accuracy = model.evaluate(model.forward, network, x_train_normalize, t_train_onehotlabel)
+  test_accuracy = model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel)
+
   return(c(train_accuracy, test_accuracy))
 }
 
