@@ -71,6 +71,7 @@ gradient <- function(model.forward, network, x, t) {
 
 지금까지 만든 것을 테스트해보자. 학습 자료 처음부터 100개만 뽑하서 배치를 이용해서 한꺼번에 돌려 손실 함수 값을 계산하겠습니다.
 
+
 ```R
 batch_size <- 100
 
