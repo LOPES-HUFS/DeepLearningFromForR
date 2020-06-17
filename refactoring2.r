@@ -72,22 +72,18 @@ model.predict<-function(network, model.forward, x){
     return(model.forward(network, x)$softmax)
 }
 
-model.evaluate <- function(predict,x,t){
+model.evaluate <- function(predict, x, t){
+  predict <- max.col(predict)
   answer <- max.col(t)
   accuracy <- (sum(ifelse(predict == answer,1,0))) / dim(x)[1]
   return(accuracy)
 }
 
 model.train <- function(network, model.forward, model.backward, optimizer="SGD", batch_size=100, iters_num=10000, learning_rate=0.01, debug=FALSE){
-    print("start")
     train_size <- dim(x_train_normalize)[1]
     iter_per_epoch <- max(train_size / batch_size)
 
-    train_loss_list <- data.frame(lossvalue  =  0)
-    train_acc_list <- data.frame(train_acc  =  0)
-    test_acc_list <- data.frame(test_acc  =  0)
     for(i in 1:iters_num){
-        print(i)
         batch_mask <- sample(train_size, batch_size)
         x_batch <- x_train_normalize[batch_mask,]
         t_batch <- t_train_onehotlabel[batch_mask,]
@@ -95,15 +91,12 @@ model.train <- function(network, model.forward, model.backward, optimizer="SGD",
         gradient <- model.backward(network, x_batch, t_batch)
         network <- get_optimizer(network, gradient, optimizer)
         if(debug){
-            predict <- model.predict(network, model.forward, x_train_normalize)
-            loss_value <- loss(predict, network, x_batch, t_batch)$loss
-            train_loss_list <- rbind(train_loss_list,loss_value)
             if(i %% iter_per_epoch == 0){
-                train_acc <- model.evaluate(predict, x_train_normalize, t_train_onehotlabel)
-                test_acc <- model.evaluate(predict, x_test_normalize, t_test_onehotlabel)
-                train_acc_list <- rbind(train_acc_list,train_acc)
-                test_acc_list <- rbind(test_acc_list,test_acc)
-
+                train_predict <- model.predict(network, model.forward, x_train_normalize)
+                test_predict <- model.predict(network, model.forward, x_test_normalize)
+                train_acc <- model.evaluate(train_predict, x_train_normalize, t_train_onehotlabel)
+                test_acc <- model.evaluate(test_predict, x_test_normalize, t_test_onehotlabel)
+                
                 print(c(train_acc, test_acc))
             }
         }
@@ -115,13 +108,6 @@ model.train <- function(network, model.forward, model.backward, optimizer="SGD",
     test_accuracy = model.evaluate(test_predict, x_test_normalize, t_test_onehotlabel)
     print(train_accuracy, test_accuracy)
 
-    if(debug){
-        return(
-            network=network,
-            loss=train_loss_list,
-            accuracy=merge(train_acc_list, test_acc_list)
-        )
-    }
     return(network=network)
 }
 
@@ -130,4 +116,4 @@ train_answer <- making_one_hot_label(mnist_data$t_train,60000, 10)
 test_answer <- making_one_hot_label(mnist_data$t_test,10000, 10)
 model.init(mnist_data$x_train, mnist_data$x_test, train_answer, test_answer)
 network <- TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
-model.train(network, model.forward, model.backward, optimizer="SGD", batch_size=100, iters_num=10000, learning_rate=0.01, debug=TRUE)
+train <- model.train(network, model.forward, model.backward, optimizer="SGD", batch_size=100, iters_num=10000, learning_rate=0.01, debug=TRUE)
