@@ -38,12 +38,12 @@ col2im <- function(col, input_data, filter_h, filter_w, stride, pad){
   out_h <- ((h + 2 * pad - filter_h) %/% stride) + 1
   out_w <- ((w + 2 * pad - filter_w) %/% stride) + 1
   col <- aperm(array(t(col),c(filter_h,filter_w,c,h,w,n)),c(4,5,1,2,3,6))
-  result <- array(0,c(n, c, h + 2*pad + stride - 1, w + 2*pad + stride - 1))
+  result <- array(0,c(h + 2*pad + stride - 1, w + 2*pad + stride - 1,c,n))
   for(i in 0:(filter_h-1)){
     i_max <- i + (stride * out_h)
     for(j in 0:(filter_w-1)){
       j_max <- j + (stride * out_w)
-      result[seq(j+1, j_max, stride), seq(i+1, i_max, stride),,] <- result[seq(j+1, j_max, stride), seq(i+1, i_max, stride),,]+col[,,j+1,i+1,,]
+      result[seq(j+1, j_max, stride), seq(i+1, i_max, stride),,] <- result[seq(j+1, j_max, stride), seq(i+1, i_max, stride),,]+col[j+1,i+1,,,,]
     }
   }
   return(result[pad:H + pad, pad:W + pad,,])
