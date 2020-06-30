@@ -105,3 +105,19 @@ pooling.forward <- function(x, pool_h, pool_w, stride, pad){
   return(list(out=new_out,x=x,argmax=arg_max,col=col))
   
 }
+
+flatten_forward <- function(x){
+  n <- dim(x)[4]
+  c <- dim(x)[3]
+  h <- dim(x)[2]
+  w <- dim(x)[1]
+  out <- matrix(0, nrow = n, ncol = h*w*c)
+  mask <- dim(x)
+  for(i in 1:n){
+    data <- x[,,,i]
+    temp <- matrix(data, nrow = 1, ncol = h*w*c)
+    out[i,] <- temp
+  }
+  return(list(out = out , mask = mask, x=x))
+  
+}
