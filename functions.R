@@ -62,7 +62,7 @@ SoftmaxWithLoss.forward <- function(x, t){
 
 SoftmaxWithLoss.backward <- function(forward, dout=1){
     dx <- (forward$y - forward$t) / dim(forward$t)[1]
-    return(dx)
+    return(list(dx = dx))
 }
 
 drop_out_single <- function(input_size, rate) {
