@@ -137,4 +137,12 @@ flatten.forward <- function(x){
   return(list(out = out , mask = mask, x=x))
   
 }
-flatten.backward
+flatten.backward <- function(flatten_forward,dout){
+  n <- dim(dout)[1]
+  out <- array(0,dim = flatten_forward$mask)
+  for(i in 1:n){
+    dx <- array(dout[i,],dim = flatten_forward$mask[1:3])
+    out[,,,i] <- dx
+  }
+  return(out)
+}
