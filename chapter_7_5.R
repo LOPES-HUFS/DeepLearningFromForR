@@ -66,20 +66,20 @@ convolution.forward <- function(x,W,b,stride,pad){
   col_w <- t(matrix(aperm(W,c(3,4,1,2)),fn*fc,fh*fw))
   out <- sweep(col%*%col_w,2,b,"+") 
   new_out <- aperm(array(out,c(out_h,out_w,n,fn)),c(1,2,4,3))
-  return(list(out=new_out,x=x,col=col,col_w=col_w))
+  return(list(out=new_out,x=x,col=col,col_w=col_w,W=W))
 }
 
-convolution.backward <- function(dout,W,stride=1,pad=0){
-  fn <- dim(W)[4]
-  fc <- dim(W)[3]
-  fh <- dim(W)[2]
-  fw <- dim(W)[1]
-  new_dout <- matrix(aperm(dout$out,c(1,2,4,3)),ncol=fn)
+convolution.backward <- function(convolution_forward,dout,stride=1,pad=0){
+  fn <- dim(convolution_forward$W)[4]
+  fc <- dim(convolution_forward$W)[3]
+  fh <- dim(convolution_forward$W)[2]
+  fw <- dim(convolution_forward$W)[1]
+  new_dout <- matrix(aperm(dout,c(1,2,4,3)),ncol=fn)
   db <- colSums(new_dout)
-  dW <- t(dout$col)%*%new_dout
+  dW <- t(convolution_forward$col)%*%new_dout
   dW <- array(dW,c(fw,fh,fc,fn))
-  dcol <- new_dout%*%t(dout$col_w)
-  dx <- col2im(dcol, dout$x, fh, fw,stride, pad)
+  dcol <- new_dout%*%t(convolution_forward$col_w)
+  dx <- col2im(dcol, convolution_forward$x, fh, fw,stride, pad)
   return(dx)
 }
 
