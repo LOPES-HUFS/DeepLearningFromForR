@@ -43,10 +43,12 @@ col2im <- function(col, input_data, filter_h, filter_w, stride, pad){
     i_max <- (i +stride * out_h)-1
     for(j in 1:filter_w){
       j_max <- (j + stride * out_w)-1
-      result[seq(i, i_max, stride),seq(j, j_max, stride),,] <- result[seq(i, i_max, stride),seq(j, j_max, stride),,]+col[,,j,i,,]
+      result[seq(j, j_max, stride),seq(i, i_max, stride),,] <- result[seq(j, j_max, stride),seq(i, i_max, stride),,]+col[,,j,i,,] 
     }
   }
-  return(result[(1+pad):(h + pad), (1+pad):(w + pad),,])
+  new_result <- result[(1+pad):(h + pad), (1+pad):(w + pad),,]
+  new_result_reshape <- array(new_result,c(dim(new_result)[1],dim(new_result)[2],c,n))
+  return(new_result_reshape)
 }
 
 convolution_forward <- function(x,W,b,stride,pad){
@@ -105,6 +107,20 @@ pooling.forward <- function(x, pool_h, pool_w, stride, pad){
   return(list(out=new_out,x=x,argmax=arg_max,col=col))
   
 }
+
+pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
+  dout <- aperm(pool_forward$out,c(3,1,2,4))
+  pool_size <- pool_h * pool_w
+  dmax <- matrix(0,nrow = length(dout), ncol = pool_size)
+  for(i in 1:dim(pool_forward$argmax)[1]){
+    dmax[i,array(c(pool_forward$argmax))[i]] <- array(c(dout))[i]
+  }
+  #dmax <- array(t(dmax),c(pool_size,dim(dout)))
+  dcol <- dmax
+  dx <- col2im(dcol,pool_forward$x,pool_h,pool_w,stride,pad)
+  return(dx)
+}
+
 
 flatten_forward <- function(x){
   n <- dim(x)[4]
