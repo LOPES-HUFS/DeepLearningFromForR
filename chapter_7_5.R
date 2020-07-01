@@ -51,7 +51,7 @@ col2im <- function(col, input_data, filter_h, filter_w, stride, pad){
   return(new_result_reshape)
 }
 
-convolution_forward <- function(x,W,b,stride,pad){
+convolution.forward <- function(x,W,b,stride,pad){
   fn <- dim(W)[4]
   fc <- dim(W)[3]
   fh <- dim(W)[2]
@@ -69,7 +69,7 @@ convolution_forward <- function(x,W,b,stride,pad){
   return(list(out=new_out,x=x,col=col,col_w=col_w))
 }
 
-convolution_backward <- function(dout,W,stride=1,pad=0){
+convolution.backward <- function(dout,W,stride=1,pad=0){
   fn <- dim(W)[4]
   fc <- dim(W)[3]
   fh <- dim(W)[2]
@@ -122,7 +122,7 @@ pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
 }
 
 
-flatten_forward <- function(x){
+flatten.forward <- function(x){
   n <- dim(x)[4]
   c <- dim(x)[3]
   h <- dim(x)[2]
@@ -137,3 +137,4 @@ flatten_forward <- function(x){
   return(list(out = out , mask = mask, x=x))
   
 }
+flatten.backward
