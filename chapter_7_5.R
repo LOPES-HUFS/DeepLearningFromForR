@@ -17,6 +17,7 @@ im2col <- function(input, filter_h, filter_w, stride, pad){
   input_w <- dim(input)[2]
   temp <- padding(input, pad)
   output_r <- ((input_h + 2 * pad - filter_h) %/% stride) + 1 #OK
+
   output_c <- ((input_w + 2 * pad - filter_w) %/% stride) + 1 #OK
   result <- array(0, dim = c(filter_h, filter_w,output_r, output_c, c, N))
   for(i in 0:(filter_h-1)){
@@ -80,7 +81,7 @@ convolution.backward <- function(convolution_forward,dout,stride=1,pad=0){
   dW <- array(dW,c(fw,fh,fc,fn))
   dcol <- new_dout%*%t(convolution_forward$col_w)
   dx <- col2im(dcol, convolution_forward$x, fh, fw,stride, pad)
-  return(dx)
+  return(list(dx=dx,dW=dW,db=db))
 }
 
 pooling.forward <- function(x, pool_h, pool_w, stride, pad){
@@ -109,14 +110,12 @@ pooling.forward <- function(x, pool_h, pool_w, stride, pad){
 }
 
 pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
-  dout <- aperm(pool_forward$out,c(3,1,2,4))
+  dout <- aperm(dout,c(3,1,2,4))
   pool_size <- pool_h * pool_w
   dmax <- matrix(0,nrow = length(dout), ncol = pool_size)
-  for(i in 1:dim(pool_forward$argmax)[1]){
-    dmax[i,array(c(pool_forward$argmax))[i]] <- array(c(dout))[i]
-  }
-  #dmax <- array(t(dmax),c(pool_size,dim(dout)))
-  dcol <- dmax
+  dmax[cbind(1:length(pool_dout),loss_temp$predict$pool_temp$argmax)]<-pool_dout
+  dmax <- array(t(dmax),dim = c(pool_size,dim(pool_dout)))
+  dcol <- matrix(dmax,dim(dmax)[3]*dim(dmax)[4]*dim(dmax)[5],dim(dmax)[1]*dim(dmax)[2],T)
   dx <- col2im(dcol,pool_forward$x,pool_h,pool_w,stride,pad)
   return(dx)
 }
