@@ -13,8 +13,8 @@ padding <- function(input, num){
 im2col <- function(input, filter_h, filter_w, stride, pad){   
   N <- dim(input)[4]
   c <- dim(input)[3]
-  input_h <- dim(input)[1]
-  input_w <- dim(input)[2]
+  input_h <- dim(input)[2]
+  input_w <- dim(input)[1]
   temp <- padding(input, pad)
   output_r <- ((input_h + 2 * pad - filter_h) %/% stride) + 1 #OK
 
@@ -44,7 +44,7 @@ col2im <- function(col, input_data, filter_h, filter_w, stride, pad){
     i_max <- (i +stride * out_h)-1
     for(j in 1:filter_w){
       j_max <- (j + stride * out_w)-1
-      result[seq(j, j_max, stride),seq(i, i_max, stride),,] <- result[seq(j, j_max, stride),seq(i, i_max, stride),,]+col[,,j,i,,] 
+      result[seq(i, i_max, stride),seq(j, j_max, stride),,] <- result[seq(i, i_max, stride),seq(j, j_max, stride),,]+col[,,j,i,,] 
     }
   }
   new_result <- result[(1+pad):(h + pad), (1+pad):(w + pad),,]
@@ -113,7 +113,7 @@ pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
   dout <- aperm(dout,c(3,1,2,4))
   pool_size <- pool_h * pool_w
   dmax <- matrix(0,nrow = length(dout), ncol = pool_size)
-  dmax[cbind(1:length(dout),loss_temp$predict$pool_temp$argmax)]<-dout
+  dmax[cbind(1:length(dout),pool_forward$predict$pool_temp$argmax)]<-dout
   dmax <- array(t(dmax),dim = c(pool_size,dim(dout)))
   dcol <- matrix(dmax,dim(dmax)[3]*dim(dmax)[4]*dim(dmax)[5],dim(dmax)[1]*dim(dmax)[2],T)
   dx <- col2im(dcol,pool_forward$x,pool_h,pool_w,stride,pad)
