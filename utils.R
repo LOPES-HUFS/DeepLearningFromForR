@@ -13,14 +13,19 @@ draw_image <- function(x){
   return(image(1:28, 1:28, matrix(x, nrow=28)[ , 28:1], col = gray(seq(0, 1, 0.05)), xlab = "", ylab=""))
 }
 
-get_data<- function(){
+get_data<- function(tensor=FALSE){
   mnist<-read_mnist()
   x_train<-mnist$train$images
   t_train<-mnist$train$labels
   x_test<-mnist$test$images
   t_test<-mnist$test$labels
+  if(tensor==TRUE){
+    x_train <- array(x_train,28,28,1,60000)
+    x_test <- array(x_test,28,28,1,60000)
+  }
   x_train_normalize <- x_train/255
   x_test_normalize <- x_test/255
+  
   return(list(x_train=x_train_normalize,x_test=x_test_normalize,t_train=t_train,t_test=t_test))
 }
   

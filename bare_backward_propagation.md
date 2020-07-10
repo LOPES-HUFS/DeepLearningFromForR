@@ -91,10 +91,12 @@ loss_value <- loss(model.forward=model.forward, network = temp_TwoLayerNet, x=x_
 
 ```R
 model.evaluate <- function(model, network, x, t){
+    
     temp <- model(network, x)
     y <- max.col(temp$x)
     t <- max.col(t)
-    accuracy <- (sum(ifelse(y == t,1,0))) / dim(x)[1]
+    accuracy <- ifelse(NROW(dim(x))==2,sum(ifelse(y == t,1,0)) / dim(x)[1], sum(ifelse(y == t,1,0)) / dim(x)[4])
+    #accuracy <- (sum(ifelse(y == t,1,0))) / dim(x)[1]
     return(accuracy)
 }
 ```
