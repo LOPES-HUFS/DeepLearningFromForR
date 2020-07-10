@@ -79,8 +79,11 @@ adam.update <- function(network,grads,iter,m,v,lr=0.001,beta1=0.9,beta2=0.999){
     names(m) <- names(network)
     names(v) <- names(network)
     for(i in 1:NROW(network)){
-      m[[i]] <- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
-      v[[i]] <- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+      #m[[i]] <- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+      m[[i]] <- array(0,dim(network[[i]]))
+      
+      #v[[i]] <- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+      v[[i]] <- array(0,dim(network[[i]]))
     }
   }
   optimizer$Adam$iter <<- iter+1
