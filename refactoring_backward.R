@@ -85,8 +85,8 @@ model.train <- function(batch_size, iters_num, learning_rate, optimizer_name, de
       }
   }
 
-  train_accuracy = model.evaluate(model.forward, network, x_train_normalize, t_train_onehotlabel)
-  test_accuracy = model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel)
+  train_accuracy <- model.evaluate(model.forward, network, x_train_normalize, t_train_onehotlabel)
+  test_accuracy <- model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel)
 
   return(c(train_accuracy, test_accuracy))
 }
