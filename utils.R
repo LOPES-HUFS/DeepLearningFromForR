@@ -20,8 +20,8 @@ get_data<- function(tensor=FALSE){
   x_test<-mnist$test$images
   t_test<-mnist$test$labels
   if(tensor==TRUE){
-    x_train <- array(x_train,c(28,28,1,60000))
-    x_test <- array(x_test,c(28,28,1,10000))
+    x_train <- array(t(x_train),c(28,28,1,60000))
+    x_test <- array(t(x_test),c(28,28,1,10000))
   }
   x_train_normalize <- x_train/255
   x_test_normalize <- x_test/255
