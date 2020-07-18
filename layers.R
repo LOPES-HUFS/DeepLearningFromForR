@@ -1,4 +1,5 @@
 source("./functions.R")
+source("./utils.R")
 
 Relu.forward <- function(x){
   mask <- x<=0
