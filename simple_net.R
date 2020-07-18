@@ -110,6 +110,7 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
 train_loss_list <- data.frame(loss_value = 0)
 test_acc <- data.frame(acc = 0)
 init(TRUE)
+pool_params <- list(pool_h=2, pool_w=2, stride=2, pad=0)
 params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
                          pad=0,stride=1,hidden_size=100,output_size=10,
                          weight_init_std=0.01)
