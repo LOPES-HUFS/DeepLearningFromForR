@@ -1,5 +1,5 @@
 library(dslabs)
-source("./functions.R")
+source("./layers.R")
 source("./utils.R")
 source("./optimizer.R")
 
