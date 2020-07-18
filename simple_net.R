@@ -63,7 +63,7 @@ loss <- function(model.forward, network, x, t){
 
 model.backward <- function(model.forward, network, x, t) {
   # 순전파
-  loss_temp <- loss_test(model.forward, network, x, t)
+  loss_temp <- loss(model.forward, network, x, t)
   # 역전파
   dout <- 1
   dout <- backward("SoftmaxWithLoss",loss_temp$softmax,dout)
