@@ -30,7 +30,7 @@ init <- function(tensor){
   t_test_onehotlabel <<- making_one_hot_label(mnist_data$t_test,10000, 10)
 } 
 
-pool_params <- list(pool_h=2, pool_w=2, stride=2, pad=0)
+
 model.forward <- function(network, x){
   conv_params <- list(W = network$W1,b = network$b1, stride = 1, pad = 0)
   affine_params_1 <- list(W = network$W2,b = network$b2)
