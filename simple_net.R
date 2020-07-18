@@ -111,9 +111,5 @@ train_loss_list <- data.frame(loss_value = 0)
 test_acc <- data.frame(acc = 0)
 init(TRUE)
 pool_params <- list(pool_h=2, pool_w=2, stride=2, pad=0)
-params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
-                         pad=0,stride=1,hidden_size=100,output_size=10,
-                         weight_init_std=0.01)
-network <- simple_net_params(params = params)  
 
 model_temp <- model.train(train_x = x_train_normalize,train_t = t_train_onehotlabel,x_test_normalize,t_test_onehotlabel,batch_size = 100,epoch = 5,optimizer_name = "adam",debug = TRUE)
