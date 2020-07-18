@@ -3,11 +3,6 @@ source("./layers.R")
 source("./utils.R")
 source("./optimizer.R")
 
-make_parameter <- function(input_dim,filter_size,filter_num,pad,stride,hidden_size,output_size){
-  return(list(input_dim=input_dim,filter_size=filter_size,filter_num=filter_num,
-              pad=pad,stride=stride,hidden_size=hidden_size,output_size=output_size,
-              weight_init_std=0.01))
-}
 
 simple_net_params <- function(params){
   input_size <- params[["input_dim"]][1]
@@ -114,7 +109,9 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
 train_loss_list <- data.frame(loss_value = 0)
 test_acc <- data.frame(acc = 0)
 init(TRUE)
-params <- make_parameter(c(28,28,1),5,30,0,1,100,10)
+params <- params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
+                         pad=0,stride=1,hidden_size=100,output_size=10,
+                         weight_init_std=0.01)
 network <- simple_net_params(params = params)  
 
 model_temp <- model.train(train_x = x_train_normalize,train_t = t_train_onehotlabel,x_test_normalize,t_test_onehotlabel,batch_size = 100,iters_num = 3000,optimizer_name = "adam",debug = TRUE)
