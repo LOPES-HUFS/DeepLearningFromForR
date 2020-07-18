@@ -88,7 +88,7 @@ convolution.backward <- function(convolution_forward,dout,stride=1,pad=0){
   dW <- t(convolution_forward$col)%*%new_dout
   dW <- array(dW,c(fw,fh,fc,fn))
   dcol <- new_dout%*%t(convolution_forward$col_w)
-  dx <- col2im(dcol, convolution_forward$x, fh, fw,stride, pad)
+  dx <- col2im(dcol, dim(convolution_forward$x), fh, fw,stride, pad)
   return(list(dx=dx,dW=dW,db=db))
 }
 
@@ -128,21 +128,6 @@ pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
   return(dx)
 }
 
-flatten.forward <- function(x){
-  n <- dim(x)[4]
-  c <- dim(x)[3]
-  h <- dim(x)[2]
-  w <- dim(x)[1]
-  out <- matrix(0, nrow = n, ncol = h*w*c)
-  mask <- dim(x)
-  for(i in 1:n){
-    data <- x[,,,i]
-    temp <- matrix(data, nrow = 1, ncol = h*w*c)
-    out[i,] <- temp
-  }
-  return(list(out = out , mask = mask))
-  
-}
 flatten.forward <- function(x){
   mask <- dim(x)
   out <- t(matrix(x,nrow=dim(x)[1]*dim(x)[2]*dim(x)[3],ncol=dim(x)[4]))
