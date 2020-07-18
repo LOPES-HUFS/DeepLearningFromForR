@@ -80,10 +80,10 @@ model.evaluate <- function(model, network, x, t){
   return(accuracy)
 }
 
-model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, optimizer_name, debug=FALSE){
+model.train <- function(train_x,train_t, test_x, test_t, batch_size, epoch, optimizer_name, debug=FALSE){
   train_size <- dim(train_x)[4]
   iter_per_epoch <- max(train_size / batch_size)
-  
+  iters_num <- iter_per_epoch*epoch
   params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
                  pad=0,stride=1,hidden_size=100,output_size=10,
                  weight_init_std=0.01)
@@ -116,4 +116,4 @@ params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
                          weight_init_std=0.01)
 network <- simple_net_params(params = params)  
 
-model_temp <- model.train(train_x = x_train_normalize,train_t = t_train_onehotlabel,x_test_normalize,t_test_onehotlabel,batch_size = 100,iters_num = 3000,optimizer_name = "adam",debug = TRUE)
+model_temp <- model.train(train_x = x_train_normalize,train_t = t_train_onehotlabel,x_test_normalize,t_test_onehotlabel,batch_size = 100,epoch = 5,optimizer_name = "adam",debug = TRUE)
