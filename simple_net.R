@@ -85,7 +85,9 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
   train_size <- dim(train_x)[4]
   iter_per_epoch <- max(train_size / batch_size)
   
-  params <- make_parameter(c(28,28,1),5,30,0,1,100,10)
+  params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
+                 pad=0,stride=1,hidden_size=100,output_size=10,
+                 weight_init_std=0.01)
   network <- simple_net_params(params = params)  
   for(i in 1:iters_num){
     batch_mask <- sample(train_size ,batch_size)
