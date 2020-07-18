@@ -156,6 +156,9 @@ forward <- function(name, x, params=NA){
     else if(name == "Pooling"){
       return(pooling.forward(x, params[["pool_h"]], params[["pool_w"]], 
                              params[["stride"]], params[["pad"]]))}
+    else if(name == "Drop_out"){
+      return(drop_out.forward(x,params[["rate"]]))
+    }
     else{
       return("name is False")
     }
@@ -173,6 +176,7 @@ backward <- function(name,forward,dout,params=NA){
     else if(name == "SoftmaxWithLoss"){return(SoftmaxWithLoss.backward(forward,dout))}
     else if(name == "Convolution"){return(convolution.backward(forward,dout))}
     else if(name == "Flatten"){return(flatten.backward(forward,dout))}
+    else if(name == "Drop_out"){return(drop_out.backward(forward,dout))}
     else{return("name is False")}
   }
 }
