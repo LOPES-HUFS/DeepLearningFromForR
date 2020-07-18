@@ -1,3 +1,4 @@
+library(dslabs)
 source("./functions.R")
 source("./utils.R")
 source("./optimizer.R")
@@ -100,7 +101,7 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
     
     gradient <- model.backward(model.forward,network, x_batch, t_batch)
     network <- get_optimizer(network, gradient, optimizer_name)
-    if(debug=TRUE){
+    if(debug==TRUE){
       if(i %% 600 ==0){
         train_loss_list <- rbind(train_loss_list,loss_test(model.forward=model.forward, network = network, x_batch, t_batch)$loss)
         test_acc <- rbind(test_acc,model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel))
