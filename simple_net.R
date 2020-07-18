@@ -1,7 +1,7 @@
 source("./functions.R")
 source("./utils.R")
 source("./optimizer.R")
-source("./cnn_functions")
+source("./cnn_functions.R")
 
 make_parameter <- function(input_dim,filter_size,filter_num,pad,stride,hidden_size,output_size){
   return(list(input_dim=input_dim,filter_size=filter_size,filter_num=filter_num,
