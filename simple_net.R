@@ -107,7 +107,6 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
       }
     }
     
-  }
   return(list(loss=train_loss_list,test_acc=test_acc))
 }
 
