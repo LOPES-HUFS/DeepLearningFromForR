@@ -3,7 +3,6 @@ source("./layers.R")
 source("./utils.R")
 source("./optimizer.R")
 
-
 simple_net_params <- function(params){
   input_size <- params[["input_dim"]][1]
   conv_output_size <- (input_size - params[["filter_size"]] + 2*params[["pad"]]) / params[["stride"]] + 1
@@ -111,7 +110,7 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
 train_loss_list <- data.frame(loss_value = 0)
 test_acc <- data.frame(acc = 0)
 init(TRUE)
-params <- params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
+params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
                          pad=0,stride=1,hidden_size=100,output_size=10,
                          weight_init_std=0.01)
 network <- simple_net_params(params = params)  
