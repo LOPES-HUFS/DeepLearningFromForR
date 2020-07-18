@@ -29,6 +29,18 @@ get_data<- function(tensor=FALSE){
   return(list(x_train=x_train_normalize,x_test=x_test_normalize,t_train=t_train,t_test=t_test))
 }
 
+padding <- function(input, num){
+  input_nrow <- dim(input)[1]
+  input_ncol <- dim(input)[2]
+  n <- dim(input)[4]
+  c <- dim(input)[3]
+  temp <- array(0, dim = c((input_nrow + (2 * num)),(input_ncol + (2 * num)),c,n))
+  temp_nrow <- nrow(temp)
+  temp_ncol <- ncol(temp)
+  temp[(1 + num):(temp_nrow - num), (1 + num):(temp_nrow - num),,] <- input
+  return(temp)
+}
+
 im2col <- function(input, filter_h, filter_w, stride, pad){   
   N <- dim(input)[4]
   c <- dim(input)[3]
@@ -50,11 +62,11 @@ im2col <- function(input, filter_h, filter_w, stride, pad){
   return(reshape_result)
 }
 
-col2im <- function(col, input_data, filter_h, filter_w, stride, pad){
-  n <- dim(input_data)[4]
-  c <- dim(input_data)[3]
-  h <- dim(input_data)[2]
-  w <- dim(input_data)[1]
+col2im <- function(col, input_dim, filter_h, filter_w, stride, pad){
+  n <- input_dim[4]
+  c <- input_dim[3]
+  h <- input_dim[2]
+  w <- input_dim[1]
   out_h <- ((h + 2 * pad - filter_h) %/% stride) + 1
   out_w <- ((w + 2 * pad - filter_w) %/% stride) + 1
   col <- aperm(array(t(col),c(filter_h,filter_w,c,out_h,out_w,n)),c(4,5,1,2,3,6))

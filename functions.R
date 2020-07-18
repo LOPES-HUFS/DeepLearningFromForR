@@ -30,15 +30,4 @@ softmax <- function(a){
 
 softmax <- compiler::cmpfun(softmax)
 
-padding <- function(input, num){
-    input_nrow <- dim(input)[1]
-    input_ncol <- dim(input)[2]
-    n <- dim(input)[4]
-    c <- dim(input)[3]
-    temp <- array(0, dim = c((input_nrow + (2 * num)),(input_ncol + (2 * num)),c,n))
-    temp_nrow <- nrow(temp)
-    temp_ncol <- ncol(temp)
-    temp[(1 + num):(temp_nrow - num), (1 + num):(temp_nrow - num),,] <- input
-    return(temp)
-}
 
