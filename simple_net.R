@@ -106,7 +106,7 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
         test_acc <- rbind(test_acc,model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel))
       }
     }
-    
+  }
   return(list(loss=train_loss_list,test_acc=test_acc))
 }
 
