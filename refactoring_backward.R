@@ -2,7 +2,7 @@
 #  setwd('/Users/yejin/Sites/DeepLearningFromForR')
 library(dslabs)
 
-source("./functions.R")
+source("./layers.R")
 source("./utils.R")
 source("./model.R")
 
