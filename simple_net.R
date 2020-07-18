@@ -56,7 +56,7 @@ loss <- function(model.forward, network, x, t){
   softmax_params <- list(t = t)
   temp <- model.forward(network, x)
   y <- temp$x
-  last_layer.forward <- forward("SoftmaxWithLoss",y,softmax_params) # 이부분 뭔가 이상 
+  last_layer.forward <- forward("SoftmaxWithLoss",y,softmax_params) 
   return(list(loss = last_layer.forward$loss, softmax = last_layer.forward, predict =  temp))
 }
 
@@ -98,12 +98,12 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
     x_batch <- array(x_batch,c(28,28,1,100))
     t_batch <- train_t[batch_mask,]
     
-    gradient <- gradient_test(model.forward_test,network, x_batch, t_batch)
+    gradient <- model.backward(model.forward,network, x_batch, t_batch)
     network <- get_optimizer(network, gradient, optimizer_name)
     if(debug=TRUE){
       if(i %% 600 ==0){
-        train_loss_list <- rbind(train_loss_list,loss_test(model.forward=model.forward_test, network = network, x_batch, t_batch)$loss)
-        test_acc <- rbind(test_acc,model.evaluate(model.forward_test, network, x_test_normalize, t_test_onehotlabel))
+        train_loss_list <- rbind(train_loss_list,loss_test(model.forward=model.forward, network = network, x_batch, t_batch)$loss)
+        test_acc <- rbind(test_acc,model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel))
       }
     }
     
