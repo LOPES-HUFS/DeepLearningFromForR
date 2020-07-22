@@ -48,7 +48,6 @@ im2col <- function(input, filter_h, filter_w, stride, pad){
   input_w <- dim(input)[1]
   pad_temp <- padding(input, pad)
   output_r <- ((input_h + 2 * pad - filter_h) %/% stride) + 1 #OK
-  
   output_c <- ((input_w + 2 * pad - filter_w) %/% stride) + 1 #OK
   result <- array(0, dim = c(filter_h, filter_w,output_r, output_c, c, N))
   for(i in 0:(filter_h-1)){
