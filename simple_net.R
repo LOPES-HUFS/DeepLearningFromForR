@@ -3,7 +3,6 @@ source("./layers.R")
 source("./utils.R")
 source("./optimizer.R")
 
-
 simple_net_params <- function(params){
   input_size <- params[["input_dim"]][1]
   conv_output_size <- (input_size - params[["filter_size"]] + 2*params[["pad"]]) / params[["stride"]] + 1
@@ -31,7 +30,7 @@ init <- function(tensor){
   t_test_onehotlabel <<- making_one_hot_label(mnist_data$t_test,10000, 10)
 } 
 
-pool_params <- list(pool_h=2, pool_w=2, stride=2, pad=0)
+
 model.forward <- function(network, x){
   conv_params <- list(W = network$W1,b = network$b1, stride = 1, pad = 0)
   affine_params_1 <- list(W = network$W2,b = network$b2)
@@ -81,10 +80,10 @@ model.evaluate <- function(model, network, x, t){
   return(accuracy)
 }
 
-model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, optimizer_name, debug=FALSE){
+model.train <- function(train_x,train_t, test_x, test_t, batch_size, epoch, optimizer_name, debug=FALSE){
   train_size <- dim(train_x)[4]
   iter_per_epoch <- max(train_size / batch_size)
-  
+  iters_num <- iter_per_epoch*epoch
   params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
                  pad=0,stride=1,hidden_size=100,output_size=10,
                  weight_init_std=0.01)
@@ -111,9 +110,6 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, iters_num, 
 train_loss_list <- data.frame(loss_value = 0)
 test_acc <- data.frame(acc = 0)
 init(TRUE)
-params <- params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
-                         pad=0,stride=1,hidden_size=100,output_size=10,
-                         weight_init_std=0.01)
-network <- simple_net_params(params = params)  
+pool_params <- list(pool_h=2, pool_w=2, stride=2, pad=0)
 
-model_temp <- model.train(train_x = x_train_normalize,train_t = t_train_onehotlabel,x_test_normalize,t_test_onehotlabel,batch_size = 100,iters_num = 3000,optimizer_name = "adam",debug = TRUE)
+model_temp <- model.train(train_x = x_train_normalize,train_t = t_train_onehotlabel,x_test_normalize,t_test_onehotlabel,batch_size = 100,epoch = 5,optimizer_name = "adam",debug = TRUE)

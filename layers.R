@@ -88,7 +88,7 @@ convolution.backward <- function(convolution_forward,dout,stride=1,pad=0){
   dW <- t(convolution_forward$col)%*%new_dout
   dW <- array(dW,c(fw,fh,fc,fn))
   dcol <- new_dout%*%t(convolution_forward$col_w)
-  dx <- col2im(dcol, convolution_forward$x, fh, fw,stride, pad)
+  dx <- col2im(dcol, dim(convolution_forward$x), fh, fw,stride, pad)
   return(list(dx=dx,dW=dW,db=db))
 }
 
@@ -121,28 +121,14 @@ pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
   dout <- aperm(dout,c(3,1,2,4))
   pool_size <- pool_h * pool_w
   dmax <- matrix(0,nrow = length(pool_forward$argmax), ncol = pool_size)
-  dmax[cbind(1:length(pool_forward$argmax),pool_forward$argmax)]<-c(dout)
+  prebound <- cbind(1:length(pool_forward$argmax),pool_forward$argmax)
+  dmax[prebound] <- c(dout)
   dmax <- array(t(dmax),dim = c(pool_size,dim(dout)))
   dcol <- matrix(dmax,dim(dmax)[3]*dim(dmax)[4]*dim(dmax)[5],dim(dmax)[1]*dim(dmax)[2],T)
-  dx <- col2im(dcol,pool_forward$x,pool_h,pool_w,stride,pad)
+  dx <- col2im(dcol,dim(pool_forward$x),pool_h,pool_w,stride,pad)
   return(dx)
 }
 
-flatten.forward <- function(x){
-  n <- dim(x)[4]
-  c <- dim(x)[3]
-  h <- dim(x)[2]
-  w <- dim(x)[1]
-  out <- matrix(0, nrow = n, ncol = h*w*c)
-  mask <- dim(x)
-  for(i in 1:n){
-    data <- x[,,,i]
-    temp <- matrix(data, nrow = 1, ncol = h*w*c)
-    out[i,] <- temp
-  }
-  return(list(out = out , mask = mask))
-  
-}
 flatten.forward <- function(x){
   mask <- dim(x)
   out <- t(matrix(x,nrow=dim(x)[1]*dim(x)[2]*dim(x)[3],ncol=dim(x)[4]))
@@ -171,6 +157,9 @@ forward <- function(name, x, params=NA){
     else if(name == "Pooling"){
       return(pooling.forward(x, params[["pool_h"]], params[["pool_w"]], 
                              params[["stride"]], params[["pad"]]))}
+    else if(name == "Drop_out"){
+      return(drop_out.forward(x,params[["rate"]]))
+    }
     else{
       return("name is False")
     }
@@ -188,6 +177,7 @@ backward <- function(name,forward,dout,params=NA){
     else if(name == "SoftmaxWithLoss"){return(SoftmaxWithLoss.backward(forward,dout))}
     else if(name == "Convolution"){return(convolution.backward(forward,dout))}
     else if(name == "Flatten"){return(flatten.backward(forward,dout))}
+    else if(name == "Drop_out"){return(drop_out.backward(forward,dout))}
     else{return("name is False")}
   }
 }
