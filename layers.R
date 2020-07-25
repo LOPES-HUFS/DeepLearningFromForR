@@ -106,7 +106,7 @@ pooling.forward <- function(x, pool_h, pool_w, stride, pad){
   out <- apply(col,1,max)
   out <- matrix(out,nrow=NROW(out))
   new_out <- aperm(array(out,c(c,out_h,out_w,n)),c(3,2,1,4))
-  return(list(new_out=new_out,x=x,argmax=arg_max,out=out))
+  return(list(out=new_out,x=x,argmax=arg_max))
   
 }
 
