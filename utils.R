@@ -58,7 +58,7 @@ im2col <- function(input, filter_h, filter_w, stride, pad){
     }
   }
   reshape_result <- matrix(aperm(result,c(4,3,5,2,1,6)),output_r*output_c*N,byrow = T)
-  return(list(reshape_result=reshape_result,result=result))
+  return(reshape_result)
 }
 
 col2im <- function(col, input_dim, filter_h, filter_w, stride, pad){
