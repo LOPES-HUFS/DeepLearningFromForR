@@ -103,17 +103,10 @@ pooling.forward <- function(x, pool_h, pool_w, stride, pad){
   col <- matrix(t(col_im), ncol=pool_h*pool_w,byrow=T)
   arg_max <- matrix(0,nrow=NROW(col))
   out <- matrix(0,nrow=NROW(col))
-  for(i in 1:NROW(col)){
-    if(sum(col[i,])==0){
-      arg_max[i,] <- 1
-    }
-    else{
-      arg_max[i,] <- which.max(col[i,])
-    }
-    out[i,] <- max(col[i,])
-  }
-  out <- aperm(array(out,c(c,out_h,out_w,n)),c(2,3,1,4))
-  return(list(out=out,x=x,argmax=arg_max))
+  arg_max <- apply(col,1,which.max)
+  out <- apply(col,1,max)
+  new_out <- aperm(array(out,c(c,out_h,out_w,n)),c(3,2,1,4))
+  return(list(new_out=new_out,x=x,argmax=arg_max,out=out))
   
 }
 
