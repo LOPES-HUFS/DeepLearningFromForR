@@ -49,16 +49,16 @@ im2col <- function(input, filter_h, filter_w, stride, pad){
   pad_temp <- padding(input, pad)
   output_r <- ((input_h + 2 * pad - filter_h) %/% stride) + 1 #OK
   output_c <- ((input_w + 2 * pad - filter_w) %/% stride) + 1 #OK
-  result <- array(0, dim = c(filter_h, filter_w,output_r, output_c, c, N))
-  for(i in 0:(filter_h-1)){
-    i_max <- i + (stride * output_r)
-    for(j in 0:(filter_w-1)){
-      j_max <- j + (stride * output_c)
-      result[j+1,i+1,,,,] <- pad_temp[seq(j+1, j_max, stride), seq(i+1, i_max, stride),,]
+  result <- array(0, dim = c(output_r, output_c,filter_h, filter_w, c, N))
+  for(i in 1:(filter_h)){
+    i_max <- (i-1) + (stride * output_r)
+    for(j in 1:(filter_w)){
+      j_max <- (j-1) + (stride * output_c)
+      result[,,j,i,,] <- pad_temp[seq(j, j_max, stride), seq(i, i_max, stride),,]
     }
   }
-  reshape_result <- matrix(aperm(result,c(1,2,5,3,4,6)),output_r*output_c*N,byrow = T)
-  return(reshape_result)
+  reshape_result <- matrix(aperm(result,c(4,3,5,2,1,6)),output_r*output_c*N,byrow = T)
+  return(list(reshape_result=reshape_result,result=result))
 }
 
 col2im <- function(col, input_dim, filter_h, filter_w, stride, pad){
