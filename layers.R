@@ -73,8 +73,8 @@ convolution.forward <- function(x,W,b,stride,pad){
   out_w <- ((w + 2 * pad - fw) %/% stride) + 1
   col <- im2col(x, fh, fw, stride, pad)
   col_w <- t(matrix(aperm(W,c(3,4,1,2)),fn*fc,fh*fw))
-  out <- sweep(col%*%col_w,2,b,"+") 
-  out <- aperm(array(out,c(out_h,out_w,n,fn)),c(1,2,4,3))
+  out <- sweep(col%*%col_w,2,b,"+")
+  out <- aperm(array(out,c(out_h,out_w,n,fn)),c(2,1,4,3))
   return(list(out=out,x=x,col=col,col_w=col_w,W=W))
 }
 
