@@ -72,7 +72,7 @@ convolution.forward <- function(x,W,b,stride,pad){
   out_h <- ((h + 2 * pad - fh) %/% stride) + 1
   out_w <- ((w + 2 * pad - fw) %/% stride) + 1
   col <- im2col(x, fh, fw, stride, pad)
-  col_w <- t(matrix(aperm(W,c(3,4,1,2)),fn*fc,fh*fw))
+  col_w <- t(matrix(aperm(W,c(3,4,2,1)),fn*fc,fh*fw))
   out <- sweep(col%*%col_w,2,b,"+")
   out <- aperm(array(out,c(out_h,out_w,n,fn)),c(2,1,4,3))
   return(list(out=out,x=x,col=col,col_w=col_w,W=W))
@@ -124,7 +124,7 @@ pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
 
 flatten.forward <- function(x){
   mask <- dim(x)
-  out <- t(matrix(x,nrow=dim(x)[1]*dim(x)[2]*dim(x)[3],ncol=dim(x)[4]))
+  out <- matrix(aperm(x,c(2,1,3,4)),nrow=dim(x)[4],ncol=dim(x)[1]*dim(x)[2]*dim(x)[3],T)
   return(list(out = out , mask = mask))
 }
 
