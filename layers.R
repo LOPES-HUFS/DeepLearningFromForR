@@ -135,9 +135,12 @@ flatten.backward <- function(flatten_forward,dout){
 
 forward <- function(name, x, params=NA){
   if(all(is.na(params)) == TRUE){
-    if(name=="Flatten"){return(flatten.forward(x))}
-    else if(name =="ReLU"){return(Relu.forward(x))}
-    else{return("name is False")}
+    if(name=="Flatten"){
+      return(flatten.forward(x))}
+    else if(name =="ReLU")
+      {return(Relu.forward(x))}
+    else{
+      return("name is False:check write Flatten or ReLU ")}
   }
   else{
     if(name=="Affine"){
