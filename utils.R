@@ -68,19 +68,20 @@ col2im <- function(col, input_dim, filter_h, filter_w, stride, pad){
   w <- input_dim[1]
   out_h <- ((h + 2 * pad - filter_h) %/% stride) + 1
   out_w <- ((w + 2 * pad - filter_w) %/% stride) + 1
-  col <- aperm(array(t(col),c(filter_h,filter_w,c,out_h,out_w,n)),c(4,5,1,2,3,6))
-  result <- array(0,c(h + 2*pad + stride - 1, w + 2*pad + stride - 1,c,n ))
+  col <- aperm(array(t(col),c(filter_h,filter_w,c,out_h,out_w,n)),c(5,4,1,2,3,6))
+  newcol<-aperm(col,c(1,2,4,3,5,6))
+  result <- array(0,c(h + 2*pad + stride - 1, w + 2*pad + stride - 1,c,n))
   for(i in 1:filter_h){
     i_max <- (i +stride * out_h)-1
     for(j in 1:filter_w){
       j_max <- (j + stride * out_w)-1
-      result[seq(i, i_max, stride),seq(j, j_max, stride),,] <- result[seq(i, i_max, stride),seq(j, j_max, stride),,]+col[,,i,j,,]
+      result[seq(i, i_max, stride),seq(j, j_max, stride),,] <- result[seq(i, i_max, stride),seq(j, j_max, stride),,]+newcol[,,i,j,,]
       
     }
   }
   new_result <- result[(1+pad):(h + pad), (1+pad):(w + pad),,]
-  new_result <- array(new_result,c(dim(new_result)[1],dim(new_result)[2],c,n))
-  return(new_result)
+  new_result_reshape <- array(new_result,c(dim(new_result)[1],dim(new_result)[2],c,n))
+  return(list(new_result=new_result_reshape))
 }
 
   
