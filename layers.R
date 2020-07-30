@@ -83,7 +83,7 @@ convolution.backward <- function(convolution_forward,dout,stride=1,pad=0){
   fc <- dim(convolution_forward$W)[3]
   fh <- dim(convolution_forward$W)[2]
   fw <- dim(convolution_forward$W)[1]
-  new_dout <- matrix(aperm(dout,c(1,2,4,3)),ncol=fn)
+  new_dout <- matrix(aperm(dout,c(2,1,4,3)),ncol=fn)
   db <- colSums(new_dout)
   dW <- t(convolution_forward$col)%*%new_dout
   dW <- array(dW,c(fw,fh,fc,fn))
@@ -111,16 +111,17 @@ pooling.forward <- function(x, pool_h, pool_w, stride, pad){
 }
 
 pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
-  dout <- aperm(dout,c(3,1,2,4))
+  dout <- aperm(dout,c(1,3,2,4))
   pool_size <- pool_h * pool_w
   dmax <- matrix(0,nrow = length(pool_forward$argmax), ncol = pool_size)
   prebound <- cbind(1:length(pool_forward$argmax),pool_forward$argmax)
-  dmax[prebound] <- c(dout)
-  dmax <- array(t(dmax),dim = c(pool_size,dim(dout)))
-  dcol <- matrix(dmax,dim(dmax)[3]*dim(dmax)[4]*dim(dmax)[5],dim(dmax)[1]*dim(dmax)[2],T)
+  dmax[prebound] <- as.vector(aperm(dout,c(2,1,3,4)))
+  dmax_temp <- dmax
+  dcol <- matrix(t(dmax_temp),dim(dout)[1]*dim(dout)[3]*dim(dout)[4],4*dim(dout)[2],T)
   dx <- col2im(dcol,dim(pool_forward$x),pool_h,pool_w,stride,pad)
-  return(dx)
+  return(list(dx=dx))
 }
+
 
 flatten.forward <- function(x){
   mask <- dim(x)
@@ -130,7 +131,7 @@ flatten.forward <- function(x){
 
 flatten.backward <- function(flatten_forward,dout){
   temp_out <- array(t(dout), dim = flatten_forward$mask)
-  return(aperm(temp_out, c(2, 1, 3, 4)))
+  return(temp_out)
 }
 
 forward <- function(name, x, params=NA){
