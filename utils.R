@@ -81,7 +81,7 @@ col2im <- function(col, input_dim, filter_h, filter_w, stride, pad){
   }
   new_result <- result[(1+pad):(h + pad), (1+pad):(w + pad),,]
   new_result_reshape <- array(new_result,c(dim(new_result)[1],dim(new_result)[2],c,n))
-  return(list(new_result=new_result_reshape))
+  return(new_result_reshape)
 }
 
   
