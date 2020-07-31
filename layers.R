@@ -111,13 +111,13 @@ pooling.forward <- function(x, pool_h, pool_w, stride, pad){
 }
 
 pooling.backward <- function(pool_forward,dout,pool_h,pool_w,stride,pad){
-  dout <- aperm(dout,c(1,3,2,4))
+  new_dout <- aperm(dout,c(1,3,2,4))
   pool_size <- pool_h * pool_w
   dmax <- matrix(0,nrow = length(pool_forward$argmax), ncol = pool_size)
   prebound <- cbind(1:length(pool_forward$argmax),pool_forward$argmax)
-  dmax[prebound] <- as.vector(aperm(dout,c(2,1,3,4)))
+  dmax[prebound] <- as.vector(aperm(new_dout,c(2,1,3,4)))
   dmax_temp <- dmax
-  dcol <- matrix(t(dmax_temp),dim(dout)[1]*dim(dout)[3]*dim(dout)[4],4*dim(dout)[2],T)
+  dcol <- matrix(t(dmax_temp),dim(new_dout)[1]*dim(new_dout)[3]*dim(new_dout)[4],4*dim(new_dout)[2],T)
   dx <- col2im(dcol,dim(pool_forward$x),pool_h,pool_w,stride,pad)
   return(list(dx=dx))
 }
