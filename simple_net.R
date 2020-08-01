@@ -65,7 +65,7 @@ model.backward <- function(model.forward, network, x, t) {
   dout3 <- backward("Affine",loss_temp$predict$Affine_1.forward,dout2$dx)
   dout_3 <- backward("Flatten",loss_temp$predict$flatten,dout3$dx)
   dx <- backward("Pooling",loss_temp$predict$pool_temp,dout_3,pool_params)
-  dx1 <- backward("ReLU",loss_temp$predict$Relu_1.forward,dx)
+  dx1 <- backward("ReLU",loss_temp$predict$Relu_1.forward,dx$dx)
   dx2 <- backward("Convolution",loss_temp$predict$conv_temp,dx1$dx)
   grads  <- list(W1  =  dx2$dW, b1  =  dx2$db, W2  =  dout3$dW, b2  =  dout3$db, W3 = dout1$dW, b3 = dout1$db)
   return(grads)
@@ -97,13 +97,14 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, epoch, opti
     gradient <- model.backward(model.forward,network, x_batch, t_batch)
     network <- get_optimizer(network, gradient, optimizer_name)
     if(debug==TRUE){
-      if(i %% 600 ==0){
-        train_loss_list <- rbind(train_loss_list,loss(model.forward=model.forward, network = network, x_batch, t_batch)$loss)
-        test_acc <- rbind(test_acc,model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel))
+      if(i %% iter_per_epoch == 0){
+        train_loss_list <- rbind(train_loss_list,loss(model.forward=model.forward_test, 
+                                                      network = network, x_batch, t_batch)$loss)
+        test_acc <- rbind(test_acc,model.evaluate(model.forward_test, network, x_test_normalize, t_test_onehotlabel))
       }
     }
-  }
-  return(list(loss=train_loss_list,test_acc=test_acc))
+}
+  return(network)
 }
 
 
@@ -112,4 +113,4 @@ test_acc <- data.frame(acc = 0)
 init(TRUE)
 pool_params <- list(pool_h=2, pool_w=2, stride=2, pad=0)
 
-model_temp <- model.train(train_x = x_train_normalize,train_t = t_train_onehotlabel,x_test_normalize,t_test_onehotlabel,batch_size = 100,epoch = 5,optimizer_name = "adam",debug = TRUE)
+model_temp <- model.train(train_x = x_train_normalize,train_t = t_train_onehotlabel,batch_size = 100,epoch = 1,optimizer_name = "adam")
