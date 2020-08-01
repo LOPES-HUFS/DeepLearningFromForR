@@ -104,7 +104,7 @@ model.train <- function(train_x,train_t, test_x, test_t, batch_size, epoch, opti
       }
     }
 }
-  return(network)
+  return(list(network=network,train_loss_list=train_loss_list,test_acc=test_acc))
 }
 
 
