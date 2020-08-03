@@ -30,26 +30,26 @@ model.forward <- function(network, x){
   relu_1 <- Relu.forward(affine_1$out)
   affine_2 <- Affine.forward(network$W2, network$b2, relu_1$out)
   softmax <- softmax(affine_2$out)
-
+  
   return(list(
     affine_1 = affine_1,
     relu_1 = relu_1,
     affine_2 = affine_2,
     softmax = softmax
-    ))
+  ))
 }
 
 model.backward <- function(network, x, t) {
   # 순전파
   d_forward <- model.forward(network, x)
-
+  
   # 역전파
   dout <- 1
   last_backward <- SoftmaxWithLoss.backward(d_forward$softmax, t, dout)
   affine_2_backward <- Affine.backward(d_forward$affine_2, last_backward$dx)
   relu_1_backward <- Relu.backward(d_forward$relu_1, affine_2_backward$dx)
   affine_1_backward <- Affine.backward(d_forward$affine_1, relu_1_backward$dx)
-
+  
   return(list(
     W1 = affine_1_backward$dW, 
     b1 = affine_1_backward$db, 
@@ -59,39 +59,40 @@ model.backward <- function(network, x, t) {
 }
 
 SoftmaxWithLoss.backward <- function(predict, t, dout=1){
-    dx <- (predict - t) / dim(predict)[1]
-    return(list(dx = dx))
+  dx <- (predict - t) / dim(predict)[1]
+  return(list(dx = dx))
+}
+
+loss <- function(model.forward, network, x, t){
+  temp <- model.forward(network, x)
+  y <- temp$affine_2$out
+  last_layer.forward <- SoftmaxWithLoss.forward(y,t) 
+  return(list(loss = last_layer.forward$loss, softmax = last_layer.forward, predict =  temp))
 }
 
 model.train <- function(batch_size, iters_num, learning_rate, optimizer_name, debug=FALSE){
   train_size <- dim(x_train_normalize)[1]
   iter_per_epoch <- max(train_size / batch_size)
-
+  train_loss_list <- data.frame(loss_value = 0)
+  test_acc <- data.frame(acc = 0)
   network <- TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
   for(i in 1:iters_num){
-      batch_mask <- sample(train_size ,batch_size)
-      x_batch <- x_train_normalize[batch_mask,]
-      t_batch <- t_train_onehotlabel[batch_mask,]
-
-      gradient <- model.backward(network, x_batch, t_batch)
-      network <- get_optimizer(network, gradient, optimizer_name)
-
-      if(debug){
-          if(i %% iter_per_epoch == 0){
-              train_acc <- model.evaluate(model.forward, network, x_train_normalize, t_train_onehotlabel)
-              test_acc <- model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel)
-              print(c(train_acc, test_acc))
-          }
+    batch_mask <- sample(train_size ,batch_size)
+    x_batch <- x_train_normalize[batch_mask,]
+    t_batch <- t_train_onehotlabel[batch_mask,]
+    
+    gradient <- model.backward(network, x_batch, t_batch)
+    network <- get_optimizer(network, gradient, optimizer_name)
+    loss_value <- loss(model.forward=model.forward,network,x_batch, t_batch)$loss
+    train_loss_list <- rbind(train_loss_list,loss_value)
+    if(debug){
+      if(i %% iter_per_epoch == 0){
+        test_acc <- rbind(test_acc,model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel))
       }
+    }
   }
-
-  train_accuracy <- model.evaluate(model.forward, network, x_train_normalize, t_train_onehotlabel)
-  test_accuracy <- model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel)
-
-  return(c(train_accuracy, test_accuracy))
+  return(list(train_loss_list=train_loss_list, test_accuracy=test_acc))
 }
 
 init()
-model.train(100, 10000, 0.1, "SGD", TRUE)
-
-
+model.train(100, 12000, 0.1, "adam", TRUE)
