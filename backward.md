@@ -13,6 +13,7 @@ library(dslabs)
 source("./functions.R")
 source("./utils.R")
 source("./model.R")
+source("./layers.R")
 ```
 
 1개의 은닉층을 갖는 네트워크를 생성합니다. 네트워크는 순전파와 동일합니다.
