@@ -55,6 +55,34 @@ model.backward <- function(model.forward, network, x, t) {
   return(grads)
 }
 
+model.train <- function(train_x,train_t, test_x, test_t, batch_size, epoch, optimizer_name){
+  train_loss_list <- data.frame(loss_value = 0)
+  test_acc <- data.frame(acc = 0)
+  train_size <- dim(train_x)[4]
+  iter_per_epoch <- max(train_size / batch_size)
+  iters_num <- iter_per_epoch*epoch
+  params <- list(input_dim=c(28,28,1),filter_size=5,filter_num=30,
+                 pad=0,stride=1,hidden_size=100,output_size=10,
+                 weight_init_std=0.01)
+  network <- simple_net_params(params = params)  
+  for(i in 1:iters_num){
+    batch_mask <- sample(train_size ,batch_size)
+    x_batch <- train_x[,,,batch_mask]
+    x_batch <- array(x_batch,c(28,28,1,100))
+    t_batch <- train_t[batch_mask,]
+    gradient <- model.backward(model.forward,network, x_batch, t_batch)
+    network <- get_optimizer(network, gradient, optimizer_name)
+    loss_value <- loss(model.forward=model.forward, network = network, x_batch, t_batch)$loss
+    print(loss_value)
+    train_loss_list <- rbind(train_loss_list,loss_value)
+    if(i %% iter_per_epoch == 0){
+      acc <- model.evaluate(model.forward, network, x_test_normalize, t_test_onehotlabel)
+      test_acc <- rbind(test_acc,acc)
+    }
+  }
+  return(list(network=network,train_loss_list=train_loss_list,test_acc=test_acc))
+}
+
 model.evaluate <- function(model, network, x, t){
   
   temp <- model(network, x)

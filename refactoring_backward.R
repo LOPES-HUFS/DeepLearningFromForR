@@ -91,7 +91,7 @@ model.train <- function(batch_size, iters_num, learning_rate, optimizer_name, de
       }
     }
   }
-  return(list(train_loss_list=train_loss_list, test_accuracy=test_acc))
+  return(list(network=network,train_loss_list=train_loss_list, test_accuracy=test_acc))
 }
 
 init()
